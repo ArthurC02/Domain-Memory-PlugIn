@@ -50,4 +50,10 @@ jobs:
         env:
           DOMAIN_MEMORY_BINARY: ${{ matrix.binary }}
           DOMAIN_MEMORY_REFERENCE_REPO: ${{ runner.temp }}/reference
-        run: cargo test --release --locked --test expected_output
+        run: |
+          set -o pipefail
+          log="$RUNNER_TEMP/expected_output.log"
+          cargo test --release --locked --test expected_output 2>&1 | tee "$log" && exit 0
+          awk '/^DIFF /{if(n++<10&&block)print "::error title=Recorded output differs::" block; block=substr($0,6); next} /^     /&&block{block=block "%0A" substr($0,6)} END{if(n<=10&&block)print "::error title=Recorded output differs::" block}' "$log"
+          grep -E '^[0-9]+ of [0-9]+ cases match|^Set DOMAIN_MEMORY|panicked' "$log" | sed 's/^/::error::/'
+          exit 1
