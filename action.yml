@@ -7,7 +7,11 @@ branding:
 
 inputs:
   version:
-    description: The release to install, such as v6.6.0, or latest. Defaults to the tag this action is used at, else the latest release.
+    description: The release to install, such as v6.7.0, or latest. Defaults to the release of the commit this action is used at, whether pinned by tag or by SHA.
+    required: false
+    default: ''
+  sha256sums:
+    description: The SHA-256 the release's SHA256SUMS must have; set it to detect a replaced release asset.
     required: false
     default: ''
 
@@ -22,9 +26,14 @@ runs:
     - id: install
       shell: bash
       env:
-        DOMAIN_MEMORY_VERSION: ${{ inputs.version || (startsWith(github.action_ref, 'v') && github.action_ref) || 'latest' }}
+        DOMAIN_MEMORY_VERSION: ${{ inputs.version }}
+        DOMAIN_MEMORY_SHA256SUMS_SHA256: ${{ inputs.sha256sums }}
         DOMAIN_MEMORY_INSTALL_DIR: ${{ runner.temp }}/domain-memory
       run: |
+        if [ -z "$DOMAIN_MEMORY_VERSION" ]; then
+          DOMAIN_MEMORY_VERSION=$(sed -n 's/^ *"version": *"\([^"]*\)".*/v\1/p' "$GITHUB_ACTION_PATH/.claude-plugin/plugin.json")
+          export DOMAIN_MEMORY_VERSION
+        fi
         sh "$GITHUB_ACTION_PATH/install.sh"
         echo "$DOMAIN_MEMORY_INSTALL_DIR" >> "$GITHUB_PATH"
         name=domain-memory

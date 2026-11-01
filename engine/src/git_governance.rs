@@ -288,20 +288,27 @@ fn install_hook(
     Ok(hook)
 }
 
-/// Records this executable as `domain-memory.executable` in the clone's git
-/// config when it runs outside a plugin's `engine/` directory and the clone names
-/// none yet, so the hooks it installs find it; returns the path it recorded.
-pub fn wire_executable(repo_root: &Path) -> Result<Option<String>, String> {
-    if engine_directory()?.is_some() {
-        return Ok(None);
-    }
-    let configured =
-        git::run_git_text(repo_root, &["config", "--get", "domain-memory.executable"])?;
-    if configured.code == 0 {
-        return Ok(None);
-    }
-    let executable = std::env::current_exe().map_err(|error| error.to_string())?;
-    let shown = shown_path(&executable, None);
+/// Records `domain-memory.executable` in the clone's git config so the hooks it
+/// installs find the tool: `given` exactly as the caller wrote it, or else this
+/// executable when it runs outside a plugin's `engine/` directory and the clone
+/// names none yet. One inside the repository is recorded relative to its top,
+/// which each worktree resolves to its own copy. Returns what it recorded.
+pub fn wire_executable(repo_root: &Path, given: Option<&str>) -> Result<Option<String>, String> {
+    let shown = match given {
+        Some(given) => given.to_string(),
+        None => {
+            if engine_directory()?.is_some() {
+                return Ok(None);
+            }
+            let configured =
+                git::run_git_text(repo_root, &["config", "--get", "domain-memory.executable"])?;
+            if configured.code == 0 {
+                return Ok(None);
+            }
+            let executable = std::env::current_exe().map_err(|error| error.to_string())?;
+            shown_path(&executable, Some(repo_root))
+        }
+    };
     let set = git::run_git_text(repo_root, &["config", "domain-memory.executable", &shown])?;
     if set.code != 0 {
         return Err(format!(

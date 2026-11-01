@@ -4122,8 +4122,8 @@
   },
   "install-git-hitl-hook": {
    "prog": "domain-memory install-git-hitl-hook",
-   "usage": "usage: domain-memory install-git-hitl-hook [-h]\n                                           [--registry-root REGISTRY_ROOT]\n                                           [--repo-root REPO_ROOT]\n",
-   "help": "usage: domain-memory install-git-hitl-hook [-h]\n                                           [--registry-root REGISTRY_ROOT]\n                                           [--repo-root REPO_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n",
+   "usage": "usage: domain-memory install-git-hitl-hook [-h]\n                                           [--registry-root REGISTRY_ROOT]\n                                           [--repo-root REPO_ROOT]\n                                           [--executable EXECUTABLE]\n",
+   "help": "usage: domain-memory install-git-hitl-hook [-h]\n                                           [--registry-root REGISTRY_ROOT]\n                                           [--repo-root REPO_ROOT]\n                                           [--executable EXECUTABLE]\n\nInstalls the hook, and records the executable it runs as git config\ndomain-memory.executable; see --executable.\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --executable EXECUTABLE\n                        the path the hook runs, recorded exactly as given; a\n                        relative path is read from the top of each worktree\n                        (default: this executable, recorded unless it runs\n                        from a plugin's engine/ or the key is already set)\n",
    "actions": [
     {
      "dest": "help",
@@ -4160,14 +4160,25 @@
      "choices": null,
      "default": null,
      "discovered": true
+    },
+    {
+     "dest": "executable",
+     "options": [
+      "--executable"
+     ],
+     "kind": "store",
+     "required": false,
+     "type": "str",
+     "choices": null,
+     "default": null
     }
    ],
    "mutex": []
   },
   "install-pre-commit-hook": {
    "prog": "domain-memory install-pre-commit-hook",
-   "usage": "usage: domain-memory install-pre-commit-hook [-h]\n                                             [--registry-root REGISTRY_ROOT]\n                                             [--repo-root REPO_ROOT]\n",
-   "help": "usage: domain-memory install-pre-commit-hook [-h]\n                                             [--registry-root REGISTRY_ROOT]\n                                             [--repo-root REPO_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n",
+   "usage": "usage: domain-memory install-pre-commit-hook [-h]\n                                             [--registry-root REGISTRY_ROOT]\n                                             [--repo-root REPO_ROOT]\n                                             [--executable EXECUTABLE]\n",
+   "help": "usage: domain-memory install-pre-commit-hook [-h]\n                                             [--registry-root REGISTRY_ROOT]\n                                             [--repo-root REPO_ROOT]\n                                             [--executable EXECUTABLE]\n\nInstalls the hook, and records the executable it runs as git config\ndomain-memory.executable; see --executable.\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --executable EXECUTABLE\n                        the path the hook runs, recorded exactly as given; a\n                        relative path is read from the top of each worktree\n                        (default: this executable, recorded unless it runs\n                        from a plugin's engine/ or the key is already set)\n",
    "actions": [
     {
      "dest": "help",
@@ -4204,6 +4215,17 @@
      "choices": null,
      "default": null,
      "discovered": true
+    },
+    {
+     "dest": "executable",
+     "options": [
+      "--executable"
+     ],
+     "kind": "store",
+     "required": false,
+     "type": "str",
+     "choices": null,
+     "default": null
     }
    ],
    "mutex": []

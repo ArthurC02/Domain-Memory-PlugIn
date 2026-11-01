@@ -15444,7 +15444,7 @@
   "install-git-hitl-hook help": {
    "exit": 0,
    "stderr": "",
-   "stdout": "usage: domain-memory install-git-hitl-hook [-h]\n                                           [--registry-root REGISTRY_ROOT]\n                                           [--repo-root REPO_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n"
+   "stdout": "usage: domain-memory install-git-hitl-hook [-h]\n                                           [--registry-root REGISTRY_ROOT]\n                                           [--repo-root REPO_ROOT]\n                                           [--executable EXECUTABLE]\n\nInstalls the hook, and records the executable it runs as git config\ndomain-memory.executable; see --executable.\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --executable EXECUTABLE\n                        the path the hook runs, recorded exactly as given; a\n                        relative path is read from the top of each worktree\n                        (default: this executable, recorded unless it runs\n                        from a plugin's engine/ or the key is already set)\n"
   },
   "install-git-hitl-hook pre-push in a directory that is not a repository": {
    "exit": 1,
@@ -15789,17 +15789,17 @@
   },
   "install-git-hitl-hook unknown option": {
    "exit": 2,
-   "stderr": "usage: domain-memory install-git-hitl-hook [-h]\n                                           [--registry-root REGISTRY_ROOT]\n                                           [--repo-root REPO_ROOT]\ndomain-memory install-git-hitl-hook: error: unrecognized arguments: --not-an-option-of-any-command\n",
+   "stderr": "usage: domain-memory install-git-hitl-hook [-h]\n                                           [--registry-root REGISTRY_ROOT]\n                                           [--repo-root REPO_ROOT]\n                                           [--executable EXECUTABLE]\ndomain-memory install-git-hitl-hook: error: unrecognized arguments: --not-an-option-of-any-command\n",
    "stdout": ""
   },
   "install-pre-commit-hook help": {
    "exit": 0,
    "stderr": "",
-   "stdout": "usage: domain-memory install-pre-commit-hook [-h]\n                                             [--registry-root REGISTRY_ROOT]\n                                             [--repo-root REPO_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n"
+   "stdout": "usage: domain-memory install-pre-commit-hook [-h]\n                                             [--registry-root REGISTRY_ROOT]\n                                             [--repo-root REPO_ROOT]\n                                             [--executable EXECUTABLE]\n\nInstalls the hook, and records the executable it runs as git config\ndomain-memory.executable; see --executable.\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --executable EXECUTABLE\n                        the path the hook runs, recorded exactly as given; a\n                        relative path is read from the top of each worktree\n                        (default: this executable, recorded unless it runs\n                        from a plugin's engine/ or the key is already set)\n"
   },
   "install-pre-commit-hook missing option": {
    "exit": 2,
-   "stderr": "usage: domain-memory install-pre-commit-hook [-h]\n                                             [--registry-root REGISTRY_ROOT]\n                                             [--repo-root REPO_ROOT]\ndomain-memory install-pre-commit-hook: error: argument --repo-root: expected one argument\n",
+   "stderr": "usage: domain-memory install-pre-commit-hook [-h]\n                                             [--registry-root REGISTRY_ROOT]\n                                             [--repo-root REPO_ROOT]\n                                             [--executable EXECUTABLE]\ndomain-memory install-pre-commit-hook: error: argument --repo-root: expected one argument\n",
    "stdout": ""
   },
   "install-pre-commit-hook pre-commit in a directory that is not a repository": {
@@ -16140,7 +16140,7 @@
   },
   "install-pre-commit-hook unknown option": {
    "exit": 2,
-   "stderr": "usage: domain-memory install-pre-commit-hook [-h]\n                                             [--registry-root REGISTRY_ROOT]\n                                             [--repo-root REPO_ROOT]\ndomain-memory install-pre-commit-hook: error: unrecognized arguments: --not-an-option-of-any-command\n",
+   "stderr": "usage: domain-memory install-pre-commit-hook [-h]\n                                             [--registry-root REGISTRY_ROOT]\n                                             [--repo-root REPO_ROOT]\n                                             [--executable EXECUTABLE]\ndomain-memory install-pre-commit-hook: error: unrecognized arguments: --not-an-option-of-any-command\n",
    "stdout": ""
   },
   "invalid choice after singular mapping": {

@@ -2,6 +2,24 @@
 
 Notable changes to the Domain Memory plugin, newest first. The format follows Keep a Changelog, and versions follow Semantic Versioning: a minor version adds or changes behavior, a patch version only fixes it. Versions before 0.10.0 are recorded in the repository history only.
 
+## 6.7.0
+
+A pinned install stays pinned, and a wrong version says so (SkillHub feedback 280–286).
+
+### Added
+
+- `action.yml` takes `sha256sums`, the digest the release's `SHA256SUMS` must have; `install.sh` and `install.ps1` take it as `DOMAIN_MEMORY_SHA256SUMS_SHA256`. A replaced release asset then stops the install.
+- `install-pre-commit-hook` and `install-git-hitl-hook` take `--executable <path>`, recorded exactly as given as `git config domain-memory.executable`; a relative path is read from the top of each worktree. Their help says that they write this key.
+
+### Changed
+
+- The action installs the release its own commit belongs to, read from its `plugin.json`, instead of reading a version from the ref: pinned by commit SHA, it no longer falls back to the latest release without a word.
+- An installer run from inside the repository records its path relative to the repository's top, so the key, which every worktree of a clone shares, does not tie them all to one worktree's copy.
+
+### Fixed
+
+- `install.sh` and `install.ps1` read a bare number such as `6.7.0` as the tag `v6.7.0`, and a release that cannot be downloaded is named with where the releases are listed, instead of only curl's 404.
+
 ## 6.6.0
 
 Installing is one line per place, from a newcomer's trial (SkillHub feedback 270–279) and the conventions of uv, deno, mise and cargo-dist.

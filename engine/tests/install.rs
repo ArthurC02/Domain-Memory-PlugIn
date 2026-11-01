@@ -231,3 +231,77 @@ fn install_sh_takes_its_directory_from_the_environment() {
         text(&run.stdout)
     );
 }
+
+#[test]
+fn install_sh_names_a_missing_release_and_reads_a_bare_number_as_its_tag() {
+    let root = scratch("sh-missing");
+    std::fs::create_dir_all(root.join("dist")).unwrap();
+    let base = serve(root.join("dist"));
+    let run = Command::new("sh")
+        .arg(plugin().join("install.sh"))
+        .args(["--version", "9.9.9", "--to"])
+        .arg(root.join("bin"))
+        .env("DOMAIN_MEMORY_DOWNLOAD_URL", &base)
+        .output()
+        .unwrap();
+    assert_eq!(Some(1), run.status.code(), "{}", text(&run.stdout));
+    assert!(
+        text(&run.stderr).contains(&format!(
+            "could not download {ASSET} from {base}; is v9.9.9 a release? The releases are listed at "
+        )),
+        "{}",
+        text(&run.stderr)
+    );
+}
+
+#[test]
+fn install_sh_refuses_sums_other_than_the_pinned_ones() {
+    let (base, to) = release("sh-pinned", None);
+    let run = Command::new("sh")
+        .arg(plugin().join("install.sh"))
+        .args(["--version", "v0.0.0-test", "--to"])
+        .arg(&to)
+        .env("DOMAIN_MEMORY_DOWNLOAD_URL", &base)
+        .env("DOMAIN_MEMORY_SHA256SUMS_SHA256", "0".repeat(64))
+        .output()
+        .unwrap();
+    assert_eq!(Some(1), run.status.code(), "{}", text(&run.stdout));
+    assert!(
+        text(&run.stderr).contains("is not the one DOMAIN_MEMORY_SHA256SUMS_SHA256 pins"),
+        "{}",
+        text(&run.stderr)
+    );
+    assert!(!to.join(INSTALLED).exists());
+}
+
+#[cfg(windows)]
+#[test]
+fn install_ps1_names_a_missing_release_and_refuses_unpinned_sums() {
+    let root = scratch("ps1-missing");
+    std::fs::create_dir_all(root.join("dist")).unwrap();
+    let missing = install_ps1(&serve(root.join("dist")), &root.join("bin"));
+    assert!(!missing.status.success());
+    assert!(
+        text(&missing.stderr).contains("is v0.0.0-test a release?"),
+        "{}",
+        text(&missing.stderr)
+    );
+    let (base, to) = release("ps1-pinned", None);
+    let pinned = Command::new("powershell")
+        .args(["-NoProfile", "-ExecutionPolicy", "Bypass", "-File"])
+        .arg(plugin().join("install.ps1"))
+        .args(["-Version", "0.0.0-test", "-To"])
+        .arg(&to)
+        .env("DOMAIN_MEMORY_DOWNLOAD_URL", &base)
+        .env("DOMAIN_MEMORY_NO_MODIFY_PATH", "1")
+        .env("DOMAIN_MEMORY_SHA256SUMS_SHA256", "0".repeat(64))
+        .output()
+        .unwrap();
+    assert!(!pinned.status.success());
+    assert!(
+        text(&pinned.stderr).contains("is not the one DOMAIN_MEMORY_SHA256SUMS_SHA256 pins"),
+        "{}",
+        text(&pinned.stderr)
+    );
+    assert!(!to.join(INSTALLED).exists());
+}

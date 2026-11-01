@@ -1520,3 +1520,38 @@ exit 1",
         run.outcome()
     );
 }
+
+#[test]
+fn a_hook_installer_records_the_executable_it_is_given_and_its_own_path_inside_the_repository_relative()
+ {
+    let sandbox = Sandbox::seeded("SHA256:NOBODY");
+    let given = sandbox.domain(&["install-pre-commit-hook", "--executable", "tools/dm"]);
+    assert_eq!(0, given.code, "{}", given.stderr);
+    assert!(
+        given
+            .stdout
+            .contains("The hook runs tools/dm, recorded as git config domain-memory.executable"),
+        "{}",
+        given.stdout
+    );
+    assert_eq!(
+        "tools/dm",
+        sandbox.git(&["config", "--get", "domain-memory.executable"])
+    );
+
+    sandbox.git(&["config", "--unset", "domain-memory.executable"]);
+    let inside = sandbox.repo.join("tools").join(INSTALLER_NAME);
+    link(Path::new(EXECUTABLE), &inside);
+    let run = Run::of(
+        &sandbox
+            .command(&inside, &sandbox.repo)
+            .arg("install-pre-commit-hook")
+            .output()
+            .unwrap(),
+    );
+    assert_eq!(0, run.code, "{}", run.stderr);
+    assert_eq!(
+        format!("tools/{INSTALLER_NAME}"),
+        sandbox.git(&["config", "--get", "domain-memory.executable"])
+    );
+}

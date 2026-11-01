@@ -72,7 +72,8 @@ jobs:
       - id: setup
         uses: ./
         with:
-          version: v6.5.0
+          version: 6.5.0
+          sha256sums: ca94e981d70408d5bebffb8cc0d7ce14d06d515d1c79d7bb4e7ded7a64ada73e
       - name: The installed executable is on PATH
         shell: bash
         run: |

@@ -7,7 +7,8 @@
 # Options, as a flag or in the environment:
 #   --version <tag>  DOMAIN_MEMORY_VERSION      the release (default: the latest)
 #   --to <dir>       DOMAIN_MEMORY_INSTALL_DIR  where it lands (default: ~/.local/bin)
-# so a pinned install reads: curl -fsSL <url> | DOMAIN_MEMORY_VERSION=v6.6.0 sh
+#                    DOMAIN_MEMORY_SHA256SUMS_SHA256  the digest SHA256SUMS must have, to pin it too
+# so a pinned install reads: curl -fsSL <url> | DOMAIN_MEMORY_VERSION=v6.7.0 sh
 # DOMAIN_MEMORY_DOWNLOAD_URL replaces the release's download address, for a mirror.
 set -eu
 
@@ -20,6 +21,7 @@ while [ $# -gt 0 ]; do
     *) echo "install.sh: unknown argument $1; it takes --version <tag> and --to <dir>" >&2; exit 2 ;;
   esac
 done
+case $version in [0-9]*) version=v$version ;; esac
 
 case "$(uname -s)-$(uname -m)" in
   Linux-x86_64) asset=domain-memory-linux-x86_64 name=domain-memory ;;
@@ -37,16 +39,30 @@ else
   base=${DOMAIN_MEMORY_DOWNLOAD_URL:-$releases/download/$version}
 fi
 
+sha256() {
+  if command -v sha256sum >/dev/null 2>&1; then
+    sha256sum "$1" | cut -d' ' -f1
+  else
+    shasum -a 256 "$1" | cut -d' ' -f1
+  fi
+}
+fetch() {
+  curl -fsSL "$base/$1" -o "$work/$1" || {
+    echo "install.sh: could not download $1 from $base; is $version a release? The releases are listed at $releases" >&2
+    exit 1
+  }
+}
+
 work=$(mktemp -d)
 trap 'rm -rf "$work"' EXIT
-curl -fsSL "$base/$asset" -o "$work/$asset"
-curl -fsSL "$base/SHA256SUMS" -o "$work/SHA256SUMS"
-wanted=$(awk -v asset="$asset" '$2 == asset || $2 == "*" asset { print $1 }' "$work/SHA256SUMS")
-if command -v sha256sum >/dev/null 2>&1; then
-  actual=$(sha256sum "$work/$asset" | cut -d' ' -f1)
-else
-  actual=$(shasum -a 256 "$work/$asset" | cut -d' ' -f1)
+fetch "$asset"
+fetch SHA256SUMS
+if [ -n "${DOMAIN_MEMORY_SHA256SUMS_SHA256:-}" ] && [ "$(sha256 "$work/SHA256SUMS")" != "$DOMAIN_MEMORY_SHA256SUMS_SHA256" ]; then
+  echo "install.sh: SHA256SUMS from $base is not the one DOMAIN_MEMORY_SHA256SUMS_SHA256 pins; nothing was installed" >&2
+  exit 1
 fi
+wanted=$(awk -v asset="$asset" '$2 == asset || $2 == "*" asset { print $1 }' "$work/SHA256SUMS")
+actual=$(sha256 "$work/$asset")
 if [ -z "$wanted" ] || [ "$wanted" != "$actual" ]; then
   echo "install.sh: $asset from $base does not match its SHA256SUMS entry (${wanted:-none}); nothing was installed" >&2
   exit 1
