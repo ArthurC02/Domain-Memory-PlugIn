@@ -8,7 +8,7 @@
 #   --version <tag>  DOMAIN_MEMORY_VERSION      the release (default: the latest)
 #   --to <dir>       DOMAIN_MEMORY_INSTALL_DIR  where it lands (default: ~/.local/bin)
 #                    DOMAIN_MEMORY_SHA256SUMS_SHA256  the digest SHA256SUMS must have, to pin it too
-# so a pinned install reads: curl -fsSL <url> | DOMAIN_MEMORY_VERSION=v7.0.1 sh
+# so a pinned install reads: curl -fsSL <url> | DOMAIN_MEMORY_VERSION=v7.0.2 sh
 # DOMAIN_MEMORY_DOWNLOAD_URL replaces the release's download address, for a mirror.
 set -eu
 

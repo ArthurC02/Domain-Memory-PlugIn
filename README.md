@@ -43,7 +43,7 @@ Both check the executable against the release's `SHA256SUMS` before it lands, pr
 **GitHub Actions**:
 
 ```yaml
-- uses: ArthurC02/Domain-Memory-PlugIn@v7.0.1
+- uses: ArthurC02/Domain-Memory-PlugIn@v7.0.2
 - run: |
     domain-memory validate
     domain-memory verify-evidence
@@ -65,7 +65,7 @@ The pre-commit hook stops a commit whose staged code no longer matches what the 
 
 ### Pin a version for a team
 
-Pin the same tag everywhere, so the Skills an agent reads, the hooks and CI run one release. In Claude Code, `/plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v7.0.1`; to declare it for everyone who opens the repository, add this to its `.claude/settings.json`, or run `claude plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v7.0.1 --scope project` then `claude plugin install domain-memory@domain-memory --scope project`:
+Pin the same tag everywhere, so the Skills an agent reads, the hooks and CI run one release. In Claude Code, `/plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v7.0.2`; to declare it for everyone who opens the repository, add this to its `.claude/settings.json`, or run `claude plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v7.0.2 --scope project` then `claude plugin install domain-memory@domain-memory --scope project`:
 
 ```json
 {
@@ -74,7 +74,7 @@ Pin the same tag everywhere, so the Skills an agent reads, the hooks and CI run 
       "source": {
         "source": "github",
         "repo": "ArthurC02/Domain-Memory-PlugIn",
-        "ref": "v7.0.1"
+        "ref": "v7.0.2"
       }
     }
   },
@@ -84,7 +84,7 @@ Pin the same tag everywhere, so the Skills an agent reads, the hooks and CI run 
 }
 ```
 
-Claude Code honours it once the folder is trusted. On the command line, pin with `DOMAIN_MEMORY_VERSION=v7.0.1` in front of `sh` (`$env:DOMAIN_MEMORY_VERSION = 'v7.0.1'` before `irm` in PowerShell); `DOMAIN_MEMORY_INSTALL_DIR` chooses the folder, and `DOMAIN_MEMORY_SHA256SUMS_SHA256` pins the digest of the release's `SHA256SUMS`. In GitHub Actions the action's tag or commit SHA is the pin. Every release is a tag `v<version>`, and its [GitHub Release](https://github.com/ArthurC02/Domain-Memory-PlugIn/releases) carries the executables, `SHA256SUMS` and a build provenance attestation (`gh attestation verify <file> -R ArthurC02/Domain-Memory-PlugIn`).
+Claude Code honours it once the folder is trusted. On the command line, pin with `DOMAIN_MEMORY_VERSION=v7.0.2` in front of `sh` (`$env:DOMAIN_MEMORY_VERSION = 'v7.0.2'` before `irm` in PowerShell); `DOMAIN_MEMORY_INSTALL_DIR` chooses the folder, and `DOMAIN_MEMORY_SHA256SUMS_SHA256` pins the digest of the release's `SHA256SUMS`. In GitHub Actions the action's tag or commit SHA is the pin. Every release is a tag `v<version>`, and its [GitHub Release](https://github.com/ArthurC02/Domain-Memory-PlugIn/releases) carries the executables, `SHA256SUMS` and a build provenance attestation (`gh attestation verify <file> -R ArthurC02/Domain-Memory-PlugIn`).
 
 ### Upgrading
 

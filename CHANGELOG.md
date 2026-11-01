@@ -2,6 +2,13 @@
 
 Notable changes to the Domain Memory plugin, newest first. The format follows Keep a Changelog, and versions follow Semantic Versioning: a minor version adds or changes behavior, a patch version only fixes it. Versions before 0.10.0 are recorded in the repository history only.
 
+## 7.0.2
+
+### Fixed
+
+- The router Skill names `& "${CLAUDE_PLUGIN_ROOT}/scripts/domain-memory.cmd"` for PowerShell only. `&` is PowerShell's call operator, which `cmd` refuses, and Claude Code on Windows runs Git Bash or PowerShell.
+- The plugin README says `gh attestation verify` needs a signed-in `gh`, and gives the check without it: compare `sha256sum` of a bundled build with the release's `SHA256SUMS`.
+
 ## 7.0.1
 
 ### Fixed
