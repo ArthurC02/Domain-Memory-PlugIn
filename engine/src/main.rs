@@ -467,10 +467,12 @@ fn validate_command(invocation: &Invocation) -> Result<i32, String> {
     let mut repository = invocation
         .text("repo_root")
         .map(|given| listing::Repository::new(&py::resolve(given)));
+    let mut found = Vec::new();
     let errors = validate::validate(
         &registry_root,
         repository.as_mut(),
         invocation.flag("require_reviewed"),
+        &mut found,
     )?;
     let code = if errors.is_empty() {
         emit_stdout("Registry is valid.\n");
@@ -484,12 +486,7 @@ fn validate_command(invocation: &Invocation) -> Result<i32, String> {
         1
     };
     let mut notes = validate::unsettled_notes(&registry_root)?;
-    if code == 0 {
-        notes.extend(validate::consistency_notes(&registry_root)?);
-        if let Some(repository) = repository.as_mut() {
-            notes.extend(validate::unplaced_note(&registry_root, repository)?);
-        }
-    }
+    notes.extend(found);
     for note in notes {
         emit_stderr(&format!("{note}\n"));
     }

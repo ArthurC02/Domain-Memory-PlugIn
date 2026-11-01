@@ -348,7 +348,10 @@ fn verified_by(approvals: &Value) -> Vec<Value> {
             let mut entry = Object::new();
             entry.insert(
                 "by",
-                Value::Str(format!("human:{}", str_of(&held("reviewer")))),
+                Value::Str(format!(
+                    "human:{}",
+                    crate::hitl::person(&str_of(&held("reviewer")))
+                )),
             );
             entry.insert("at", held("approved_at"));
             Value::Object(entry)

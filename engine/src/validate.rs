@@ -68,6 +68,7 @@ pub fn validate(
     root: &Path,
     repository: Option<&mut Repository>,
     require_reviewed: bool,
+    notes: &mut Vec<String>,
 ) -> Result<Vec<String>, String> {
     let repo_root = repository.as_ref().map(|found| found.root.clone());
     if !has_registry(root) {
@@ -103,11 +104,19 @@ pub fn validate(
             shown_path(root, None)
         ));
     }
+    let mut candidates = Vec::new();
     if let Some(repository) = repository {
-        let contexts = records_of(&loaded, "contexts");
-        if loaded.iter().any(|(asset, _)| *asset == "contexts") {
-            errors.extend(implementation_path_errors(contexts, repository)?);
-        }
+        let (reviewed, unreviewed): (Vec<Unplaced>, Vec<Unplaced>) =
+            unplaced_implementation_paths(records_of(&loaded, "contexts"), repository)?
+                .into_iter()
+                .partition(|found| found.reviewed);
+        errors.extend(reviewed.iter().map(implementation_path_error));
+        candidates = unreviewed;
+    }
+    if errors.is_empty() {
+        notes.extend(consistency_notes(records_of(&loaded, "interactions")));
+        notes.extend(unplaced_note(&candidates));
+        notes.extend(doubled_reviewer_notes(&loaded));
     }
     Ok(errors)
 }
@@ -343,51 +352,57 @@ pub fn unplaced_implementation_paths(
         .collect())
 }
 
-fn implementation_path_errors(
-    contexts: &[Object],
-    repository: &mut Repository,
-) -> Result<Vec<String>, String> {
-    Ok(unplaced_implementation_paths(contexts, repository)?
-        .into_iter()
-        .filter(|found| found.reviewed)
-        .map(|found| {
-            format!(
-                "contexts/{} implementation_path {} lies over no file in the repository; after a move, relocate-evidence --from <old repository path> --to <new> proposes the new path, or correct it",
-                found.id, found.path
-            )
-        })
-        .collect())
+fn implementation_path_error(found: &Unplaced) -> String {
+    format!(
+        "contexts/{} implementation_path {} lies over no file in the repository; after a move, relocate-evidence --from <old repository path> --to <new> proposes the new path, or correct it",
+        found.id, found.path
+    )
 }
 
-pub fn unplaced_note(
-    registry_root: &Path,
-    repository: &mut Repository,
-) -> Result<Option<String>, String> {
-    let contexts = Registry::open(registry_root)?.records("contexts")?;
-    let contexts: Vec<Object> = contexts
-        .into_iter()
-        .filter_map(|record| record.as_object().cloned())
-        .collect();
-    let unplaced: Vec<String> = unplaced_implementation_paths(&contexts, repository)?
-        .into_iter()
-        .filter(|found| !found.reviewed)
+fn unplaced_note(candidates: &[Unplaced]) -> Option<String> {
+    if candidates.is_empty() {
+        return None;
+    }
+    let unplaced: Vec<String> = candidates
+        .iter()
         .map(|found| format!("contexts/{} implementation_path {}", found.id, found.path))
         .collect();
-    if unplaced.is_empty() {
-        return Ok(None);
-    }
     let verb = if unplaced.len() == 1 { "lies" } else { "lie" };
-    Ok(Some(format!(
+    Some(format!(
         "NOTE: {} {verb} over no file in the repository; a candidate may name code to come, and ship-package refuses to review it until code is there or the path is corrected.",
         unplaced.join(", ")
-    )))
+    ))
 }
 
-pub fn consistency_notes(registry_root: &Path) -> Result<Vec<String>, String> {
-    let interactions = Registry::open(registry_root)?.records("interactions")?;
-    Ok(interactions
+fn doubled_reviewer_notes(loaded: &Loaded) -> Vec<String> {
+    let mut notes = Vec::new();
+    for (asset, records) in loaded {
+        for record in records {
+            let Some(Value::Array(verified)) = record.get("verified") else {
+                continue;
+            };
+            for by in verified
+                .iter()
+                .filter_map(|approval| approval.as_object()?.get("by")?.as_str())
+            {
+                if let Some(name) = by
+                    .strip_prefix("human:")
+                    .filter(|name| name.starts_with("human:"))
+                {
+                    notes.push(format!(
+                        "NOTE: {asset}/{} is verified by {by}: record-approval before 7.0.3 added a second human: prefix to --reviewer {name}; the reviewer is {name}.",
+                        identifier(record)
+                    ));
+                }
+            }
+        }
+    }
+    notes
+}
+
+fn consistency_notes(interactions: &[Object]) -> Vec<String> {
+    interactions
         .iter()
-        .filter_map(Value::as_object)
         .filter_map(|record| {
             let consistency = record.get("consistency")?.as_str()?;
             (!KNOWN_CONSISTENCIES.contains(&consistency)).then(|| {
@@ -398,7 +413,7 @@ pub fn consistency_notes(registry_root: &Path) -> Result<Vec<String>, String> {
                 )
             })
         })
-        .collect())
+        .collect()
 }
 
 pub fn unsettled_notes(registry_root: &Path) -> Result<Vec<String>, String> {

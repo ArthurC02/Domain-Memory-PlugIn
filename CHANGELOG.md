@@ -2,6 +2,16 @@
 
 Notable changes to the Domain Memory plugin, newest first. The format follows Keep a Changelog, and versions follow Semantic Versioning: a minor version adds or changes behavior, a patch version only fixes it. Versions before 0.10.0 are recorded in the repository history only.
 
+## 7.0.3
+
+### Fixed
+
+- `validate` reads the Registry once. Its notes about interactions' consistency values and unplaced candidate Contexts reopened it, re-reading every record file and recomputing the implementation paths it had just checked. On SkillHub's Registry of 773 records it runs about 13% faster. What it prints is unchanged.
+- `record-approval --reviewer` takes a person's name with or without `human:`. In 7.0.2 a reviewer given as `human:ArthurC` was written into the record as `verified: - by: "human:human:ArthurC"`. The approval now stores the bare name, and the Registry writes `human:<name>` once.
+- `record-approval` refuses the proposer as reviewer whether either is written with `human:` or not. Before, a proposer `human:ArthurC` could approve as `--reviewer ArthurC`. It also refuses an `agent:` reviewer, saying that `--reviewer` takes the name of the person who approves.
+- `validate` notes each record already verified by a doubled `human:human:` name, and says which reviewer it means (stderr).
+- `init-change-package` says on stderr that the person it names with `--proposer` cannot approve the package; `record-approval` refuses them at review time. The help for `--proposer` and `--reviewer` says what each takes.
+
 ## 7.0.2
 
 ### Fixed

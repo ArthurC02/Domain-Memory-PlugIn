@@ -105,7 +105,7 @@ fn registry_condition(
             ],
         ));
     }
-    let errors = validate(registry_path, Some(listing), false)?;
+    let errors = validate(registry_path, Some(listing), false, &mut Vec::new())?;
     if !errors.is_empty() {
         let shown: Vec<String> = errors.iter().take(ERRORS_SHOWN).cloned().collect();
         return Ok((

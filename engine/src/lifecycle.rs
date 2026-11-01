@@ -45,6 +45,7 @@ pub fn init_change_package(invocation: &Invocation) -> Result<i32, String> {
         invocation.text("proposer"),
     );
     create_package(&py::resolve(given), requirement_id, proposal_id, proposer)?;
+    proposer_note(proposer);
     let missing: Vec<&str> = [
         ("--requirement-id", requirement_id),
         ("--proposal-id", proposal_id),
@@ -62,6 +63,14 @@ pub fn init_change_package(invocation: &Invocation) -> Result<i32, String> {
         ));
     }
     Ok(0)
+}
+
+fn proposer_note(proposer: Option<&str>) {
+    if let Some(proposer) = proposer.filter(|name| !name.starts_with("agent:")) {
+        emit_stderr(&format!(
+            "NOTE: {proposer} proposes this package, so record-approval refuses {proposer} as its reviewer; another person approves it.\n"
+        ));
+    }
 }
 
 fn init_recitation_package(invocation: &Invocation) -> Result<i32, String> {
@@ -90,6 +99,7 @@ fn init_recitation_package(invocation: &Invocation) -> Result<i32, String> {
         &recitation,
         [requirement_id, proposal_id, proposer],
     )?;
+    proposer_note(Some(proposer));
     emit_stdout(&format!(
         "Created {}: a routine re-citation package; submit it, record its one test result, then review it.\n",
         PurePath::new(given).as_posix()

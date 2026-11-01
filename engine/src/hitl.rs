@@ -414,6 +414,12 @@ pub struct Approval<'a> {
     pub approved_at: Option<&'a str>,
 }
 
+/// A person named with or without the `human:` prefix the Registry writes,
+/// so `human:ArthurC` and `ArthurC` are one reviewer.
+pub fn person(name: &str) -> &str {
+    name.strip_prefix("human:").unwrap_or(name)
+}
+
 pub fn record_approval(root: &Path, approval: &Approval) -> Result<(), String> {
     let path = root.join(PROPOSAL_FILE);
     let mut proposal = load_json(&path)?;
@@ -427,7 +433,16 @@ pub fn record_approval(root: &Path, approval: &Approval) -> Result<(), String> {
     {
         return Err("approval requires role, reviewer, and scope".to_string());
     }
-    if get(&proposal, "proposer").as_str() == Some(approval.reviewer) {
+    let reviewer = person(approval.reviewer);
+    if approval.reviewer.starts_with("agent:")
+        || !completed_identifier(&Value::Str(reviewer.to_string()))
+    {
+        return Err(format!(
+            "--reviewer takes the name of the person who approves, such as ArthurC; {} is not one",
+            approval.reviewer
+        ));
+    }
+    if get(&proposal, "proposer").as_str().map(person) == Some(reviewer) {
         return Err("the proposer cannot approve the proposal".to_string());
     }
     let timestamp = match approval.approved_at {
@@ -464,7 +479,7 @@ pub fn record_approval(root: &Path, approval: &Approval) -> Result<(), String> {
     }
     let mut recorded = Object::new();
     recorded.insert("role", Value::Str(approval.role.to_string()));
-    recorded.insert("reviewer", Value::Str(approval.reviewer.to_string()));
+    recorded.insert("reviewer", Value::Str(reviewer.to_string()));
     recorded.insert("decision", Value::Str("approved".to_string()));
     recorded.insert("approved_at", Value::Str(timestamp));
     recorded.insert("scope", Value::Str(approval.scope.to_string()));

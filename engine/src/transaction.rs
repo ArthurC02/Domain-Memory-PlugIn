@@ -233,9 +233,9 @@ fn invalid_update(
     staging: &Path,
     repository: &mut Repository,
 ) -> Result<Option<String>, String> {
-    let mut errors = validate(staging, Some(&mut *repository), false)?;
+    let mut errors = validate(staging, Some(&mut *repository), false, &mut Vec::new())?;
     if !errors.is_empty() {
-        let already = validate(root, Some(repository), false)?;
+        let already = validate(root, Some(repository), false, &mut Vec::new())?;
         errors.retain(|error| !already.contains(error));
     }
     Ok((!errors.is_empty()).then(|| format!("registry update is invalid: {}", errors.join("; "))))
