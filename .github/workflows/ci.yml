@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  engine:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            binary: bin/linux-x86_64/domain-memory
+          - os: macos-latest
+            binary: bin/macos-universal/domain-memory
+          - os: windows-latest
+            binary: bin/windows-x86_64/domain-memory.exe
+    defaults:
+      run:
+        shell: bash
+        working-directory: engine
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install the pinned Rust toolchain
+        run: rustup toolchain install
+      - name: Rust format
+        run: cargo fmt --check
+      - name: Rust lint
+        run: cargo clippy --all-targets --locked -- -D warnings
+      - name: Rust tests
+        run: cargo test --locked
+      - name: Committed binaries match the source
+        run: cargo run --locked --example build_binaries -- --check
+      - name: Clone the reference repository
+        run: git clone -q --no-checkout https://github.com/ArthurC02/SkillHub.git "$RUNNER_TEMP/reference"
+      - name: Committed binary matches the recorded output
+        env:
+          DOMAIN_MEMORY_BINARY: ${{ matrix.binary }}
+          DOMAIN_MEMORY_REFERENCE_REPO: ${{ runner.temp }}/reference
+        run: cargo test --release --locked --test expected_output

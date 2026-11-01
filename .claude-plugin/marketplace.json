@@ -1,0 +1,11 @@
+{
+  "name": "domain-memory",
+  "owner": { "name": "ArthurC02" },
+  "plugins": [
+    {
+      "name": "domain-memory",
+      "source": "./",
+      "description": "A governed, file-backed domain model that coding agents read before they code and keep current after."
+    }
+  ]
+}

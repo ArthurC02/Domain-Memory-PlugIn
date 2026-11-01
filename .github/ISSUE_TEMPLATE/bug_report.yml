@@ -1,0 +1,40 @@
+name: Bug report
+description: A command printed something wrong, refused something it should accept, or wrote something it should not.
+labels: [bug]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Plugin version
+      description: The `version` in `.claude-plugin/plugin.json`.
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options: [Linux x86-64, macOS, Windows x86-64, Built from source]
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Command
+      description: The full command line you ran.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: What it printed
+      description: Stdout, stderr and the exit code. Remove anything private first.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
