@@ -106,7 +106,7 @@ fn text(bytes: &[u8]) -> String {
 #[test]
 fn the_launcher_runs_the_executable_committed_for_this_platform() {
     let run = Command::new("sh")
-        .arg(plugin().join("bin").join("domain-memory"))
+        .arg(plugin().join("scripts").join("domain-memory"))
         .arg("-h")
         .output()
         .unwrap();
@@ -123,7 +123,7 @@ fn the_launcher_runs_the_executable_committed_for_this_platform() {
 fn the_windows_launcher_runs_the_committed_executable() {
     let run = Command::new("cmd")
         .arg("/c")
-        .arg(plugin().join("bin").join("domain-memory.cmd"))
+        .arg(plugin().join("scripts").join("domain-memory.cmd"))
         .arg("-h")
         .output()
         .unwrap();

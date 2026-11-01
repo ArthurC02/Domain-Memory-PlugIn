@@ -1,6 +1,8 @@
 ---
 name: domain-memory-extract
 description: Extract DDD information into the Domain Registry as cited candidates. Use when the Registry has never seen the source, a requirement, a codebase or a change; it never promotes what it finds.
+license: MIT
+compatibility: "Part of the Domain Memory plugin: needs git and the domain-memory executable the plugin bundles (Linux x86-64, macOS, Windows x86-64), and reads the plugin's shared references through ../../ links."
 ---
 
 # Extract Domain Memory

@@ -567,3 +567,62 @@ fn the_schema_page_names_the_known_values_and_leaves_kind_and_delivery_unchecked
     .collect();
     assert_eq!(Vec::<&str>::new(), missing);
 }
+
+/// The value of one `key:` line in a SKILL.md frontmatter, unquoted.
+fn frontmatter_value(text: &str, key: &str) -> Option<String> {
+    let front = text.strip_prefix("---\n")?.split("\n---\n").next()?;
+    front.lines().find_map(|line| {
+        let value = line.strip_prefix(key)?.strip_prefix(':')?.trim();
+        Some(value.trim_matches('"').to_string())
+    })
+}
+
+#[test]
+fn the_plugin_installs_everywhere_and_its_skills_meet_the_agent_skills_specification() {
+    assert!(
+        !plugin().join("bin").exists(),
+        "claude.ai and Cowork refuse a plugin with a top-level bin/; keep executables in scripts/"
+    );
+    for entry in std::fs::read_dir(plugin().join("skills")).unwrap() {
+        let directory = entry.unwrap().path();
+        let page = directory.join("SKILL.md");
+        let text = read(&page);
+        let folder = directory
+            .file_name()
+            .unwrap()
+            .to_string_lossy()
+            .into_owned();
+        let name = frontmatter_value(&text, "name").unwrap_or_default();
+        assert_eq!(
+            folder,
+            name,
+            "{}: name must match its directory",
+            page.display()
+        );
+        assert!(
+            name.len() <= 64
+                && name
+                    .chars()
+                    .all(|c| c.is_ascii_lowercase() || c.is_ascii_digit() || c == '-')
+                && !name.starts_with('-')
+                && !name.ends_with('-')
+                && !name.contains("--"),
+            "{name}: lowercase letters, digits and single inner hyphens only"
+        );
+        let description = frontmatter_value(&text, "description").unwrap_or_default();
+        assert!(
+            (1..=1024).contains(&description.chars().count()),
+            "{name}: description must be 1 to 1024 characters"
+        );
+        if let Some(compatibility) = frontmatter_value(&text, "compatibility") {
+            assert!(
+                (1..=500).contains(&compatibility.chars().count()),
+                "{name}: compatibility must be 1 to 500 characters"
+            );
+        }
+        assert!(
+            text.lines().count() < 500,
+            "{name}: keep SKILL.md under 500 lines"
+        );
+    }
+}

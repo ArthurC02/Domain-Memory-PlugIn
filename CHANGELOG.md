@@ -2,6 +2,21 @@
 
 Notable changes to the Domain Memory plugin, newest first. The format follows Keep a Changelog, and versions follow Semantic Versioning: a minor version adds or changes behavior, a patch version only fixes it. Versions before 0.10.0 are recorded in the repository history only.
 
+## 6.9.0
+
+The plugin keeps to Claude Code's plugin rules everywhere a plugin installs, and its Skills to the Agent Skills specification.
+
+### Changed
+
+- The launchers moved from `bin/` to `scripts/` (`scripts/domain-memory`, `scripts\domain-memory.cmd`): claude.ai and Cowork refuse a plugin with a top-level `bin/`, including one an organization distributes. Claude Code no longer puts the launcher on the Bash tool's PATH; the router Skill names it as `"${CLAUDE_PLUGIN_ROOT}/scripts/domain-memory"`, which Claude Code substitutes, and an install on PATH still runs as `domain-memory`. A clone that called `bin/domain-memory` calls `scripts/domain-memory`; the executables in `engine/bin/`, the installers and the hooks are unchanged.
+- The icon moved to `assets/icon.png`, outside `.claude-plugin/`, which holds only manifests.
+
+### Added
+
+- `plugin.json` names `displayName`, `homepage`, `repository`, `license`, `icon`, `documentationUrl` and `supportUrl`; `claude plugin validate --strict` passes.
+- Every Skill's frontmatter carries `license` and a `compatibility` line saying what it needs outside its own folder: git, the bundled executable, and the plugin's shared references.
+- A docs test keeps a top-level `bin/` out and holds each Skill to the specification's name, description, compatibility and length rules.
+
 ## 6.8.1
 
 ### Fixed

@@ -1,6 +1,8 @@
 ---
 name: domain-memory-maintain
 description: Keep the Domain Registry current after implementation. Use when merged code moved or edited cited lines, or a selected source moved; it re-cites evidence and records what the model learned as governed candidates.
+license: MIT
+compatibility: "Part of the Domain Memory plugin: needs git and the domain-memory executable the plugin bundles (Linux x86-64, macOS, Windows x86-64), and reads the plugin's shared references through ../../ links."
 ---
 
 # Maintain Domain Memory

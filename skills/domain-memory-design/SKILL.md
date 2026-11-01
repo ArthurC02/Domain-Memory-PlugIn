@@ -1,6 +1,8 @@
 ---
 name: domain-memory-design
 description: Turn a material domain change into a reviewable boundary decision and Change Package. Use after Read, when the seven-step workflow says the change is material; it records unknowns instead of inventing facts.
+license: MIT
+compatibility: "Part of the Domain Memory plugin: needs git and the domain-memory executable the plugin bundles (Linux x86-64, macOS, Windows x86-64), and reads the plugin's shared references through ../../ links."
 ---
 
 # Design a Domain Change

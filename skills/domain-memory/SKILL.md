@@ -1,6 +1,8 @@
 ---
 name: domain-memory
 description: "Route domain-driven development work to the smallest Domain Memory capability: read the reviewed model before coding, extract it from a requirement or code, design a material change as a Change Package, keep the Registry current after implementation, review its consistency, or review a branch through it."
+license: MIT
+compatibility: "Part of the Domain Memory plugin: needs git and the domain-memory executable the plugin bundles (Linux x86-64, macOS, Windows x86-64), and reads the plugin's shared references through ../../ links."
 ---
 
 # Domain Memory
@@ -21,7 +23,7 @@ Then choose one capability:
 - **Review a change** when asked to review a pull request or a branch, from one `brief`, to decide whether it needs a Change Package, a recite, or nothing: [domain-memory-review-change](../domain-memory-review-change/SKILL.md).
 - **Implementation hygiene** while writing code from a handoff, when a repository check forces a change, or when an external system is added or replaced: [domain-memory-implementation-hygiene](../domain-memory-implementation-hygiene/SKILL.md).
 
-Every capability runs the same commands, through the executable that [running the commands](../../AGENTS.md#running-the-commands) names for each platform.
+Every capability runs the same commands, through the executable that [running the commands](../../AGENTS.md#running-the-commands) names for each platform. In Claude Code that is `"${CLAUDE_PLUGIN_ROOT}/scripts/domain-memory" <command>`, or `domain-memory <command>` when it is installed on PATH.
 
 A brownfield refactoring that preserves the reviewed model takes the [brownfield refactoring fast path](../../references/brownfield-refactoring.md) before anyone opens a Change Package: it is a proof of preservation, not a way around unknown ownership or a changed contract.
 

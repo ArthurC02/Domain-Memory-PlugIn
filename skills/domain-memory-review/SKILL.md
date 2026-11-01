@@ -1,6 +1,8 @@
 ---
 name: domain-memory-review
 description: Check that Registry facts, source evidence, audit history, proposals and the implementation handoff still agree. Use before relying on a domain fact; it checks the Registry itself, not a branch, and is read-only.
+license: MIT
+compatibility: "Part of the Domain Memory plugin: needs git and the domain-memory executable the plugin bundles (Linux x86-64, macOS, Windows x86-64), and reads the plugin's shared references through ../../ links."
 ---
 
 # Review Domain Memory

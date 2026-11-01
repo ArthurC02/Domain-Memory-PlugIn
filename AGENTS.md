@@ -35,10 +35,10 @@ A record moves along one of three paths:
 
 ## Running the commands
 
-Every command is one executable. `bin/domain-memory` (`bin\domain-memory.cmd` from `cmd` or PowerShell) runs the one committed for the platform, from any working directory, with the command first:
+Every command is one executable. `scripts/domain-memory` (`scripts\domain-memory.cmd` from `cmd` or PowerShell) runs the one committed for the platform, from any working directory, with the command first:
 
 ```bash
-bin/domain-memory <command> [options]
+scripts/domain-memory <command> [options]
 ```
 
 The executables themselves:

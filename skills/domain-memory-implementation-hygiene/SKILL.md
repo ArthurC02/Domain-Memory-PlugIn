@@ -1,6 +1,8 @@
 ---
 name: domain-memory-implementation-hygiene
 description: Check that a code change expresses reviewed Domain Memory boundaries without turning generic style rules into Registry facts. Use while writing or refactoring code from a handoff, when a repository check forces a change, or when an external system is added or replaced; it routes a material change to Design.
+license: MIT
+compatibility: "Part of the Domain Memory plugin: needs git and the domain-memory executable the plugin bundles (Linux x86-64, macOS, Windows x86-64), and reads the plugin's shared references through ../../ links."
 ---
 
 # Domain Memory implementation hygiene

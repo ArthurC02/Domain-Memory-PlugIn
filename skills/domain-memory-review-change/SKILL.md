@@ -1,6 +1,8 @@
 ---
 name: domain-memory-review-change
 description: Review a pull request or a branch for what it does to the reviewed domain model. Use when asked to review a PR or a branch; from one brief it decides whether the change needs a Change Package, a recite, or nothing.
+license: MIT
+compatibility: "Part of the Domain Memory plugin: needs git and the domain-memory executable the plugin bundles (Linux x86-64, macOS, Windows x86-64), and reads the plugin's shared references through ../../ links."
 ---
 
 # Review a change against Domain Memory

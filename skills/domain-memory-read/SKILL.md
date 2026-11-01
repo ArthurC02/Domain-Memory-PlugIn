@@ -1,6 +1,8 @@
 ---
 name: domain-memory-read
 description: Read the reviewed Domain Registry before coding. Use when a request names a domain term or may cross a Context; it answers who owns what, which invariants hold, and what must commit together, and writes nothing.
+license: MIT
+compatibility: "Part of the Domain Memory plugin: needs git and the domain-memory executable the plugin bundles (Linux x86-64, macOS, Windows x86-64), and reads the plugin's shared references through ../../ links."
 ---
 
 # Read Domain Memory

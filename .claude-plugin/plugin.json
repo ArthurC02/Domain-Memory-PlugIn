@@ -1,8 +1,15 @@
 {
   "name": "domain-memory",
-  "version": "6.8.1",
+  "displayName": "Domain Memory",
+  "version": "6.9.0",
   "description": "A governed, file-backed domain model that coding agents read before they code and keep current after: read reviewed DDD facts, design changes under review, maintain the Registry, and review a branch against it.",
   "author": { "name": "ArthurC02" },
+  "homepage": "https://github.com/ArthurC02/Domain-Memory-PlugIn#readme",
+  "repository": "https://github.com/ArthurC02/Domain-Memory-PlugIn",
+  "license": "MIT",
   "keywords": ["ddd", "domain-model", "architecture", "code-review"],
+  "icon": "./assets/icon.png",
+  "documentationUrl": "https://github.com/ArthurC02/Domain-Memory-PlugIn/blob/main/AGENTS.md",
+  "supportUrl": "https://github.com/ArthurC02/Domain-Memory-PlugIn/issues",
   "skills": "./skills/"
 }

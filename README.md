@@ -24,7 +24,7 @@ Pick the line for where you work. Each installs the latest release; [pinning](#p
 /plugin install domain-memory@domain-memory
 ```
 
-The `domain-memory` Skill is the entry point: it runs `readiness` first and picks the capability the work needs.
+The `domain-memory` Skill is the entry point: it runs `readiness` first and picks the capability the work needs. The plugin follows Claude Code's plugin layout and the [Agent Skills](https://agentskills.io/specification) format, and keeps its launcher in `scripts/` rather than a top-level `bin/`, so an organization can also distribute it to claude.ai and Cowork; the Skills run it as `${CLAUDE_PLUGIN_ROOT}/scripts/domain-memory`.
 
 **The command line**, on macOS, Linux or Git Bash (needs `curl`):
 
@@ -43,7 +43,7 @@ Both check the executable against the release's `SHA256SUMS` before it lands, pr
 **GitHub Actions**:
 
 ```yaml
-- uses: ArthurC02/Domain-Memory-PlugIn@v6.8.1
+- uses: ArthurC02/Domain-Memory-PlugIn@v6.9.0
 - run: |
     domain-memory validate
     domain-memory verify-evidence
@@ -65,7 +65,7 @@ The pre-commit hook stops a commit whose staged code no longer matches what the 
 
 ### Pin a version for a team
 
-Pin the same tag everywhere, so the Skills an agent reads, the hooks and CI run one release. In Claude Code, `/plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v6.8.1`; to declare it for everyone who opens the repository, add this to its `.claude/settings.json`, or run `claude plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v6.8.1 --scope project` then `claude plugin install domain-memory@domain-memory --scope project`:
+Pin the same tag everywhere, so the Skills an agent reads, the hooks and CI run one release. In Claude Code, `/plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v6.9.0`; to declare it for everyone who opens the repository, add this to its `.claude/settings.json`, or run `claude plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v6.9.0 --scope project` then `claude plugin install domain-memory@domain-memory --scope project`:
 
 ```json
 {
@@ -74,7 +74,7 @@ Pin the same tag everywhere, so the Skills an agent reads, the hooks and CI run 
       "source": {
         "source": "github",
         "repo": "ArthurC02/Domain-Memory-PlugIn",
-        "ref": "v6.8.1"
+        "ref": "v6.9.0"
       }
     }
   },
@@ -84,7 +84,7 @@ Pin the same tag everywhere, so the Skills an agent reads, the hooks and CI run 
 }
 ```
 
-Claude Code honours it once the folder is trusted. On the command line, pin with `DOMAIN_MEMORY_VERSION=v6.8.1` in front of `sh` (`$env:DOMAIN_MEMORY_VERSION = 'v6.8.1'` before `irm` in PowerShell); `DOMAIN_MEMORY_INSTALL_DIR` chooses the folder, and `DOMAIN_MEMORY_SHA256SUMS_SHA256` pins the digest of the release's `SHA256SUMS`. In GitHub Actions the action's tag or commit SHA is the pin. Every release is a tag `v<version>`, and its [GitHub Release](https://github.com/ArthurC02/Domain-Memory-PlugIn/releases) carries the executables, `SHA256SUMS` and a build provenance attestation (`gh attestation verify <file> -R ArthurC02/Domain-Memory-PlugIn`).
+Claude Code honours it once the folder is trusted. On the command line, pin with `DOMAIN_MEMORY_VERSION=v6.9.0` in front of `sh` (`$env:DOMAIN_MEMORY_VERSION = 'v6.9.0'` before `irm` in PowerShell); `DOMAIN_MEMORY_INSTALL_DIR` chooses the folder, and `DOMAIN_MEMORY_SHA256SUMS_SHA256` pins the digest of the release's `SHA256SUMS`. In GitHub Actions the action's tag or commit SHA is the pin. Every release is a tag `v<version>`, and its [GitHub Release](https://github.com/ArthurC02/Domain-Memory-PlugIn/releases) carries the executables, `SHA256SUMS` and a build provenance attestation (`gh attestation verify <file> -R ArthurC02/Domain-Memory-PlugIn`).
 
 ### Upgrading
 
@@ -95,7 +95,7 @@ Claude Code honours it once the folder is trusted. On the command line, pin with
 
 ### Any other agent, or from a clone
 
-Point your agent at [`AGENTS.md`](AGENTS.md). A clone runs the executable committed for its platform through one launcher, `bin/domain-memory` (`bin\domain-memory.cmd` from `cmd` or PowerShell). Linux x86-64, macOS (Apple silicon and Intel) and Windows x86-64 have one; on any other platform, `cargo build --release --locked --manifest-path engine/Cargo.toml` builds it and the launcher runs that build.
+Point your agent at [`AGENTS.md`](AGENTS.md). A clone runs the executable committed for its platform through one launcher, `scripts/domain-memory` (`scripts\domain-memory.cmd` from `cmd` or PowerShell). Linux x86-64, macOS (Apple silicon and Intel) and Windows x86-64 have one; on any other platform, `cargo build --release --locked --manifest-path engine/Cargo.toml` builds it and the launcher runs that build.
 
 ### MCP
 
