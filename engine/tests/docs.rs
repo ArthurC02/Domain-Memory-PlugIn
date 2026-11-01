@@ -650,10 +650,21 @@ fn the_plugin_folder_passes_the_plugin_directorys_blocking_checks() {
     for file in &files {
         let size = std::fs::metadata(file).unwrap().len();
         assert!(size < 5 * 1024 * 1024, "{} is over 5 MiB", file.display());
+        assert!(
+            size < 4608 * 1024,
+            "{} is over 4.5 MiB, too close to the directory's 5 MiB limit",
+            file.display()
+        );
         let name = file.file_name().unwrap().to_string_lossy();
         assert!(
             !["Thumbs.db", ".DS_Store", "desktop.ini"].contains(&name.as_ref()),
             "{} is a system file the directory refuses",
+            file.display()
+        );
+        let bytes = std::fs::read(file).unwrap();
+        assert!(
+            !bytes.windows(11).any(|window| window == b"PRIVATE KEY"),
+            "{} carries a private-key header a secret scanner would flag",
             file.display()
         );
     }
@@ -664,6 +675,10 @@ fn the_plugin_folder_passes_the_plugin_directorys_blocking_checks() {
             ".gitattributes uses {refused}"
         );
     }
+    assert!(
+        plugin().join("LICENSE").is_file(),
+        "the plugin folder carries its own license"
+    );
     let readme = read(&plugin().join("README.md"));
     let prose: String = readme.split("```").step_by(2).collect();
     assert!(

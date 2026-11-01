@@ -12,9 +12,11 @@ pub const PATTERNS: [(&str, Matcher); 6] = [
     ("generic-secret", generic_secret),
 ];
 
-const KEY_OPENING: &str = "-----BEGIN ";
-const KEY_KINDS: [&str; 4] = ["", "RSA ", "EC ", "OPENSSH "];
-const KEY_CLOSING: &str = "PRIVATE KEY-----";
+// Spelled in lowercase and matched as uppercase, so no executable carries a
+// private-key header that a secret scanner would take for key material.
+const KEY_OPENING: &str = "-----begin ";
+const KEY_KINDS: [&str; 4] = ["", "rsa ", "ec ", "openssh "];
+const KEY_CLOSING: &str = "private key-----";
 const LONG_TOKEN_RUN: usize = 20;
 const SLACK_TOKEN_RUN: usize = 10;
 const MINIMUM_SECRET_RUN: usize = 16;
@@ -35,6 +37,13 @@ fn literal_at(text: &[char], at: usize, literal: &str) -> bool {
         .chars()
         .enumerate()
         .all(|(offset, expected)| text.get(at + offset) == Some(&expected))
+}
+
+fn uppercase_at(text: &[char], at: usize, lowercase: &str) -> bool {
+    lowercase
+        .chars()
+        .enumerate()
+        .all(|(offset, letter)| text.get(at + offset) == Some(&letter.to_ascii_uppercase()))
 }
 
 fn letters_at(text: &[char], at: usize, letters: &str) -> bool {
@@ -82,11 +91,11 @@ fn bounded_run(text: &[char], start: usize, member: fn(char) -> bool, minimum: u
 
 fn private_key(text: &[char]) -> bool {
     (0..text.len()).any(|at| {
-        literal_at(text, at, KEY_OPENING)
+        uppercase_at(text, at, KEY_OPENING)
             && KEY_KINDS.iter().any(|kind| {
                 let after_kind = at + KEY_OPENING.len() + kind.len();
-                literal_at(text, at + KEY_OPENING.len(), kind)
-                    && literal_at(text, after_kind, KEY_CLOSING)
+                uppercase_at(text, at + KEY_OPENING.len(), kind)
+                    && uppercase_at(text, after_kind, KEY_CLOSING)
             })
     })
 }

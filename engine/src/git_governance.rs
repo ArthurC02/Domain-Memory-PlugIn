@@ -128,7 +128,7 @@ fn tool_for_hook(name: &str) -> String {
     }}
   fi
   test -n "$tool" && test -x "$tool" && return 0
-  hint=$(git config --get domain-memory.install-hint) || if test -n "$engine"; then
+  hint=$(git config --get domain-memory.install-hint) || if test -f "$engine/Cargo.toml"; then
     hint="build one with cargo build --release --manifest-path $engine/Cargo.toml"
   else
     hint="{INSTALL_HINT}"

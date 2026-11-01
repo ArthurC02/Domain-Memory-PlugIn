@@ -2,6 +2,22 @@
 
 Notable changes to the Domain Memory plugin, newest first. The format follows Keep a Changelog, and versions follow Semantic Versioning: a minor version adds or changes behavior, a patch version only fixes it. Versions before 0.10.0 are recorded in the repository history only.
 
+## 7.0.1
+
+### Fixed
+
+- No executable carries a private-key header any more. The `scan-secrets` pattern for one was stored as plain text, and the Windows build held it whole, so a secret scanner run over an install flagged the plugin. The pattern is now kept in lowercase and matched in uppercase; what `scan-secrets` finds is unchanged.
+- The plugin folder carries its own `LICENSE`, so a copy of the folder alone still states its license.
+- The manifest's `documentationUrl` points at the plugin's agent guide, `plugins/domain-memory/AGENTS.md`.
+- A git hook installed from a clone's bundled executable suggests `cargo build` only where the engine's source is, and otherwise names the install line. In 7.0.0 it pointed at a `Cargo.toml` that the plugin folder does not hold.
+- The router Skill names the launcher for PowerShell and `cmd`, `scripts\domain-memory.cmd`. Run there, the extensionless launcher does nothing and prints nothing.
+- The manifest drops `"skills": "./skills/"`, which named the folder Claude Code reads anyway.
+- The plugin README says how to check a bundled build against its release attestation, and how to rebuild one from source.
+
+### Added
+
+- The docs test that holds the plugin folder to the directory's checks also refuses any file containing a private-key header, and requires the folder's `LICENSE`. It also keeps every file under 4.5 MiB, leaving headroom below the directory's 5 MiB limit.
+
 ## 7.0.0
 
 The plugin is its own folder, `plugins/domain-memory/`, which passes the plugin directory's blocking checks: an install copies only what the plugin runs.
