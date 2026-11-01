@@ -47,12 +47,12 @@ pub fn ranked_lookup(root: &Path, asset: &str, query: &str) -> Result<(Vec<Value
     let entries = asset_records(root, asset)?;
     let limit = query_result_limit(root)?;
     let needle = casefold(query);
-    let phrase: Vec<Value> = entries
+    let mut phrase: Vec<&Value> = entries
         .iter()
         .filter(|entry| casefold(&json::dumps(entry, ONE_LINE)).contains(&needle))
-        .take(limit)
-        .cloned()
         .collect();
+    phrase.sort_by_key(|entry| phrase_rank(entry, &needle));
+    let phrase: Vec<Value> = phrase.into_iter().take(limit).cloned().collect();
     if !phrase.is_empty() {
         return Ok((phrase, Found::Phrase));
     }
@@ -111,6 +111,23 @@ pub fn ranked_lookup(root: &Path, asset: &str, query: &str) -> Result<(Vec<Value
         Found::CommonWords
     };
     Ok((Vec::new(), how))
+}
+
+/// 0 when the record's id or name is the phrase, 1 when it holds it, 2 when only
+/// its other text does; the sort keeps the Registry's order within each.
+fn phrase_rank(entry: &Value, needle: &str) -> u8 {
+    let names: Vec<String> = ["id", "name", "term"]
+        .iter()
+        .filter_map(|key| entry.as_object()?.get(key)?.as_str())
+        .map(casefold)
+        .collect();
+    if names.iter().any(|name| name == needle) {
+        0
+    } else if names.iter().any(|name| name.contains(needle)) {
+        1
+    } else {
+        2
+    }
 }
 
 fn is_common(holders: usize, records: usize) -> bool {

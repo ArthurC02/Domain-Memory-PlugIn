@@ -267,7 +267,10 @@ fn install_sh_refuses_sums_other_than_the_pinned_ones() {
         .unwrap();
     assert_eq!(Some(1), run.status.code(), "{}", text(&run.stdout));
     assert!(
-        text(&run.stderr).contains("is not the one DOMAIN_MEMORY_SHA256SUMS_SHA256 pins"),
+        text(&run.stderr).contains(&format!(
+            "is not the one DOMAIN_MEMORY_SHA256SUMS_SHA256 pins (pinned {}, got ",
+            "0".repeat(64)
+        )),
         "{}",
         text(&run.stderr)
     );

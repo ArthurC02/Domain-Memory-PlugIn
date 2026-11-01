@@ -112,24 +112,31 @@ const INSTALL_HINT: &str = "install it on PATH with curl -fsSL https://github.co
 fn tool_for_hook(name: &str) -> String {
     format!(
         r##"tool_for_hook() {{
-  tool=$(git config --get domain-memory.executable) || {{
+  configured=$(git config --get domain-memory.executable) && tool=$configured || {{
     test -z "$engine" || case "$(uname -s)-$(uname -m)" in
       Linux-x86_64) tool="$engine/bin/linux-x86_64/domain-memory" ;;
       Darwin-*) tool="$engine/bin/macos-universal/domain-memory" ;;
       MINGW*-x86_64|MSYS*-x86_64|CYGWIN*-x86_64) tool="$engine/bin/windows-x86_64/domain-memory.exe" ;;
       *) tool="$engine/target/release/domain-memory" ;;
     esac
-    if ! {{ test -n "$tool" && test -x "$tool"; }}; then
-      found=$(command -v domain-memory) && tool=$found
-    fi
   }}
+  if ! {{ test -n "$tool" && test -x "$tool"; }}; then
+    found=$(command -v domain-memory) && {{
+      test -z "$configured" ||
+        echo "domain-memory {name}: $configured, named by git config domain-memory.executable, is not in this worktree; running $found, $("$found" --version 2>/dev/null)" >&2
+      tool=$found
+    }}
+  fi
   test -n "$tool" && test -x "$tool" && return 0
   hint=$(git config --get domain-memory.install-hint) || if test -n "$engine"; then
     hint="build one with cargo build --release --manifest-path $engine/Cargo.toml"
   else
     hint="{INSTALL_HINT}"
   fi
-  echo "domain-memory {name}: no Domain Memory executable${{tool:+ at $tool}}; $hint" >&2
+  where=${{tool:+ at $tool}}
+  test -z "$configured" ||
+    where=" at $configured, which git config domain-memory.executable names from this worktree's top"
+  echo "domain-memory {name}: no Domain Memory executable$where; $hint" >&2
   return 1
 }}
 "##

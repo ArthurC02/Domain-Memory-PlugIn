@@ -10,7 +10,8 @@ use crate::fnmatch::fnmatchcase;
 use crate::git::{self, Failure};
 use crate::json::{Object, Value};
 use crate::listing::{
-    EXCLUDED_DIRECTORIES, Repository, ignored_among, ignored_relatives, listing_of,
+    EXCLUDED_DIRECTORIES, Repository, ignored_among, ignored_relatives, tracked_listing_of,
+    untracked_files,
 };
 use crate::okf::truthy;
 use crate::policy::validate_policy;
@@ -203,7 +204,7 @@ pub fn discover_sources(
     let files = match listing {
         Some(shared) => shared.files()?,
         None => {
-            own = listing_of(&root, &profile.excluded_set())?;
+            own = tracked_listing_of(&root, &profile.excluded_set())?;
             &own
         }
     };
@@ -492,9 +493,10 @@ fn source_files(
     }
     let names: Vec<String> = chosen.iter().map(|(named, _)| named.clone()).collect();
     let ignored = ignored_relatives(root, &names)?;
+    let untracked = untracked_files(root)?;
     let mut kept: Vec<PathBuf> = chosen
         .into_iter()
-        .filter(|(named, _)| !ignored.contains(named))
+        .filter(|(named, _)| !ignored.contains(named) && !untracked.contains(named))
         .map(|(_, path)| path)
         .collect();
     kept.sort_by_key(|path| path_key(path));
@@ -992,7 +994,7 @@ fn git_state(root: &Path, selected: &[String]) -> Result<Option<GitState>, Raise
     let Some(trees) = git_unless_unavailable(root, &revisions)? else {
         return Ok(None);
     };
-    let mut status = vec!["status", "--porcelain", "-z", "--"];
+    let mut status = vec!["status", "--porcelain", "--untracked-files=no", "-z", "--"];
     status.extend(selected.iter().map(String::as_str));
     let Some(dirty) = git_unless_unavailable(root, &status)? else {
         return Ok(None);
@@ -1160,20 +1162,20 @@ pub fn counted(count: usize, noun: &str) -> String {
     format!("{count} {noun}{}", if count == 1 { "" } else { "s" })
 }
 
-fn shown_argument(path: &py::PurePath) -> String {
-    let text = path.as_posix();
-    if text.contains(' ') {
-        format!("\"{text}\"")
-    } else {
-        text
-    }
-}
-
+/// The refresh-listing command for this Domain Memory, naming it from the
+/// repository's top, so the advice holds in any clone and leaks no machine path.
 pub fn refresh_listing_advice(registry_root: &py::PurePath, repo_root: &py::PurePath) -> String {
+    let registry = shown_path(
+        &py::resolve(&registry_root.as_posix()),
+        Some(&py::resolve(&repo_root.as_posix())),
+    );
+    let quoted = if registry.contains(' ') {
+        format!("\"{registry}\"")
+    } else {
+        registry
+    };
     format!(
-        "run refresh-listing --registry-root {} --repo-root {} (no confirmation needed)",
-        shown_argument(registry_root),
-        shown_argument(repo_root)
+        "run refresh-listing --registry-root {quoted} from the repository's top (no confirmation needed)"
     )
 }
 

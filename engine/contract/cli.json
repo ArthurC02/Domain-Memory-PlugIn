@@ -6,7 +6,7 @@
   "lookup": {
    "prog": "domain-memory lookup",
    "usage": "usage: domain-memory lookup [-h] [--registry-root REGISTRY_ROOT]\n                            --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                            --query QUERY\n",
-   "help": "usage: domain-memory lookup [-h] [--registry-root REGISTRY_ROOT]\n                            --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                            --query QUERY\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --query QUERY\n",
+   "help": "usage: domain-memory lookup [-h] [--registry-root REGISTRY_ROOT]\n                            --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                            --query QUERY\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --query QUERY         the words to search for; an exact id or name ranks\n                        first\n",
    "actions": [
     {
      "dest": "help",
@@ -72,7 +72,7 @@
   "resolve-terms": {
    "prog": "domain-memory resolve-terms",
    "usage": "usage: domain-memory resolve-terms [-h] [--registry-root REGISTRY_ROOT]\n                                   --query QUERY [--context CONTEXT]\n                                   [--with-mentions]\n",
-   "help": "usage: domain-memory resolve-terms [-h] [--registry-root REGISTRY_ROOT]\n                                   --query QUERY [--context CONTEXT]\n                                   [--with-mentions]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --query QUERY\n  --context CONTEXT\n  --with-mentions\n",
+   "help": "usage: domain-memory resolve-terms [-h] [--registry-root REGISTRY_ROOT]\n                                   --query QUERY [--context CONTEXT]\n                                   [--with-mentions]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --query QUERY         the word or phrase to resolve to vocabulary terms\n  --context CONTEXT\n  --with-mentions\n",
    "actions": [
     {
      "dest": "help",
@@ -137,7 +137,7 @@
   "get-context": {
    "prog": "domain-memory get-context",
    "usage": "usage: domain-memory get-context [-h] [--registry-root REGISTRY_ROOT] --id ID\n                                 [--summary]\n",
-   "help": "usage: domain-memory get-context [-h] [--registry-root REGISTRY_ROOT] --id ID\n                                 [--summary]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --id ID\n  --summary             ids and one line each, without evidence\n",
+   "help": "usage: domain-memory get-context [-h] [--registry-root REGISTRY_ROOT] --id ID\n                                 [--summary]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --id ID               the Context's id\n  --summary             ids and one line each, without evidence\n",
    "actions": [
     {
      "dest": "help",
@@ -191,7 +191,7 @@
   "get-record": {
    "prog": "domain-memory get-record",
    "usage": "usage: domain-memory get-record [-h] [--registry-root REGISTRY_ROOT]\n                                --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                --id ID [--changes-root CHANGES_ROOT]\n",
-   "help": "usage: domain-memory get-record [-h] [--registry-root REGISTRY_ROOT]\n                                --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                --id ID [--changes-root CHANGES_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --id ID\n  --changes-root CHANGES_ROOT\n",
+   "help": "usage: domain-memory get-record [-h] [--registry-root REGISTRY_ROOT]\n                                --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                --id ID [--changes-root CHANGES_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --id ID               the record's id within --asset\n  --changes-root CHANGES_ROOT\n                        the directory that holds the Change Packages (default:\n                        changes/ beside the Registry)\n",
    "actions": [
     {
      "dest": "help",
@@ -268,7 +268,7 @@
   "dependents": {
    "prog": "domain-memory dependents",
    "usage": "usage: domain-memory dependents [-h] [--registry-root REGISTRY_ROOT]\n                                --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                --id ID\n",
-   "help": "usage: domain-memory dependents [-h] [--registry-root REGISTRY_ROOT]\n                                --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                --id ID\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --id ID\n",
+   "help": "usage: domain-memory dependents [-h] [--registry-root REGISTRY_ROOT]\n                                --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                --id ID\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --id ID               the record's id within --asset\n",
    "actions": [
     {
      "dest": "help",
@@ -334,7 +334,7 @@
   "brief": {
    "prog": "domain-memory brief",
    "usage": "usage: domain-memory brief [-h] [--registry-root REGISTRY_ROOT]\n                           [--repo-root REPO_ROOT] [--base BASE]\n                           [--asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}]\n                           [--id ID] [--markdown]\n",
-   "help": "usage: domain-memory brief [-h] [--registry-root REGISTRY_ROOT]\n                           [--repo-root REPO_ROOT] [--base BASE]\n                           [--asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}]\n                           [--id ID] [--markdown]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --base BASE\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --id ID\n  --markdown\n",
+   "help": "usage: domain-memory brief [-h] [--registry-root REGISTRY_ROOT]\n                           [--repo-root REPO_ROOT] [--base BASE]\n                           [--asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}]\n                           [--id ID] [--markdown]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --base BASE           the commit to compare with; the change is every file\n                        that differs from it now, uncommitted edits and new\n                        files included, so for a branch pass its branch point\n                        (git merge-base main HEAD)\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --id ID               with --asset, brief this record instead of a change\n  --markdown            print Markdown for a review instead of JSON\n",
    "actions": [
     {
      "dest": "help",
@@ -563,7 +563,7 @@
   "coverage": {
    "prog": "domain-memory coverage",
    "usage": "usage: domain-memory coverage [-h] [--registry-root REGISTRY_ROOT]\n                              [--changes-root CHANGES_ROOT]\n                              [--repo-root REPO_ROOT]\n",
-   "help": "usage: domain-memory coverage [-h] [--registry-root REGISTRY_ROOT]\n                              [--changes-root CHANGES_ROOT]\n                              [--repo-root REPO_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --changes-root CHANGES_ROOT\n  --repo-root REPO_ROOT\n",
+   "help": "usage: domain-memory coverage [-h] [--registry-root REGISTRY_ROOT]\n                              [--changes-root CHANGES_ROOT]\n                              [--repo-root REPO_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --changes-root CHANGES_ROOT\n                        the directory that holds the Change Packages (default:\n                        changes/ beside the Registry)\n  --repo-root REPO_ROOT\n",
    "actions": [
     {
      "dest": "help",
@@ -714,7 +714,7 @@
   "boundary-impact": {
    "prog": "domain-memory boundary-impact",
    "usage": "usage: domain-memory boundary-impact [-h] [--registry-root REGISTRY_ROOT]\n                                     [--repo-root REPO_ROOT] --base BASE\n",
-   "help": "usage: domain-memory boundary-impact [-h] [--registry-root REGISTRY_ROOT]\n                                     [--repo-root REPO_ROOT] --base BASE\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --base BASE\n",
+   "help": "usage: domain-memory boundary-impact [-h] [--registry-root REGISTRY_ROOT]\n                                     [--repo-root REPO_ROOT] --base BASE\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --base BASE           the commit to compare with; the change is every file\n                        that differs from it now, uncommitted edits and new\n                        files included, so for a branch pass its branch point\n                        (git merge-base main HEAD)\n",
    "actions": [
     {
      "dest": "help",
@@ -1140,7 +1140,7 @@
   "list-proposals": {
    "prog": "domain-memory list-proposals",
    "usage": "usage: domain-memory list-proposals [-h] --changes-root CHANGES_ROOT\n",
-   "help": "usage: domain-memory list-proposals [-h] --changes-root CHANGES_ROOT\n\noptions:\n  -h, --help            show this help message and exit\n  --changes-root CHANGES_ROOT\n",
+   "help": "usage: domain-memory list-proposals [-h] --changes-root CHANGES_ROOT\n\noptions:\n  -h, --help            show this help message and exit\n  --changes-root CHANGES_ROOT\n                        the directory that holds the Change Packages (default:\n                        the current directory)\n",
    "actions": [
     {
      "dest": "help",
@@ -1390,7 +1390,7 @@
   "recite": {
    "prog": "domain-memory recite",
    "usage": "usage: domain-memory recite [-h] [--registry-root REGISTRY_ROOT]\n                            [--repo-root REPO_ROOT]\n                            --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                            --id ID --path PATH [--lines LINES]\n                            [--replace REPLACE] [--onto ONTO]\n",
-   "help": "usage: domain-memory recite [-h] [--registry-root REGISTRY_ROOT]\n                            [--repo-root REPO_ROOT]\n                            --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                            --id ID --path PATH [--lines LINES]\n                            [--replace REPLACE] [--onto ONTO]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --id ID\n  --path PATH\n  --lines LINES\n  --replace REPLACE\n  --onto ONTO\n",
+   "help": "usage: domain-memory recite [-h] [--registry-root REGISTRY_ROOT]\n                            [--repo-root REPO_ROOT]\n                            --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                            --id ID --path PATH [--lines LINES]\n                            [--replace REPLACE] [--onto ONTO]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --id ID               the record's id within --asset\n  --path PATH\n  --lines LINES\n  --replace REPLACE\n  --onto ONTO\n",
    "actions": [
     {
      "dest": "help",
@@ -2695,7 +2695,7 @@
   "promote-candidate": {
    "prog": "domain-memory promote-candidate",
    "usage": "usage: domain-memory promote-candidate [-h] --package-root PACKAGE_ROOT\n                                       [--registry-root REGISTRY_ROOT]\n                                       --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                       --id ID [--amend]\n                                       [--repo-root REPO_ROOT] [--cite CITE]\n                                       [--cite-function CITE_FUNCTION]\n                                       [--drop-cite DROP_CITE]\n",
-   "help": "usage: domain-memory promote-candidate [-h] --package-root PACKAGE_ROOT\n                                       [--registry-root REGISTRY_ROOT]\n                                       --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                       --id ID [--amend]\n                                       [--repo-root REPO_ROOT] [--cite CITE]\n                                       [--cite-function CITE_FUNCTION]\n                                       [--drop-cite DROP_CITE]\n\noptions:\n  -h, --help            show this help message and exit\n  --package-root PACKAGE_ROOT\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --id ID\n  --amend               a reviewed record: copy it without its review fields\n                        and supersede the proposal that reviewed it\n  --repo-root REPO_ROOT\n  --cite CITE           repeatable PATH:START-END to add to the promoted\n                        record's evidence\n  --cite-function CITE_FUNCTION\n                        repeatable PATH:NAME, a function the file defines, to\n                        add as evidence\n  --drop-cite DROP_CITE\n                        repeatable PATH:START-END to remove from the promoted\n                        record's evidence\n",
+   "help": "usage: domain-memory promote-candidate [-h] --package-root PACKAGE_ROOT\n                                       [--registry-root REGISTRY_ROOT]\n                                       --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                       --id ID [--amend]\n                                       [--repo-root REPO_ROOT] [--cite CITE]\n                                       [--cite-function CITE_FUNCTION]\n                                       [--drop-cite DROP_CITE]\n\noptions:\n  -h, --help            show this help message and exit\n  --package-root PACKAGE_ROOT\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --id ID               the candidate's id within --asset\n  --amend               a reviewed record: copy it without its review fields\n                        and supersede the proposal that reviewed it\n  --repo-root REPO_ROOT\n  --cite CITE           repeatable PATH:START-END to add to the promoted\n                        record's evidence\n  --cite-function CITE_FUNCTION\n                        repeatable PATH:NAME, a function the file defines, to\n                        add as evidence\n  --drop-cite DROP_CITE\n                        repeatable PATH:START-END to remove from the promoted\n                        record's evidence\n",
    "actions": [
     {
      "dest": "help",
@@ -2904,7 +2904,7 @@
   "harvest": {
    "prog": "domain-memory harvest",
    "usage": "usage: domain-memory harvest [-h] [--registry-root REGISTRY_ROOT]\n                             [--repo-root REPO_ROOT] --spec SPEC\n                             [--changes-root CHANGES_ROOT]\n                             [--through {draft,verified}]\n",
-   "help": "usage: domain-memory harvest [-h] [--registry-root REGISTRY_ROOT]\n                             [--repo-root REPO_ROOT] --spec SPEC\n                             [--changes-root CHANGES_ROOT]\n                             [--through {draft,verified}]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --spec SPEC\n  --changes-root CHANGES_ROOT\n  --through {draft,verified}\n",
+   "help": "usage: domain-memory harvest [-h] [--registry-root REGISTRY_ROOT]\n                             [--repo-root REPO_ROOT] --spec SPEC\n                             [--changes-root CHANGES_ROOT]\n                             [--through {draft,verified}]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --spec SPEC\n  --changes-root CHANGES_ROOT\n                        the directory that holds the Change Packages (default:\n                        changes/ beside the Registry)\n  --through {draft,verified}\n",
    "actions": [
     {
      "dest": "help",
@@ -2984,7 +2984,7 @@
   "discard-harvest": {
    "prog": "domain-memory discard-harvest",
    "usage": "usage: domain-memory discard-harvest [-h] [--package-root PACKAGE_ROOT]\n                                     [--spec SPEC]\n                                     [--changes-root CHANGES_ROOT]\n                                     [--registry-root REGISTRY_ROOT]\n                                     [--repo-root REPO_ROOT] --reason REASON\n",
-   "help": "usage: domain-memory discard-harvest [-h] [--package-root PACKAGE_ROOT]\n                                     [--spec SPEC]\n                                     [--changes-root CHANGES_ROOT]\n                                     [--registry-root REGISTRY_ROOT]\n                                     [--repo-root REPO_ROOT] --reason REASON\n\noptions:\n  -h, --help            show this help message and exit\n  --package-root PACKAGE_ROOT\n  --spec SPEC\n  --changes-root CHANGES_ROOT\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --reason REASON\n",
+   "help": "usage: domain-memory discard-harvest [-h] [--package-root PACKAGE_ROOT]\n                                     [--spec SPEC]\n                                     [--changes-root CHANGES_ROOT]\n                                     [--registry-root REGISTRY_ROOT]\n                                     [--repo-root REPO_ROOT] --reason REASON\n\noptions:\n  -h, --help            show this help message and exit\n  --package-root PACKAGE_ROOT\n  --spec SPEC\n  --changes-root CHANGES_ROOT\n                        the directory that holds the Change Packages (default:\n                        changes/ beside the Registry)\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --reason REASON\n",
    "actions": [
     {
      "dest": "help",
@@ -3962,7 +3962,7 @@
   "audit-attestations": {
    "prog": "domain-memory audit-attestations",
    "usage": "usage: domain-memory audit-attestations [-h] [--repo-root REPO_ROOT]\n                                        --changes-root CHANGES_ROOT\n",
-   "help": "usage: domain-memory audit-attestations [-h] [--repo-root REPO_ROOT]\n                                        --changes-root CHANGES_ROOT\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --changes-root CHANGES_ROOT\n",
+   "help": "usage: domain-memory audit-attestations [-h] [--repo-root REPO_ROOT]\n                                        --changes-root CHANGES_ROOT\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --changes-root CHANGES_ROOT\n                        the directory that holds the Change Packages to audit\n",
    "actions": [
     {
      "dest": "help",
@@ -4005,7 +4005,7 @@
   "verify-audit": {
    "prog": "domain-memory verify-audit",
    "usage": "usage: domain-memory verify-audit [-h] [--registry-root REGISTRY_ROOT]\n                                  [--changes-root CHANGES_ROOT]\n                                  [--against AGAINST]\n",
-   "help": "usage: domain-memory verify-audit [-h] [--registry-root REGISTRY_ROOT]\n                                  [--changes-root CHANGES_ROOT]\n                                  [--against AGAINST]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --changes-root CHANGES_ROOT\n  --against AGAINST\n",
+   "help": "usage: domain-memory verify-audit [-h] [--registry-root REGISTRY_ROOT]\n                                  [--changes-root CHANGES_ROOT]\n                                  [--against AGAINST]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --changes-root CHANGES_ROOT\n                        the directory that holds the Change Packages (default:\n                        changes/ beside the Registry)\n  --against AGAINST\n",
    "actions": [
     {
      "dest": "help",

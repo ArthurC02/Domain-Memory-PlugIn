@@ -2,6 +2,30 @@
 
 Notable changes to the Domain Memory plugin, newest first. The format follows Keep a Changelog, and versions follow Semantic Versioning: a minor version adds or changes behavior, a patch version only fixes it. Versions before 0.10.0 are recorded in the repository history only.
 
+## 6.8.0
+
+A brief says what it did not review, and a scratch file stays local (SkillHub feedback 287–297).
+
+### Added
+
+- `brief --base` names the changed files outside every Context in `unmapped_files` and in one attention line, grouped by directory, and adds a line when one of them sits under a `contracts/` directory. Files of the Domain Memory itself are left to `registry_changes`.
+- The brief's evidence carries `citations`: each citation that is not `current`, with its asset, id, path, status and, when shifted, its lines now. The Markdown lists them under the counts.
+- `--query`, `--id`, `--base`, `--markdown` and `--changes-root` have help text; `--base` says it compares with that commit's tree, uncommitted edits included.
+
+### Changed
+
+- In a change's Markdown brief, each Context lists the records that cite a changed file first and only counts the others, with the `get-context` that lists them.
+- The verdict `no-cross-context-change` reads "No two Contexts changed together." rather than claiming the change stays inside one Context.
+- `lookup` orders the records holding the query as written by where they hold it: an id or name that is the query, then one that contains it, then other text.
+- `probe` says "5 of 9 shown" when it names only five of the changed sources.
+- The `refresh-listing` advice names the Domain Memory from the repository's top and leaves out `--repo-root`, so it works in any clone and carries no machine path.
+- A hook whose `domain-memory.executable` is missing from the worktree runs `domain-memory` from PATH and says so with its version; with none there it names the configured path as read from the worktree's top. Re-run `install-pre-commit-hook` and `install-git-hitl-hook` to get this.
+- A `SHA256SUMS` mismatch against `DOMAIN_MEMORY_SHA256SUMS_SHA256` shows both digests.
+
+### Fixed
+
+- Once the repository tracks any file, source snapshots, the discovery listing and `git_state` take tracked files only. An untracked scratch file no longer enters the committed source map, nor makes every other clone's map `stale` or its listing drift; run `refresh-listing` to drop one an older version recorded.
+
 ## 6.7.0
 
 A pinned install stays pinned, and a wrong version says so (SkillHub feedback 280–286).

@@ -43,7 +43,7 @@ const VERDICTS: [(&str, &str); 5] = [
     ),
     (
         "no-cross-context-change",
-        "The change stays inside one Context.",
+        "No two Contexts changed together.",
     ),
     (
         "unknown",
@@ -493,6 +493,20 @@ fn shown_evidence(report: Option<&Object>) -> Value {
             .cloned()
             .unwrap_or_else(|| Value::Object(Object::new())),
     );
+    let mut citations = Vec::new();
+    for item in object_list(report, "results") {
+        if item.get("status").and_then(Value::as_str) == Some("current") {
+            continue;
+        }
+        let mut citation = Object::new();
+        for key in ["asset", "id", "path", "status", "lines"] {
+            if let Some(value) = item.get(key) {
+                citation.insert(key, value.clone());
+            }
+        }
+        citations.push(citation);
+    }
+    shown.insert("citations", objects(citations));
     Value::Object(shown)
 }
 
@@ -519,6 +533,27 @@ fn failing(evidence: &Value) -> String {
         .map(|(status, count)| format!("{count} {status}"))
         .collect();
     format!("{} {noun}", parts.join(", "))
+}
+
+/// Names each file, folding the files a directory holds more than one of into
+/// `directory/ (N files)`.
+fn by_directory(paths: &[String]) -> String {
+    let mut folders: BTreeMap<&str, Vec<&str>> = BTreeMap::new();
+    for path in paths {
+        let folder = path.rsplit_once('/').map_or("", |(folder, _)| folder);
+        folders.entry(folder).or_default().push(path);
+    }
+    folders
+        .into_iter()
+        .flat_map(|(folder, held)| {
+            if held.len() == 1 || folder.is_empty() {
+                held.iter().map(|path| (*path).to_string()).collect()
+            } else {
+                vec![format!("{folder}/ ({} files)", held.len())]
+            }
+        })
+        .collect::<Vec<_>>()
+        .join(", ")
 }
 
 fn change_attention(brief: &Object) -> Vec<String> {
@@ -550,6 +585,31 @@ fn change_attention(brief: &Object) -> Vec<String> {
                 "{} lies outside every Context but is cited by {}; place it or move the citation.",
                 text_of(entry, "path"),
                 string_list(entry.get("cited_by")).join(", ")
+            ));
+        }
+    }
+    let unmapped = string_list(brief.get("unmapped_files"));
+    if !unmapped.is_empty() && verdict != "unknown" {
+        let lead = match unmapped.len() {
+            1 => "1 changed file lies outside every Context, so this brief does not cover it"
+                .to_string(),
+            many => format!(
+                "{many} changed files lie outside every Context, so this brief does not cover them"
+            ),
+        };
+        attention.push(format!("{lead}: {}.", by_directory(&unmapped)));
+        let contracts: Vec<&String> = unmapped
+            .iter()
+            .filter(|path| path.split('/').any(|part| part == "contracts"))
+            .collect();
+        if !contracts.is_empty() {
+            attention.push(format!(
+                "A contract changed outside every Context ({}); a contract change usually crosses Contexts, so check who consumes it.",
+                contracts
+                    .iter()
+                    .map(|path| path.as_str())
+                    .collect::<Vec<_>>()
+                    .join(", ")
             ));
         }
     }
@@ -744,6 +804,15 @@ pub fn brief_for_change(root: &Path, repo_root: &Path, base: &str) -> Result<Obj
         "outside_every_context",
         value_of(&found, "cited_outside_contexts"),
     );
+    let memory = format!("{}/", store::shown_path(root, Some(repo_root)));
+    brief.insert(
+        "unmapped_files",
+        strings(
+            string_list(found.get("outside_every_context"))
+                .into_iter()
+                .filter(|path| !path.starts_with(&memory)),
+        ),
+    );
     let attention = change_attention(&brief);
     brief.insert("attention", strings(attention));
     Ok(brief)
@@ -876,7 +945,9 @@ fn dependent_lines(reached: &[Value]) -> Vec<String> {
     }
 }
 
-fn context_lines(context: &Object) -> Vec<String> {
+/// Lists a Context's records; with `cited`, the records the change cites, each
+/// as `asset/id`, come first and the others are only counted.
+fn context_lines(context: &Object, cited: Option<&BTreeSet<String>>) -> Vec<String> {
     let model = context.get("model").and_then(Value::as_object);
     let heading = match model {
         None => format!("### {}", text_of(context, "id")),
@@ -906,14 +977,28 @@ fn context_lines(context: &Object) -> Vec<String> {
         if entries.is_empty() {
             continue;
         }
-        lines.push(format!("{key}:"));
-        lines.extend(
-            entries
-                .iter()
-                .filter_map(Value::as_object)
-                .map(|entry| format!("- {}", line(entry))),
-        );
-        lines.push(String::new());
+        let (first, others): (Vec<&Object>, Vec<&Object>) = entries
+            .iter()
+            .filter_map(Value::as_object)
+            .partition(|entry| {
+                cited.is_none_or(|cited| cited.contains(&format!("{key}/{}", text_of(entry, "id"))))
+            });
+        if !first.is_empty() {
+            lines.push(match cited {
+                Some(_) => format!("{key} citing changed files:"),
+                None => format!("{key}:"),
+            });
+            lines.extend(first.iter().map(|entry| format!("- {}", line(entry))));
+            lines.push(String::new());
+        }
+        if !others.is_empty() {
+            lines.push(format!(
+                "Other {key} in this Context: {} (get-context --id {} lists them)",
+                others.len(),
+                text_of(context, "id")
+            ));
+            lines.push(String::new());
+        }
     }
     lines
 }
@@ -973,11 +1058,33 @@ fn evidence_lines(evidence: &Value) -> Vec<String> {
     else {
         return vec!["No citations to verify.".to_string()];
     };
-    summary
+    let mut lines: Vec<String> = summary
         .iter()
         .filter(|(_, count)| truthy(count))
         .map(|(status, count)| format!("- {status}: {}", str_of(count)))
-        .collect()
+        .collect();
+    let citations = evidence
+        .as_object()
+        .map(|held| list_of(held, "citations"))
+        .unwrap_or_default();
+    for citation in citations.iter().filter_map(Value::as_object) {
+        let moved = match citation.get("lines").and_then(Value::as_object) {
+            Some(lines) => format!(
+                ", now at lines {}-{}",
+                text_of(lines, "start"),
+                text_of(lines, "end")
+            ),
+            None => String::new(),
+        };
+        lines.push(format!(
+            "  - {} {}/{} cites {}{moved}",
+            text_of(citation, "status"),
+            text_of(citation, "asset"),
+            text_of(citation, "id"),
+            text_of(citation, "path")
+        ));
+    }
+    lines
 }
 
 pub fn to_markdown(brief: &Object) -> String {
@@ -1010,8 +1117,13 @@ pub fn to_markdown(brief: &Object) -> String {
     if !list_of(brief, "contexts").is_empty() {
         lines.push("## Contexts".to_string());
         lines.push(String::new());
+        let cited: Option<BTreeSet<String>> = brief.get("verdict").map(|_| {
+            object_list(brief, "records")
+                .map(|record| format!("{}/{}", text_of(record, "asset"), text_of(record, "id")))
+                .collect()
+        });
         for context in object_list(brief, "contexts") {
-            lines.extend(context_lines(context));
+            lines.extend(context_lines(context, cited.as_ref()));
         }
     }
     if !list_of(brief, "records").is_empty() {

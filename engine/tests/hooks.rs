@@ -1440,7 +1440,7 @@ fn the_configured_executable_and_install_hint_replace_the_engine_defaults() {
     assert_eq!(
         (
             1,
-            "domain-memory pre-push: no Domain Memory executable at tools/dm; run make install-dm\n"
+            "domain-memory pre-push: no Domain Memory executable at tools/dm, which git config domain-memory.executable names from this worktree's top; run make install-dm\n"
         ),
         run.outcome()
     );
@@ -1553,5 +1553,40 @@ fn a_hook_installer_records_the_executable_it_is_given_and_its_own_path_inside_t
     assert_eq!(
         format!("tools/{INSTALLER_NAME}"),
         sandbox.git(&["config", "--get", "domain-memory.executable"])
+    );
+}
+
+#[test]
+fn a_hook_whose_configured_executable_is_not_in_this_worktree_says_so_and_runs_the_one_on_path() {
+    let sandbox = Sandbox::new();
+    let engine = sandbox.engine("configured-elsewhere", &Tool::Missing);
+    let hook = sandbox.push_fixture(&engine);
+    sandbox.git(&["config", "domain-memory.executable", ".domain-memory/dm"]);
+    let bin = sandbox.base.join("on-path-too");
+    write_script(
+        &bin.join("domain-memory"),
+        "test \"$1\" = --version && { echo 'domain-memory 0.0.0'; exit 0; }\necho \"on path $1\" >&2\nexit 1",
+    );
+    let head = sandbox.commit_file("memory/registry/extra.json");
+    let path = std::env::join_paths(
+        std::iter::once(bin.clone()).chain(std::env::split_paths(&path_without_domain_memory())),
+    )
+    .unwrap();
+    let run = sandbox.run_hook(
+        &hook,
+        &HookCall {
+            args: &["origin", "https://example.com/repo.git"],
+            stdin: &sandbox.new_branch(&head),
+            env: &[("PATH", path.to_str().unwrap())],
+            ..HookCall::default()
+        },
+    );
+    let (code, stderr) = run.outcome();
+    assert_eq!(1, code, "{stderr}");
+    assert!(
+        stderr.starts_with(
+            "domain-memory pre-push: .domain-memory/dm, named by git config domain-memory.executable, is not in this worktree; running "
+        ) && stderr.contains(", domain-memory 0.0.0\non path verify-git-governance\n"),
+        "{stderr}"
     );
 }

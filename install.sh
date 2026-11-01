@@ -8,7 +8,7 @@
 #   --version <tag>  DOMAIN_MEMORY_VERSION      the release (default: the latest)
 #   --to <dir>       DOMAIN_MEMORY_INSTALL_DIR  where it lands (default: ~/.local/bin)
 #                    DOMAIN_MEMORY_SHA256SUMS_SHA256  the digest SHA256SUMS must have, to pin it too
-# so a pinned install reads: curl -fsSL <url> | DOMAIN_MEMORY_VERSION=v6.7.0 sh
+# so a pinned install reads: curl -fsSL <url> | DOMAIN_MEMORY_VERSION=v6.8.0 sh
 # DOMAIN_MEMORY_DOWNLOAD_URL replaces the release's download address, for a mirror.
 set -eu
 
@@ -57,8 +57,9 @@ work=$(mktemp -d)
 trap 'rm -rf "$work"' EXIT
 fetch "$asset"
 fetch SHA256SUMS
-if [ -n "${DOMAIN_MEMORY_SHA256SUMS_SHA256:-}" ] && [ "$(sha256 "$work/SHA256SUMS")" != "$DOMAIN_MEMORY_SHA256SUMS_SHA256" ]; then
-  echo "install.sh: SHA256SUMS from $base is not the one DOMAIN_MEMORY_SHA256SUMS_SHA256 pins; nothing was installed" >&2
+sums=$(sha256 "$work/SHA256SUMS")
+if [ -n "${DOMAIN_MEMORY_SHA256SUMS_SHA256:-}" ] && [ "$sums" != "$DOMAIN_MEMORY_SHA256SUMS_SHA256" ]; then
+  echo "install.sh: SHA256SUMS from $base is not the one DOMAIN_MEMORY_SHA256SUMS_SHA256 pins (pinned $DOMAIN_MEMORY_SHA256SUMS_SHA256, got $sums); nothing was installed" >&2
   exit 1
 fi
 wanted=$(awk -v asset="$asset" '$2 == asset || $2 == "*" asset { print $1 }' "$work/SHA256SUMS")

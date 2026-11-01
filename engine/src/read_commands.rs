@@ -95,13 +95,16 @@ fn length_of(result: &Object, key: &str) -> usize {
         .map_or(0, <[Value]>::len)
 }
 
+/// Names the first five sources under `key`, saying how many there are when it
+/// leaves some out.
 fn named(result: &Object, key: &str) -> String {
-    result
+    let all = result
         .get(key)
         .and_then(Value::as_array)
-        .unwrap_or_default()
+        .unwrap_or_default();
+    let shown = all
         .iter()
-        .take(5)
+        .take(SHOWN_SOURCES)
         .map(|source| {
             source
                 .as_object()
@@ -110,8 +113,15 @@ fn named(result: &Object, key: &str) -> String {
                 .unwrap_or_default()
         })
         .collect::<Vec<_>>()
-        .join(", ")
+        .join(", ");
+    if all.len() > SHOWN_SOURCES {
+        format!("{SHOWN_SOURCES} of {} shown: {shown}", all.len())
+    } else {
+        shown
+    }
 }
+
+const SHOWN_SOURCES: usize = 5;
 
 fn closed(sentence: String) -> String {
     if sentence.ends_with('?') {

@@ -595,8 +595,10 @@ fn placement_hint(run: &mut Harvest, outside: &[String]) -> Result<String, Strin
     if placed.is_empty() {
         return Ok(String::new());
     }
-    let listing = shown(&run.registry_root, &run.repo_root);
-    let advice = refresh_listing_advice(&PurePath::new(&listing), &PurePath::new("."));
+    let advice = refresh_listing_advice(
+        &PurePath::new(&run.registry_root.to_string_lossy()),
+        &PurePath::new(&run.repo_root.to_string_lossy()),
+    );
     run.relisting = Some(advice.clone());
     let places: Vec<String> = placed
         .iter()

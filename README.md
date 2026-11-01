@@ -43,7 +43,7 @@ Both check the executable against the release's `SHA256SUMS` before it lands, pr
 **GitHub Actions**:
 
 ```yaml
-- uses: ArthurC02/Domain-Memory-PlugIn@v6.7.0
+- uses: ArthurC02/Domain-Memory-PlugIn@v6.8.0
 - run: |
     domain-memory validate
     domain-memory verify-evidence
@@ -61,11 +61,11 @@ domain-memory install-pre-commit-hook
 domain-memory install-git-hitl-hook
 ```
 
-The pre-commit hook stops a commit whose staged code no longer matches what the Registry cites; the pre-push hook checks the signatures on Registry commits. They find the executable through `git config domain-memory.executable` if set, then the plugin a clone of this repository holds, then PATH. An installer run from a release records its own path in the clone's git config, relative to the repository's top when it sits inside it, so each worktree runs its own copy; `--executable <path>` records exactly the path you give instead. A missing executable stops the hook with the install line above. Hooks regenerate nothing on an upgrade: they call whatever executable they find.
+The pre-commit hook stops a commit whose staged code no longer matches what the Registry cites; the pre-push hook checks the signatures on Registry commits. They find the executable through `git config domain-memory.executable` if set, then the plugin a clone of this repository holds, then PATH. An installer run from a release records its own path in the clone's git config, relative to the repository's top when it sits inside it, so each worktree runs its own copy; `--executable <path>` records exactly the path you give instead. A configured path this worktree lacks falls back to PATH and says which executable runs instead; with none on PATH either, the hook stops with the install line above. Hooks regenerate nothing on an upgrade: they call whatever executable they find.
 
 ### Pin a version for a team
 
-Pin the same tag everywhere, so the Skills an agent reads, the hooks and CI run one release. In Claude Code, `/plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v6.7.0`; to declare it for everyone who opens the repository, add this to its `.claude/settings.json`, or run `claude plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v6.7.0 --scope project` then `claude plugin install domain-memory@domain-memory --scope project`:
+Pin the same tag everywhere, so the Skills an agent reads, the hooks and CI run one release. In Claude Code, `/plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v6.8.0`; to declare it for everyone who opens the repository, add this to its `.claude/settings.json`, or run `claude plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v6.8.0 --scope project` then `claude plugin install domain-memory@domain-memory --scope project`:
 
 ```json
 {
@@ -74,7 +74,7 @@ Pin the same tag everywhere, so the Skills an agent reads, the hooks and CI run 
       "source": {
         "source": "github",
         "repo": "ArthurC02/Domain-Memory-PlugIn",
-        "ref": "v6.7.0"
+        "ref": "v6.8.0"
       }
     }
   },
@@ -84,7 +84,7 @@ Pin the same tag everywhere, so the Skills an agent reads, the hooks and CI run 
 }
 ```
 
-Claude Code honours it once the folder is trusted. On the command line, pin with `DOMAIN_MEMORY_VERSION=v6.7.0` in front of `sh` (`$env:DOMAIN_MEMORY_VERSION = 'v6.7.0'` before `irm` in PowerShell); `DOMAIN_MEMORY_INSTALL_DIR` chooses the folder, and `DOMAIN_MEMORY_SHA256SUMS_SHA256` pins the digest of the release's `SHA256SUMS`. In GitHub Actions the action's tag or commit SHA is the pin. Every release is a tag `v<version>`, and its [GitHub Release](https://github.com/ArthurC02/Domain-Memory-PlugIn/releases) carries the executables, `SHA256SUMS` and a build provenance attestation (`gh attestation verify <file> -R ArthurC02/Domain-Memory-PlugIn`).
+Claude Code honours it once the folder is trusted. On the command line, pin with `DOMAIN_MEMORY_VERSION=v6.8.0` in front of `sh` (`$env:DOMAIN_MEMORY_VERSION = 'v6.8.0'` before `irm` in PowerShell); `DOMAIN_MEMORY_INSTALL_DIR` chooses the folder, and `DOMAIN_MEMORY_SHA256SUMS_SHA256` pins the digest of the release's `SHA256SUMS`. In GitHub Actions the action's tag or commit SHA is the pin. Every release is a tag `v<version>`, and its [GitHub Release](https://github.com/ArthurC02/Domain-Memory-PlugIn/releases) carries the executables, `SHA256SUMS` and a build provenance attestation (`gh attestation verify <file> -R ArthurC02/Domain-Memory-PlugIn`).
 
 ### Upgrading
 

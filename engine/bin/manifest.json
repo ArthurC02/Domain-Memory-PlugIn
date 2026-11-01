@@ -1,18 +1,18 @@
 {
   "format": "domain-memory-engine-binaries/v1",
-  "source_sha256": "3ee2bea11af567e2b768959ed51a7b9168b17de3d669c8aa48aec8c05dd8386f",
+  "source_sha256": "bed87e1b7376a0bb8cbb2804efd6e348fafa64cfbec5638d22759409f7848a40",
   "binaries": {
     "linux-x86_64/domain-memory": {
       "target": "x86_64-unknown-linux-musl",
-      "sha256": "be16a66e5f2377bed2434985e556acd1385918b904d76521186a0f4f96779fc1"
+      "sha256": "5e890235fbc53cb6a59c7165626d3390e19f836213e11867179c410b6b1d1dd5"
     },
     "macos-universal/domain-memory": {
       "target": "universal2-apple-darwin",
-      "sha256": "2e69e040687869b485ad355e7e6e5a9dc84defc65e87a5219bb92c82c81b2ccc"
+      "sha256": "71ad5a548b876e4e34ab4c6a6dcb987c7237fe9976243a746f8a51c84cb9be33"
     },
     "windows-x86_64/domain-memory.exe": {
       "target": "x86_64-pc-windows-gnullvm",
-      "sha256": "c0ceb300716f4e381305debfc06dfc378547efab1f74a73c3570675b7a9961a7"
+      "sha256": "44b8c6d5320c4afa480c951402a3384897a621156c2d6dddcd59435e6daf1cd8"
     }
   }
 }

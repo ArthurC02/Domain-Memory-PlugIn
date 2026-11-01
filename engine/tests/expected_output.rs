@@ -184,6 +184,7 @@ fn prepared(case: &Value, fixture: &Path) {
                 "fixture",
             ],
         );
+        written_fixture(fixture, field(case, "untracked"));
     }
 }
 

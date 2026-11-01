@@ -48,6 +48,34 @@ pub fn listing_of(root: &Path, excluded: &HashSet<String>) -> Result<Files, Stri
     })
 }
 
+/// The files of `listing_of` that another clone also has: untracked files are
+/// left out once the repository tracks anything, so a local scratch file never
+/// reaches a committed listing or snapshot.
+pub fn tracked_listing_of(root: &Path, excluded: &HashSet<String>) -> Result<Files, String> {
+    let mut files = listing_of(root, excluded)?;
+    let untracked = untracked_files(root)?;
+    files.entries.retain(|entry| !untracked.contains(entry));
+    Ok(files)
+}
+
+/// Untracked, unignored files relative to `root`, or none when git is missing
+/// or the repository tracks nothing yet, as a new one is listed from its tree.
+pub fn untracked_files(root: &Path) -> Result<HashSet<String>, String> {
+    let run = |arguments: &[&str]| match git::run_git(root, arguments, None) {
+        Err(error) if error.kind == Failure::Invalid => Err(error.message),
+        Err(_) => Ok(None),
+        Ok(done) if done.code != 0 => Ok(None),
+        Ok(done) => Ok(Some(done.stdout)),
+    };
+    match run(&["ls-files", "-z"])? {
+        Some(tracked) if !tracked.is_empty() => {}
+        _ => return Ok(HashSet::new()),
+    }
+    Ok(run(&["ls-files", "--others", "--exclude-standard", "-z"])?
+        .map(|listed| nul_separated(&listed).collect())
+        .unwrap_or_default())
+}
+
 fn git_ignored_entries(root: &Path) -> Result<Option<HashSet<String>>, String> {
     let arguments = [
         "ls-files",
@@ -195,7 +223,7 @@ impl Repository {
 
     pub fn files(&mut self) -> Result<&Files, String> {
         if self.files.is_none() {
-            self.files = Some(listing_of(&self.root, &default_excluded())?);
+            self.files = Some(tracked_listing_of(&self.root, &default_excluded())?);
         }
         Ok(self.files.as_ref().expect("listed"))
     }
