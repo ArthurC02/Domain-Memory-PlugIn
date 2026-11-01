@@ -434,7 +434,9 @@ pub fn record_approval(root: &Path, approval: &Approval) -> Result<(), String> {
         return Err("approval requires role, reviewer, and scope".to_string());
     }
     let reviewer = person(approval.reviewer);
-    if approval.reviewer.starts_with("agent:")
+    if ["human:", "agent:"]
+        .iter()
+        .any(|prefix| reviewer.starts_with(prefix))
         || !completed_identifier(&Value::Str(reviewer.to_string()))
     {
         return Err(format!(

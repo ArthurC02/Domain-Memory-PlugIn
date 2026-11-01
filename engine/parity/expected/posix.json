@@ -24245,6 +24245,34 @@
    "stderr": "ERROR: the role already approved this proposal revision\n",
    "stdout": ""
   },
+  "record-approval refuses a reviewer given with the human prefix twice": {
+   "exit": 1,
+   "files": {
+    ".gitignore": "changes/\nm/registry/rules/extra.md\nm/registry/contexts/extra-ctx.md\nm/domain-memory-policy.json\nm/source-map.json\n",
+    "changes/p1/domain-change-proposal.json": "{\n  \"format\": \"domain-change-proposal/v1\",\n  \"proposal_id\": \"P-1\",\n  \"proposer\": \"alice\",\n  \"requirement_id\": \"R-1\",\n  \"status\": \"submitted\",\n  \"change_classification\": \"routine\",\n  \"submitted_at\": null,\n  \"verified_at\": null,\n  \"finalized_at\": null,\n  \"applied_at\": null,\n  \"proposal_revision\": 1,\n  \"base_registry_revision\": {\n    \"observed_commit\": null,\n    \"registry_digest\": \"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"\n  },\n  \"affected_contexts\": [\n    \"billing\"\n  ],\n  \"rule_ids\": [],\n  \"contract_ids\": [],\n  \"ownership_decision\": {\n    \"owner_context\": \"billing\",\n    \"invariant\": \"invariant\",\n    \"evidence\": []\n  },\n  \"boundary_decision\": {\n    \"interaction\": \"none\",\n    \"consistency\": \"synchronous\",\n    \"prohibited_dependencies\": [],\n    \"evidence\": []\n  },\n  \"implementation_design\": {\n    \"domain_forces\": [\n      \"force\"\n    ],\n    \"decision\": \"decision\",\n    \"invariants_preserved\": [\n      \"invariant\"\n    ],\n    \"rejected_alternatives\": [\n      \"alternative\"\n    ],\n    \"proof_obligations\": [\n      \"O-1\"\n    ],\n    \"counterfactual_check\": \"mutate it\"\n  },\n  \"event_change\": null,\n  \"contract_change\": null,\n  \"registry_updates\": [],\n  \"risk_flags\": [],\n  \"open_questions\": [],\n  \"approvals\": []\n}\n",
+    "changes/p1/draft-pr.md": "# Draft\n",
+    "changes/p1/evidence-bundle.json": "{\n  \"format\": \"domain-evidence-bundle/v1\",\n  \"requirement_id\": \"R-1\",\n  \"proposal_id\": \"P-1\",\n  \"registry_revision\": null,\n  \"approvals\": [],\n  \"scm_attestation\": null,\n  \"counterfactual_check\": null,\n  \"sources\": [],\n  \"test_results\": [],\n  \"contract_checks\": [],\n  \"architecture_checks\": [],\n  \"security_checks\": [],\n  \"residual_risks\": []\n}\n",
+    "changes/p1/requirement-normalization.json": "{\n  \"format\": \"domain-requirement/v1\",\n  \"requirement_id\": \"R-1\",\n  \"status\": \"draft\",\n  \"intent\": \"intent\",\n  \"actor\": \"actor\",\n  \"observable_outcome\": \"outcome\",\n  \"acceptance_criteria\": [\n    {\n      \"id\": \"AC-1\",\n      \"statement\": \"statement\"\n    }\n  ],\n  \"candidate_terms\": [],\n  \"open_questions\": [],\n  \"risk_flags\": [],\n  \"required_approval_roles\": [\n    \"domain-owner\"\n  ],\n  \"sources\": []\n}\n",
+    "changes/p1/test-obligations.json": "{\n  \"format\": \"domain-test-obligations/v1\",\n  \"requirement_id\": \"R-1\",\n  \"proposal_id\": \"P-1\",\n  \"obligations\": [\n    {\n      \"id\": \"O-1\",\n      \"source_type\": \"acceptance-criterion\",\n      \"source_id\": \"AC-1\",\n      \"expected_outcome\": \"outcome\",\n      \"level\": \"unit\",\n      \"status\": \"planned\",\n      \"check\": \"git -c dm.case=ok config --get dm.case\"\n    }\n  ]\n}\n",
+    "m/registry/aggregates/index.md": "# Aggregates\n\n",
+    "m/registry/capabilities/index.md": "# Capabilities\n\n",
+    "m/registry/contexts/billing.md": "---\ntype: Bounded Context\ntitle: Billing\nstatus: draft\n---\nOwns billing.\n",
+    "m/registry/contexts/index.md": "# Bounded Contexts\n\n- [Billing](/contexts/billing) — Owns billing.\n- [Orders](/contexts/orders) — Owns orders.\n",
+    "m/registry/contexts/orders.md": "---\ntype: Bounded Context\ntitle: Orders\nstatus: draft\n---\nOwns orders.\n",
+    "m/registry/contracts/index.md": "# Contracts\n\n",
+    "m/registry/decisions/index.md": "# Decisions\n\n",
+    "m/registry/dependency-policies/index.md": "# Dependency Policies\n\n",
+    "m/registry/events/index.md": "# Domain Events\n\n",
+    "m/registry/index.md": "---\nokf_version: \"0.2\"\n---\n# Domain Registry\n\n- [Bounded Contexts](/contexts/index.md)\n- [Vocabulary](/vocabulary/index.md)\n- [Aggregates](/aggregates/index.md)\n- [Business Rules](/rules/index.md)\n- [Contracts](/contracts/index.md)\n- [Interactions](/interactions/index.md)\n- [Decisions](/decisions/index.md)\n- [Domain Events](/events/index.md)\n- [Capabilities](/capabilities/index.md)\n- [Value Objects](/value-objects/index.md)\n- [Dependency Policies](/dependency-policies/index.md)\n",
+    "m/registry/interactions/index.md": "# Interactions\n\n",
+    "m/registry/rules/index.md": "# Business Rules\n\n",
+    "m/registry/value-objects/index.md": "# Value Objects\n\n",
+    "m/registry/vocabulary/index.md": "# Vocabulary\n\n",
+    "src/a.go": "package a\nfunc A() {}\n"
+   },
+   "stderr": "ERROR: --reviewer takes the name of the person who approves, such as ArthurC; human:human:zed is not one\n",
+   "stdout": ""
+  },
   "record-approval refuses a role of spaces": {
    "exit": 1,
    "files": {
@@ -24439,6 +24467,34 @@
     "src/a.go": "package a\nfunc A() {}\n"
    },
    "stderr": "ERROR: --reviewer takes the name of the person who approves, such as ArthurC; agent:bot is not one\n",
+   "stdout": ""
+  },
+  "record-approval refuses an agent given with the human prefix": {
+   "exit": 1,
+   "files": {
+    ".gitignore": "changes/\nm/registry/rules/extra.md\nm/registry/contexts/extra-ctx.md\nm/domain-memory-policy.json\nm/source-map.json\n",
+    "changes/p1/domain-change-proposal.json": "{\n  \"format\": \"domain-change-proposal/v1\",\n  \"proposal_id\": \"P-1\",\n  \"proposer\": \"alice\",\n  \"requirement_id\": \"R-1\",\n  \"status\": \"submitted\",\n  \"change_classification\": \"routine\",\n  \"submitted_at\": null,\n  \"verified_at\": null,\n  \"finalized_at\": null,\n  \"applied_at\": null,\n  \"proposal_revision\": 1,\n  \"base_registry_revision\": {\n    \"observed_commit\": null,\n    \"registry_digest\": \"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"\n  },\n  \"affected_contexts\": [\n    \"billing\"\n  ],\n  \"rule_ids\": [],\n  \"contract_ids\": [],\n  \"ownership_decision\": {\n    \"owner_context\": \"billing\",\n    \"invariant\": \"invariant\",\n    \"evidence\": []\n  },\n  \"boundary_decision\": {\n    \"interaction\": \"none\",\n    \"consistency\": \"synchronous\",\n    \"prohibited_dependencies\": [],\n    \"evidence\": []\n  },\n  \"implementation_design\": {\n    \"domain_forces\": [\n      \"force\"\n    ],\n    \"decision\": \"decision\",\n    \"invariants_preserved\": [\n      \"invariant\"\n    ],\n    \"rejected_alternatives\": [\n      \"alternative\"\n    ],\n    \"proof_obligations\": [\n      \"O-1\"\n    ],\n    \"counterfactual_check\": \"mutate it\"\n  },\n  \"event_change\": null,\n  \"contract_change\": null,\n  \"registry_updates\": [],\n  \"risk_flags\": [],\n  \"open_questions\": [],\n  \"approvals\": []\n}\n",
+    "changes/p1/draft-pr.md": "# Draft\n",
+    "changes/p1/evidence-bundle.json": "{\n  \"format\": \"domain-evidence-bundle/v1\",\n  \"requirement_id\": \"R-1\",\n  \"proposal_id\": \"P-1\",\n  \"registry_revision\": null,\n  \"approvals\": [],\n  \"scm_attestation\": null,\n  \"counterfactual_check\": null,\n  \"sources\": [],\n  \"test_results\": [],\n  \"contract_checks\": [],\n  \"architecture_checks\": [],\n  \"security_checks\": [],\n  \"residual_risks\": []\n}\n",
+    "changes/p1/requirement-normalization.json": "{\n  \"format\": \"domain-requirement/v1\",\n  \"requirement_id\": \"R-1\",\n  \"status\": \"draft\",\n  \"intent\": \"intent\",\n  \"actor\": \"actor\",\n  \"observable_outcome\": \"outcome\",\n  \"acceptance_criteria\": [\n    {\n      \"id\": \"AC-1\",\n      \"statement\": \"statement\"\n    }\n  ],\n  \"candidate_terms\": [],\n  \"open_questions\": [],\n  \"risk_flags\": [],\n  \"required_approval_roles\": [\n    \"domain-owner\"\n  ],\n  \"sources\": []\n}\n",
+    "changes/p1/test-obligations.json": "{\n  \"format\": \"domain-test-obligations/v1\",\n  \"requirement_id\": \"R-1\",\n  \"proposal_id\": \"P-1\",\n  \"obligations\": [\n    {\n      \"id\": \"O-1\",\n      \"source_type\": \"acceptance-criterion\",\n      \"source_id\": \"AC-1\",\n      \"expected_outcome\": \"outcome\",\n      \"level\": \"unit\",\n      \"status\": \"planned\",\n      \"check\": \"git -c dm.case=ok config --get dm.case\"\n    }\n  ]\n}\n",
+    "m/registry/aggregates/index.md": "# Aggregates\n\n",
+    "m/registry/capabilities/index.md": "# Capabilities\n\n",
+    "m/registry/contexts/billing.md": "---\ntype: Bounded Context\ntitle: Billing\nstatus: draft\n---\nOwns billing.\n",
+    "m/registry/contexts/index.md": "# Bounded Contexts\n\n- [Billing](/contexts/billing) — Owns billing.\n- [Orders](/contexts/orders) — Owns orders.\n",
+    "m/registry/contexts/orders.md": "---\ntype: Bounded Context\ntitle: Orders\nstatus: draft\n---\nOwns orders.\n",
+    "m/registry/contracts/index.md": "# Contracts\n\n",
+    "m/registry/decisions/index.md": "# Decisions\n\n",
+    "m/registry/dependency-policies/index.md": "# Dependency Policies\n\n",
+    "m/registry/events/index.md": "# Domain Events\n\n",
+    "m/registry/index.md": "---\nokf_version: \"0.2\"\n---\n# Domain Registry\n\n- [Bounded Contexts](/contexts/index.md)\n- [Vocabulary](/vocabulary/index.md)\n- [Aggregates](/aggregates/index.md)\n- [Business Rules](/rules/index.md)\n- [Contracts](/contracts/index.md)\n- [Interactions](/interactions/index.md)\n- [Decisions](/decisions/index.md)\n- [Domain Events](/events/index.md)\n- [Capabilities](/capabilities/index.md)\n- [Value Objects](/value-objects/index.md)\n- [Dependency Policies](/dependency-policies/index.md)\n",
+    "m/registry/interactions/index.md": "# Interactions\n\n",
+    "m/registry/rules/index.md": "# Business Rules\n\n",
+    "m/registry/value-objects/index.md": "# Value Objects\n\n",
+    "m/registry/vocabulary/index.md": "# Vocabulary\n\n",
+    "src/a.go": "package a\nfunc A() {}\n"
+   },
+   "stderr": "ERROR: --reviewer takes the name of the person who approves, such as ArthurC; human:agent:bot is not one\n",
    "stdout": ""
   },
   "record-approval refuses an hour of 24": {

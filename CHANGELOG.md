@@ -2,6 +2,12 @@
 
 Notable changes to the Domain Memory plugin, newest first. The format follows Keep a Changelog, and versions follow Semantic Versioning: a minor version adds or changes behavior, a patch version only fixes it. Versions before 0.10.0 are recorded in the repository history only.
 
+## 7.0.4
+
+### Fixed
+
+- `record-approval` refuses a `--reviewer` that still begins with `human:` or `agent:` once one `human:` is removed. In 7.0.3, `human:human:Zed` was recorded as `human:human:Zed`, and `human:agent:bot` let an agent approve as `human:agent:bot`. Both are now refused with the message that `--reviewer` takes the name of the person who approves (Infra 313).
+
 ## 7.0.3
 
 ### Fixed
