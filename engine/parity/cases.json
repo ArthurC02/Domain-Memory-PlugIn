@@ -171,6 +171,7 @@
   },
   {
     "name": "list-proposals over the repository's change packages",
+    "reference": true,
     "args": [
       "list-proposals",
       "--changes-root",
@@ -243,6 +244,7 @@
   },
   {
     "name": "export over the repository's Registry",
+    "reference": true,
     "args": [
       "export",
       "--registry-root",
@@ -933,6 +935,7 @@
   },
   {
     "name": "export --commit of the repository's Registry at HEAD",
+    "reference": true,
     "args": [
       "export",
       "--registry-root",
@@ -1137,6 +1140,7 @@
   },
   {
     "name": "get-record of a reviewed rule in the repository",
+    "reference": true,
     "args": [
       "get-record",
       "--registry-root",
@@ -1149,6 +1153,7 @@
   },
   {
     "name": "get-record of a repository context",
+    "reference": true,
     "args": [
       "get-record",
       "--registry-root",
@@ -1161,6 +1166,7 @@
   },
   {
     "name": "get-record of a repository rule that is missing",
+    "reference": true,
     "args": [
       "get-record",
       "--registry-root",
@@ -1640,6 +1646,7 @@
   },
   {
     "name": "get-record of a repository rule proven by an earlier package",
+    "reference": true,
     "args": [
       "get-record",
       "--registry-root",
@@ -28602,6 +28609,7 @@
   },
   {
     "name": "validate with relative roots",
+    "reference": true,
     "args": [
       "validate",
       "--registry-root",
@@ -28612,6 +28620,7 @@
   },
   {
     "name": "validate with a relative registry root only",
+    "reference": true,
     "args": [
       "validate",
       "--registry-root",

@@ -1,6 +1,6 @@
 # Contributing to Domain Memory
 
-Agents start at `AGENTS.md`, the entry for an Agent without Skill support; this page is for people changing the plugin itself. Report a bug or a friction as an issue; a pull request runs the checks below on Linux, macOS and Windows. `skills/` holds the seven Skills the manifest points to, and `references/` and `templates/` are shared by all of them. Every command is one executable, `domain-memory`, built from `engine/` in Rust, with its Linux, macOS and Windows builds committed under `engine/bin/`; its [README](engine/README.md) has the rules, the checks, and the rebuild every engine change needs.
+Agents start at `AGENTS.md`, the entry for an Agent without Skill support; this page is for people changing the plugin itself. Report a bug or a friction as an issue; a pull request runs the checks below on Linux, macOS and Windows. `skills/` holds the Skills the manifest points to: the `domain-memory` router and the seven capabilities it chooses among, and `references/` and `templates/` are shared by all of them. Every command is one executable, `domain-memory`, built from `engine/` in Rust, with its Linux, macOS and Windows builds committed under `engine/bin/`; its [README](engine/README.md) has the rules, the checks, and the rebuild every engine change needs.
 
 Requirements: a Rust toolchain (`engine/rust-toolchain.toml` pins it) and `git`; `init-signing-key` alone also needs OpenSSH's `ssh-keygen`. A copy of the plugin that only runs the commands needs neither Rust nor anything else: the committed executable for its platform is enough.
 
@@ -15,7 +15,7 @@ DOMAIN_MEMORY_REFERENCE_REPO=<reference clone> cargo test --release --locked --t
 
 `cargo test` runs the unit tests in each module, `tests/hooks.rs` (the installed git hooks against real repositories) and `tests/docs.rs` (the links, command reference and contract this plugin's pages hold). `expected_output` runs every recorded case through the executable and takes a few minutes; `--only <text>` keeps the cases whose name contains the text. Run all of them before shipping.
 
-Some recorded cases read a real repository with a reviewed Registry and a long history: [SkillHub](https://github.com/ArthurC02/SkillHub), at the commit `engine/parity/expected/posix.json` names as `pin`. Every case runs inside a checkout of that commit, taken from the clone `DOMAIN_MEMORY_REFERENCE_REPO` names; `expected_output` refuses to start without one:
+Some recorded cases read a real repository with a reviewed Registry and a long history: [SkillHub](https://github.com/ArthurC02/SkillHub), at the commit `engine/parity/expected/posix.json` names as `pin`. Every case runs inside a checkout of that commit, taken from the clone `DOMAIN_MEMORY_REFERENCE_REPO` names. Without one, `expected_output` runs the rest inside an empty repository and says how many it skipped: those that name `{repo}` in their arguments or recording, or that set `"reference": true` because they reach it through a relative path. CI always runs all of them. To run them yourself:
 
 ```sh
 git clone --no-checkout https://github.com/ArthurC02/SkillHub.git ../reference

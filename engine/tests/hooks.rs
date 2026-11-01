@@ -1406,3 +1406,32 @@ fn a_push_of_memory_commits_names_a_missing_executable_and_refuses() {
     let run = sandbox.push_hook(&hook, &sandbox.new_branch(&head));
     assert_missing_executable(&run, "pre-push", &engine);
 }
+
+#[test]
+fn the_configured_executable_and_install_hint_replace_the_engine_defaults() {
+    let sandbox = Sandbox::new();
+    let engine = sandbox.engine("no-engine", &Tool::Missing);
+    let hook = sandbox.push_fixture(&engine);
+    let head = sandbox.commit_file("memory/registry/extra.json");
+    sandbox.git(&["config", "domain-memory.executable", "tools/dm"]);
+    sandbox.git(&[
+        "config",
+        "domain-memory.install-hint",
+        "run make install-dm",
+    ]);
+    let refs = sandbox.new_branch(&head);
+    let run = sandbox.push_hook(&hook, &refs);
+    assert_eq!(
+        (
+            1,
+            "domain-memory pre-push: no Domain Memory executable at tools/dm; run make install-dm\n"
+        ),
+        run.outcome()
+    );
+    write_script(
+        &sandbox.repo.join("tools").join("dm"),
+        "echo \"configured $1\" >&2\nexit 1",
+    );
+    let run = sandbox.push_hook(&hook, &refs);
+    assert_eq!((1, "configured verify-git-governance\n"), run.outcome());
+}

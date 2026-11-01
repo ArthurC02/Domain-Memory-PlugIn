@@ -1,0 +1,54 @@
+name: Release
+
+# A tag v<version> publishes the executables committed at that tag, byte for byte
+# the ones a marketplace install runs, with SHA256SUMS, the installers, a build
+# provenance attestation and the CHANGELOG entry as the notes.
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: The tag names the plugin's version
+        run: |
+          version=$(sed -n 's/^ *"version": "\(.*\)",$/\1/p' .claude-plugin/plugin.json)
+          test "$GITHUB_REF_NAME" = "v$version" || { echo "::error::tag $GITHUB_REF_NAME does not name plugin.json's version $version"; exit 1; }
+      - name: Install the pinned Rust toolchain
+        working-directory: engine
+        run: rustup toolchain install
+      - name: Committed binaries match the source
+        working-directory: engine
+        run: cargo run --locked --example build_binaries -- --check
+      - name: Collect the assets
+        run: |
+          mkdir dist
+          cp engine/bin/linux-x86_64/domain-memory dist/domain-memory-linux-x86_64
+          cp engine/bin/macos-universal/domain-memory dist/domain-memory-macos-universal
+          cp engine/bin/windows-x86_64/domain-memory.exe dist/domain-memory-windows-x86_64.exe
+          cp install.sh install.ps1 dist/
+          (cd dist && sha256sum -- * > SHA256SUMS)
+          cat dist/SHA256SUMS
+      - name: Notes from the CHANGELOG entry
+        run: |
+          awk -v heading="## ${GITHUB_REF_NAME#v}" '/^## / { if (on) exit; on = ($0 == heading); next } on' CHANGELOG.md > notes.md
+          test -s notes.md || { echo "::error::CHANGELOG.md has no entry headed ## ${GITHUB_REF_NAME#v}"; exit 1; }
+      - uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: 'dist/*'
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/* --title "$GITHUB_REF_NAME" --notes-file notes.md --verify-tag

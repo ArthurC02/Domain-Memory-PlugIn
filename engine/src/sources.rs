@@ -1211,10 +1211,16 @@ pub fn discovery_drift_note(
         return None;
     }
     let status = result.get("status").map(str_of).unwrap_or_default();
-    let advice = if status == "discovery_drifted" {
+    let drifted_only = status == "discovery_drifted";
+    let advice = if drifted_only {
         refresh_listing_advice(registry_root, repo_root)
     } else {
         format!("the selection is {status}, so run refresh-sources, then confirm-sources")
+    };
+    let verdict = if drifted_only {
+        "the selected sources are current and the check passes; only "
+    } else {
+        ""
     };
     let changed_inside = length_of(result, "content_changed");
     let inside = if changed_inside > 0 {
@@ -1226,7 +1232,7 @@ pub fn discovery_drift_note(
         String::new()
     };
     Some(format!(
-        "NOTE: discovery drifted: {} gone, {} unlisted; {inside}{advice}",
+        "NOTE: {verdict}discovery drifted: {} gone, {} unlisted; {inside}{advice}",
         counted(gone, "listed path"),
         counted(unlisted, "matching path")
     ))

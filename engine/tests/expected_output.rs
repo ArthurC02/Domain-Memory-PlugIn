@@ -2,7 +2,7 @@
 #[path = "../src/json.rs"]
 mod json;
 
-#[allow(dead_code)]
+#[allow(dead_code, unused_imports)]
 #[path = "../src/sha256.rs"]
 mod sha256;
 
@@ -425,6 +425,33 @@ fn spellings(path: &Path) -> Vec<Vec<u8>> {
     spellings
 }
 
+fn name_byte(byte: u8) -> bool {
+    byte.is_ascii_alphanumeric() || byte == b'_' || byte == b'-' || byte >= 0x80
+}
+
+/// Replaces `from` where it stands as whole path components: a short checkout
+/// such as `/w` must not turn `creator/workspace` into `creator{plugin}orkspace`.
+fn placed_path(data: &[u8], from: &[u8], to: &[u8]) -> Vec<u8> {
+    let mut out = Vec::with_capacity(data.len());
+    let mut at = 0;
+    while at < data.len() {
+        let whole = !from.is_empty()
+            && data[at..].starts_with(from)
+            && (at == 0 || !name_byte(data[at - 1]))
+            && data
+                .get(at + from.len())
+                .is_none_or(|&next| !name_byte(next));
+        if whole {
+            out.extend_from_slice(to);
+            at += from.len();
+        } else {
+            out.push(data[at]);
+            at += 1;
+        }
+    }
+    out
+}
+
 fn replaced(data: &[u8], from: &[u8], to: &[u8]) -> Vec<u8> {
     let mut out = Vec::with_capacity(data.len());
     let mut at = 0;
@@ -504,7 +531,7 @@ fn placed(data: &[u8], places: &[(&[u8], Vec<Vec<u8>>)]) -> Vec<u8> {
     let mut data = data.to_vec();
     for (token, spellings) in places {
         for spelling in spellings {
-            data = replaced(&data, spelling, token);
+            data = placed_path(&data, spelling, token);
         }
     }
     let data = replaced(
@@ -955,25 +982,40 @@ fn option_value(name: &str) -> Option<String> {
         .and_then(|at| args.get(at + 1).cloned())
 }
 
+/// A case reads the reference repository when its arguments or its recording
+/// name it, or, for one that reaches it through a relative path, when it says so.
+fn reads_reference(case: &Value, expected: Option<&Value>) -> bool {
+    if flag(case, "reference") {
+        return true;
+    }
+    let style = || json::Style {
+        indent: None,
+        sort_keys: false,
+        ensure_ascii: false,
+        compact: true,
+    };
+    json::dumps(case, style()).contains("{repo}")
+        || expected.is_some_and(|expected| json::dumps(expected, style()).contains("{repo}"))
+}
+
 fn main() {
+    assert_eq!(
+        placed_path(b"creator/w /w/x '/w'", b"/w", b"{plugin}"),
+        b"creator/w {plugin}/x '{plugin}'"
+    );
     let engine = engine();
     let plugin = engine
         .parent()
         .expect("the plugin holds the engine")
         .to_path_buf();
-    let Some(repo) = std::env::var_os("DOMAIN_MEMORY_REFERENCE_REPO").map(|path| {
+    let repo = std::env::var_os("DOMAIN_MEMORY_REFERENCE_REPO").map(|path| {
         std::path::absolute(&path).unwrap_or_else(|error| {
             panic!(
                 "no reference clone at {}: {error}",
                 PathBuf::from(&path).display()
             )
         })
-    }) else {
-        println!(
-            "Set DOMAIN_MEMORY_REFERENCE_REPO to a clone of {REFERENCE_REPOSITORY}: every case runs inside a checkout of the recording's pin."
-        );
-        std::process::exit(1);
-    };
+    });
     let binary = std::env::var_os("DOMAIN_MEMORY_BINARY")
         .map(PathBuf::from)
         .unwrap_or_else(|| PathBuf::from(env!("CARGO_BIN_EXE_domain-memory")));
@@ -984,14 +1026,20 @@ fn main() {
     if let Value::Array(recorded) = read_json(&engine.join("parity").join("cases.json")) {
         cases.extend(recorded);
     }
+    let (pin, expected) = expected_cases(&engine.join("parity").join("expected"));
+    let mut skipped = 0;
     let chosen: Vec<Value> = cases
         .into_iter()
         .filter(|case| {
             only.as_deref()
                 .is_none_or(|only| text(case, "name").contains(only))
         })
+        .filter(|case| {
+            let needs = repo.is_none() && reads_reference(case, expected.get(text(case, "name")));
+            skipped += usize::from(needs);
+            !needs
+        })
         .collect();
-    let (pin, expected) = expected_cases(&engine.join("parity").join("expected"));
     let scratch_root =
         std::env::temp_dir().join(format!("domain-memory-expected-{}", std::process::id()));
     let snapshot = scratch_root.join("repo");
@@ -1007,18 +1055,28 @@ fn main() {
         }
         std::process::exit(1);
     }
-    git_in(
-        &repo,
-        &[
-            "clone",
-            "-q",
-            "--shared",
-            "--no-checkout",
-            &repo.to_string_lossy(),
-            &snapshot.to_string_lossy(),
-        ],
-    );
-    git_in(&snapshot, &["checkout", "-q", "--detach", &pin]);
+    let repo = match repo {
+        Some(repo) => {
+            git_in(
+                &repo,
+                &[
+                    "clone",
+                    "-q",
+                    "--shared",
+                    "--no-checkout",
+                    &repo.to_string_lossy(),
+                    &snapshot.to_string_lossy(),
+                ],
+            );
+            git_in(&snapshot, &["checkout", "-q", "--detach", &pin]);
+            repo
+        }
+        None => {
+            std::fs::create_dir_all(&snapshot).expect("empty repository");
+            git_in(&snapshot, &["init", "-q"]);
+            snapshot.clone()
+        }
+    };
     let suite = Suite {
         binary,
         snapshot,
@@ -1095,6 +1153,11 @@ fn main() {
         chosen.len() - failed.len(),
         chosen.len()
     );
+    if skipped > 0 {
+        println!(
+            "Skipped {skipped} cases that read {REFERENCE_REPOSITORY} at the recording's pin; set DOMAIN_MEMORY_REFERENCE_REPO to a clone of it to run them."
+        );
+    }
     if !failed.is_empty() || chosen.is_empty() {
         std::process::exit(1);
     }

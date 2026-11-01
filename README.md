@@ -15,29 +15,60 @@ Every new agent session starts out knowing nothing about your domain. It works o
 
 ## Install
 
+Every release is a tag, `v<version>`, with a [GitHub Release](https://github.com/ArthurC02/Domain-Memory-PlugIn/releases) carrying the executables, their `SHA256SUMS` and a build provenance attestation. Pin a tag, so the Skills an agent reads and the executable your hooks and CI run are the same version.
+
 ### Claude Code
 
 ```text
-/plugin marketplace add ArthurC02/Domain-Memory-PlugIn
+/plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v6.3.0
 /plugin install domain-memory@domain-memory
 ```
 
-### Any other agent or CLI use
+The install name is `<plugin>@<marketplace>`, and both are called `domain-memory`. Without `#<tag>` the marketplace follows `main`. To declare it for everyone who works in a repository, put this in its `.claude/settings.json`; Claude Code honours it once the folder is trusted, and offers each person the install:
 
-Clone the repository and point your agent at [`AGENTS.md`](AGENTS.md), or call the executable directly:
-
-```bash
-git clone https://github.com/ArthurC02/Domain-Memory-PlugIn.git domain-memory
-domain-memory/engine/bin/linux-x86_64/domain-memory readiness --repo-root path/to/your/repo
+```json
+{
+  "extraKnownMarketplaces": {
+    "domain-memory": {
+      "source": {
+        "source": "github",
+        "repo": "ArthurC02/Domain-Memory-PlugIn",
+        "ref": "v6.3.0"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "domain-memory@domain-memory": true
+  }
+}
 ```
 
-| Platform | Executable |
-| --- | --- |
-| Linux x86-64 (static) | `engine/bin/linux-x86_64/domain-memory` |
-| macOS (Apple silicon and Intel) | `engine/bin/macos-universal/domain-memory` |
-| Windows x86-64 | `engine/bin/windows-x86_64/domain-memory.exe` |
+The `domain-memory` Skill is the entry point: it runs `readiness` first and picks the smallest of the seven capabilities.
 
-On any other platform, build it with `cargo build --release --locked --manifest-path engine/Cargo.toml`.
+### Git hooks, CI and scripts
+
+One executable, checked against the release's `SHA256SUMS` before it lands:
+
+```bash
+curl -fsSL https://github.com/ArthurC02/Domain-Memory-PlugIn/releases/download/v6.3.0/install.sh | sh -s -- --version v6.3.0 --to .domain-memory/bin
+```
+
+```powershell
+& ([scriptblock]::Create((irm https://github.com/ArthurC02/Domain-Memory-PlugIn/releases/download/v6.3.0/install.ps1))) -Version v6.3.0 -To .domain-memory\bin
+```
+
+Each prints where the executable landed. The hooks that `install-git-hitl-hook` and `install-pre-commit-hook` write run the executable that `git config domain-memory.executable <path>` names, and print `git config domain-memory.install-hint <text>` when it is missing, so a repository that installs it this way points the hooks at it once. Run a script from inside a git hook? Unset the variables git sets for hooks first, `unset $(git rev-parse --local-env-vars)`, or a nested `git -C <other repository>` answers for the hook's repository.
+
+### Any other agent, or from a clone
+
+Point your agent at [`AGENTS.md`](AGENTS.md). A clone runs the executable committed for its platform through one launcher, `bin/domain-memory` (`bin\domain-memory.cmd` from `cmd` or PowerShell):
+
+```bash
+git clone --branch v6.3.0 https://github.com/ArthurC02/Domain-Memory-PlugIn.git domain-memory
+domain-memory/bin/domain-memory readiness --repo-root path/to/your/repo
+```
+
+Linux x86-64, macOS (Apple silicon and Intel) and Windows x86-64 have a committed executable. On any other platform, build it with `cargo build --release --locked --manifest-path engine/Cargo.toml`; the launcher runs that build.
 
 ### MCP
 
@@ -61,7 +92,7 @@ On any other platform, build it with `cargo build --release --locked --manifest-
 4. **Maintain.** Once the code is merged, re-cite evidence that moved and record what the model learned.
 5. **Review.** Check the Registry, the evidence and the audit chain, or review a branch for what it does to the domain model with `brief --base <branch point>`.
 
-The seven Skills under [`skills/`](skills/) cover these steps, and [`SKILL.md`](SKILL.md) routes a request to the smallest one that fits.
+The Skills under [`skills/`](skills/) cover these steps, and the [`domain-memory`](skills/domain-memory/SKILL.md) Skill routes a request to the smallest one that fits.
 
 ## Documentation
 

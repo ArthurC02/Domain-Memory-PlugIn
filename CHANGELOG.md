@@ -2,6 +2,28 @@
 
 Notable changes to the Domain Memory plugin, newest first. The format follows Keep a Changelog, and versions follow Semantic Versioning: a minor version adds or changes behavior, a patch version only fixes it. Versions before 0.10.0 are recorded in the repository history only.
 
+## 6.3.0
+
+### Added
+
+- Every release is a tag, `v<version>`, and a GitHub Release built by `.github/workflows/release.yml`: the executables committed at the tag, byte for byte the ones a marketplace install runs, named `domain-memory-<platform>`, with `SHA256SUMS`, `install.sh`, `install.ps1`, a build provenance attestation (`gh attestation verify <file> -R ArthurC02/Domain-Memory-PlugIn`) and this file's entry as the notes. The workflow refuses a tag that does not name `plugin.json`'s version.
+- `install.sh` and `install.ps1` install one release's executable, `--version <tag>` (default: the latest) `--to <dir>`, check it against the release's `SHA256SUMS` before it lands, and print where it went. A consumer's hooks, CI and scripts no longer need a clone.
+- `bin/domain-memory`, and `bin\domain-memory.cmd` for `cmd` and PowerShell, run the executable committed for the platform, so a clone's callers name one path instead of choosing a platform directory.
+- The pre-push and pre-commit hooks run the executable `git config domain-memory.executable` names, a path from the repository's top level or an absolute one, and print `git config domain-memory.install-hint` in place of the cargo build instruction when it is missing. Both are read on every run, so a consumer that installs the executable elsewhere, or moves it, sets them once instead of editing the generated hook.
+- The plugin has an icon, `.claude-plugin/icon.png`, in the colours of the DDD Taiwan community.
+
+### Changed
+
+- The `domain-memory` router is a Skill of the plugin, `skills/domain-memory/SKILL.md`, instead of the repository root's `SKILL.md`, which a plugin install never offered: an agent working through the installed plugin now sees the readiness-first entry point.
+- When `verify-sources` or `readiness` reports discovery drift on sources that are otherwise current, the `NOTE:` opens by saying the selected sources are current and the check passes, so the exit 0 beside it reads as intended. stdout stays the JSON report.
+- Source archives (`git archive`, GitHub's tarballs) leave out `engine/parity/` and `engine/examples/`; a clone still carries them.
+- `README.md` shows how to pin a tag in Claude Code, in a project's `.claude/settings.json`, and for the installers.
+
+### Fixed
+
+- The expected-output check masks the fixture, scratch, reference and plugin paths only where they stand as whole path components, so a plugin checked out at a short path such as `/w` no longer turns `creator/workspace` into `creator{plugin}orkspace` and fails cases that are correct.
+- Without `DOMAIN_MEMORY_REFERENCE_REPO`, `expected_output` runs every case that does not read the reference repository, inside an empty repository, and says how many it skipped, instead of refusing to start; CI still runs all of them.
+
 ## 6.2.0
 
 ### Changed

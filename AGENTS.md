@@ -2,7 +2,7 @@
 
 A file-backed Registry of reviewed domain facts, and the commands that read it and change it under review. The next Agent inherits what this one established about the domain, instead of re-deriving it from the code and guessing where it was wrong.
 
-Read this page once. Then [SKILL.md](SKILL.md) chooses the capability for the work at hand, [references/script-api.md](references/script-api.md) holds every command with what it guarantees and how it refuses, and [references/host-integration.md](references/host-integration.md) is for a host that dispatches work to several Agents. To change the plugin itself, read `CONTRIBUTING.md`.
+Read this page once. Then [the router](skills/domain-memory/SKILL.md) chooses the capability for the work at hand, [references/script-api.md](references/script-api.md) holds every command with what it guarantees and how it refuses, and [references/host-integration.md](references/host-integration.md) is for a host that dispatches work to several Agents. To change the plugin itself, read `CONTRIBUTING.md`.
 
 ## Two rules that hold whoever is reading
 
@@ -35,11 +35,13 @@ A record moves along one of three paths:
 
 ## Running the commands
 
-Every command is one executable, run from this plugin's directory with the command first:
+Every command is one executable. `bin/domain-memory` (`bin\domain-memory.cmd` from `cmd` or PowerShell) runs the one committed for the platform, from any working directory, with the command first:
 
 ```bash
-engine/bin/linux-x86_64/domain-memory <command> [options]
+bin/domain-memory <command> [options]
 ```
+
+The executables themselves:
 
 | Platform | Executable |
 | --- | --- |

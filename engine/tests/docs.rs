@@ -138,7 +138,7 @@ fn command_groups() -> BTreeMap<&'static str, Vec<String>> {
 
 fn pages() -> Vec<PathBuf> {
     let root = plugin();
-    let mut pages = vec![root.join("SKILL.md"), root.join("AGENTS.md")];
+    let mut pages = vec![root.join("AGENTS.md")];
     pages.extend(sorted_matches(&root.join("skills"), |directory| {
         Some(directory.join("SKILL.md")).filter(|skill| skill.is_file())
     }));

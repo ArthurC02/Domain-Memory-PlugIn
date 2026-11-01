@@ -1,0 +1,12 @@
+#!/bin/sh
+# Runs the Domain Memory executable committed for this machine's platform, so a
+# caller names one path on Linux, macOS and Git Bash on Windows.
+engine="$(dirname -- "$0")/../engine"
+case "$(uname -s)-$(uname -m)" in
+  Linux-x86_64) exec "$engine/bin/linux-x86_64/domain-memory" "$@" ;;
+  Darwin-*) exec "$engine/bin/macos-universal/domain-memory" "$@" ;;
+  MINGW*-x86_64|MSYS*-x86_64|CYGWIN*-x86_64) exec "$engine/bin/windows-x86_64/domain-memory.exe" "$@" ;;
+esac
+test -x "$engine/target/release/domain-memory" && exec "$engine/target/release/domain-memory" "$@"
+echo "domain-memory: no executable is committed for $(uname -s)-$(uname -m); build one with cargo build --release --locked --manifest-path $engine/Cargo.toml" >&2
+exit 127

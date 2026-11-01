@@ -111,14 +111,15 @@ const EMPTY_SHA: &str = "0000000000000000000000000000000000000000";
 fn tool_for_hook(name: &str) -> String {
     format!(
         r##"tool_for_hook() {{
-  case "$(uname -s)-$(uname -m)" in
+  tool=$(git config --get domain-memory.executable) || case "$(uname -s)-$(uname -m)" in
     Linux-x86_64) tool="$engine/bin/linux-x86_64/domain-memory" ;;
     Darwin-*) tool="$engine/bin/macos-universal/domain-memory" ;;
     MINGW*-x86_64|MSYS*-x86_64|CYGWIN*-x86_64) tool="$engine/bin/windows-x86_64/domain-memory.exe" ;;
     *) tool="$engine/target/release/domain-memory" ;;
   esac
   test -x "$tool" && return 0
-  echo "domain-memory {name}: no Domain Memory executable at $tool; build one with cargo build --release --manifest-path $engine/Cargo.toml" >&2
+  hint=$(git config --get domain-memory.install-hint) || hint="build one with cargo build --release --manifest-path $engine/Cargo.toml"
+  echo "domain-memory {name}: no Domain Memory executable at $tool; $hint" >&2
   return 1
 }}
 "##
