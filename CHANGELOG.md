@@ -2,6 +2,15 @@
 
 Notable changes to the Domain Memory plugin, newest first. The format follows Keep a Changelog, and versions follow Semantic Versioning: a minor version adds or changes behavior, a patch version only fixes it. Versions before 0.10.0 are recorded in the repository history only.
 
+## 6.2.0
+
+### Changed
+
+- The plugin has its own repository, https://github.com/ArthurC02/Domain-Memory-PlugIn, with the plugin at its root and its history kept. Claude Code installs it with `/plugin marketplace add ArthurC02/Domain-Memory-PlugIn`, then `/plugin install domain-memory@domain-memory`.
+- The manifest names ArthurC02 as the author, and its description matches the repository's.
+- `README.md` is the page for someone new to the plugin; the page for people changing it is `CONTRIBUTING.md`, which `AGENTS.md` now names.
+- `cargo test --test expected_output` reads the reference repository from `DOMAIN_MEMORY_REFERENCE_REPO`, a clone of SkillHub holding the recording's pin, and refuses to start without it, instead of assuming the plugin sits four directories deep inside that repository.
+
 ## 6.1.2
 
 ### Fixed

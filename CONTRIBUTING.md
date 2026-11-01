@@ -1,6 +1,6 @@
-# Domain Memory — developing the plugin
+# Contributing to Domain Memory
 
-Agents start at `AGENTS.md`, the entry for an Agent without Skill support; this page is for people changing the plugin itself. `skills/` holds the eight Skills the manifest points to, and `references/` and `templates/` are shared by all of them. Every command is one executable, `domain-memory`, built from `engine/` in Rust, with its Linux, macOS and Windows builds committed under `engine/bin/`; its [README](engine/README.md) has the rules, the checks, and the rebuild every engine change needs.
+Agents start at `AGENTS.md`, the entry for an Agent without Skill support; this page is for people changing the plugin itself. Report a bug or a friction as an issue; a pull request runs the checks below on Linux, macOS and Windows. `skills/` holds the seven Skills the manifest points to, and `references/` and `templates/` are shared by all of them. Every command is one executable, `domain-memory`, built from `engine/` in Rust, with its Linux, macOS and Windows builds committed under `engine/bin/`; its [README](engine/README.md) has the rules, the checks, and the rebuild every engine change needs.
 
 Requirements: a Rust toolchain (`engine/rust-toolchain.toml` pins it) and `git`; `init-signing-key` alone also needs OpenSSH's `ssh-keygen`. A copy of the plugin that only runs the commands needs neither Rust nor anything else: the committed executable for its platform is enough.
 
@@ -10,10 +10,18 @@ Run from `engine/`:
 cargo fmt --check
 cargo clippy --all-targets --locked -- -D warnings
 cargo test --locked
-cargo test --release --locked --test expected_output
+DOMAIN_MEMORY_REFERENCE_REPO=<reference clone> cargo test --release --locked --test expected_output
 ```
 
 `cargo test` runs the unit tests in each module, `tests/hooks.rs` (the installed git hooks against real repositories) and `tests/docs.rs` (the links, command reference and contract this plugin's pages hold). `expected_output` runs every recorded case through the executable and takes a few minutes; `--only <text>` keeps the cases whose name contains the text. Run all of them before shipping.
+
+Some recorded cases read a real repository with a reviewed Registry and a long history: [SkillHub](https://github.com/ArthurC02/SkillHub), at the commit `engine/parity/expected/posix.json` names as `pin`. Every case runs inside a checkout of that commit, taken from the clone `DOMAIN_MEMORY_REFERENCE_REPO` names; `expected_output` refuses to start without one:
+
+```sh
+git clone --no-checkout https://github.com/ArthurC02/SkillHub.git ../reference
+```
+
+`-- --bless` writes the executable's output into `engine/parity/expected/` instead of comparing: run it on Linux to write `posix.json`, then on Windows, which records only the cases whose output differs.
 
 ## How the code is laid out
 

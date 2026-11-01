@@ -20,6 +20,7 @@ use std::time::{Duration, Instant};
 
 use json::{Object, Value};
 
+const REFERENCE_REPOSITORY: &str = "https://github.com/ArthurC02/SkillHub.git";
 const RUN_SECONDS: u64 = 120;
 const FIXED_GIT_DATE: &str = "2026-01-01T00:00:00Z";
 const UNHURRIED_GIT_SECONDS: &str = "300";
@@ -960,11 +961,19 @@ fn main() {
         .parent()
         .expect("the plugin holds the engine")
         .to_path_buf();
-    let repo = engine
-        .ancestors()
-        .nth(4)
-        .expect("the repository holds the plugin")
-        .to_path_buf();
+    let Some(repo) = std::env::var_os("DOMAIN_MEMORY_REFERENCE_REPO").map(|path| {
+        std::path::absolute(&path).unwrap_or_else(|error| {
+            panic!(
+                "no reference clone at {}: {error}",
+                PathBuf::from(&path).display()
+            )
+        })
+    }) else {
+        println!(
+            "Set DOMAIN_MEMORY_REFERENCE_REPO to a clone of {REFERENCE_REPOSITORY}: every case runs inside a checkout of the recording's pin."
+        );
+        std::process::exit(1);
+    };
     let binary = std::env::var_os("DOMAIN_MEMORY_BINARY")
         .map(PathBuf::from)
         .unwrap_or_else(|| PathBuf::from(env!("CARGO_BIN_EXE_domain-memory")));

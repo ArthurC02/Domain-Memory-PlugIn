@@ -2,7 +2,7 @@
 
 A file-backed Registry of reviewed domain facts, and the commands that read it and change it under review. The next Agent inherits what this one established about the domain, instead of re-deriving it from the code and guessing where it was wrong.
 
-Read this page once. Then [SKILL.md](SKILL.md) chooses the capability for the work at hand, [references/script-api.md](references/script-api.md) holds every command with what it guarantees and how it refuses, and [references/host-integration.md](references/host-integration.md) is for a host that dispatches work to several Agents. To change the plugin itself, read `README.md`.
+Read this page once. Then [SKILL.md](SKILL.md) chooses the capability for the work at hand, [references/script-api.md](references/script-api.md) holds every command with what it guarantees and how it refuses, and [references/host-integration.md](references/host-integration.md) is for a host that dispatches work to several Agents. To change the plugin itself, read `CONTRIBUTING.md`.
 
 ## Two rules that hold whoever is reading
 
