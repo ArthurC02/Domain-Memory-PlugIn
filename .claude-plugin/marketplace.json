@@ -1,6 +1,7 @@
 {
   "name": "domain-memory",
   "owner": { "name": "ArthurC02" },
+  "metadata": { "description": "The Domain Memory plugin: reviewed DDD facts that coding agents read before they code." },
   "plugins": [
     {
       "name": "domain-memory",
