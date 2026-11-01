@@ -4,6 +4,21 @@ use crate::json::{self, Value};
 use crate::py;
 
 const CONTRACT: &str = include_str!("../contract/cli.json");
+const PLUGIN_MANIFEST: &str = include_str!("../../.claude-plugin/plugin.json");
+
+/// The plugin's version, from the manifest the executable embeds.
+pub fn plugin_version() -> String {
+    json::parse(PLUGIN_MANIFEST)
+        .ok()
+        .and_then(|manifest| {
+            manifest
+                .as_object()?
+                .get("version")?
+                .as_str()
+                .map(str::to_string)
+        })
+        .unwrap_or_default()
+}
 
 #[derive(Clone, Copy, PartialEq)]
 enum Kind {
@@ -267,6 +282,20 @@ pub fn parse(contract: &Contract, args: &[String]) -> Outcome {
         }
         if arg.starts_with("-h") && !arg.starts_with("--") {
             return Outcome::Help(contract.help.clone());
+        }
+        if prefix.len() > 2 && "--version".starts_with(prefix) {
+            if let Some(value) = explicit {
+                return root_usage(format!(
+                    "argument --version: ignored explicit argument {}",
+                    py::repr(value)
+                ));
+            }
+            return Outcome::Help(format!(
+                "{} {}
+",
+                contract.prog,
+                plugin_version()
+            ));
         }
         root_extras.push(arg.clone());
         index += 1;

@@ -1,7 +1,7 @@
 # Installs the Domain Memory executable of one release and checks it against
 # that release's SHA256SUMS before it lands.
 #
-#   & ([scriptblock]::Create((irm https://github.com/ArthurC02/Domain-Memory-PlugIn/releases/download/v6.4.0/install.ps1))) -Version v6.4.0
+#   & ([scriptblock]::Create((irm https://github.com/ArthurC02/Domain-Memory-PlugIn/releases/download/v6.5.0/install.ps1))) -Version v6.5.0
 #
 # -Version <tag>  the release to install (default: the latest release)
 # -To <dir>       where the executable lands (default: %LOCALAPPDATA%\Programs\domain-memory\bin)

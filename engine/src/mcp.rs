@@ -14,8 +14,6 @@ const VERSION_KEY: &str = "io.modelcontextprotocol/protocolVersion";
 const CAPABILITIES_KEY: &str = "io.modelcontextprotocol/clientCapabilities";
 const SERVER_INFO_KEY: &str = "io.modelcontextprotocol/serverInfo";
 const SERVER_NAME: &str = "domain-memory";
-const PLUGIN_MANIFEST: &str = include_str!("../../.claude-plugin/plugin.json");
-
 const PARSE_ERROR: i64 = -32700;
 const INVALID_REQUEST: i64 = -32600;
 const METHOD_NOT_FOUND: i64 = -32601;
@@ -269,16 +267,7 @@ fn capabilities() -> Value {
 }
 
 fn server_info() -> Value {
-    let version = json::parse(PLUGIN_MANIFEST)
-        .ok()
-        .and_then(|manifest| {
-            manifest
-                .as_object()?
-                .get("version")?
-                .as_str()
-                .map(str::to_string)
-        })
-        .unwrap_or_default();
+    let version = crate::cli::plugin_version();
     object(vec![
         ("name", text(SERVER_NAME)),
         ("version", Value::Str(version)),

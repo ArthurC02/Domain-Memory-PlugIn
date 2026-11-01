@@ -130329,5 +130329,39 @@
       "b/registry/index.md": "---\nokf_version: \"0.2\"\n---\n# Domain Registry\n",
       "src/a.txt": "alpha\n"
     }
+  },
+  {
+    "name": "--version prints the plugin's version",
+    "args": [
+      "--version"
+    ]
+  },
+  {
+    "name": "--version refuses an explicit value",
+    "args": [
+      "--version=x"
+    ]
+  },
+  {
+    "name": "verify-sources discovers the source map of the one Domain Memory",
+    "args": [
+      "verify-sources",
+      "--repo-root",
+      "{fixture}"
+    ],
+    "git": true,
+    "files": {
+      "AGENTS.md": "root\n",
+      "src/a.py": "print('a')\n",
+      "src/b/c.py": "print('c')\n",
+      "src/b/c_test.py": "pass\n",
+      "docs/adr/0001.md": "# decision\n",
+      "docs/plans/01.md": "# plan\n",
+      "README.md": "readme\n",
+      ".gitignore": "src/ignored.py\ndocs/cache/\n",
+      "src/ignored.py": "i\n",
+      "docs/cache/c.md": "c\n",
+      "m/source-map.json": "{\n  \"format\": \"domain-source-map/v1\",\n  \"repo_root\": \".\",\n  \"source_order\": [\n    \"repository_instructions\",\n    \"decisions\",\n    \"requirements\",\n    \"contracts\",\n    \"bounded_contexts\",\n    \"implementation\",\n    \"tests\"\n  ],\n  \"source_groups\": [\n    {\n      \"kind\": \"repository_instructions\",\n      \"authority\": \"instructions to coding agents, not a statement of the business domain\",\n      \"caution\": \"These files exist to steer agents working in this repository. They are rewritten whenever the workflow changes, and a Domain Memory that rests on one loses its evidence when it is. Select them only for a domain fact no other source states, and record the gap.\",\n      \"paths\": [\n        \"AGENTS.md\"\n      ]\n    },\n    {\n      \"kind\": \"decisions\",\n      \"authority\": \"current approved decisions when their status says so\",\n      \"paths\": [\n        \"docs/adr\"\n      ]\n    },\n    {\n      \"kind\": \"requirements\",\n      \"authority\": \"intended behavior and acceptance criteria\",\n      \"paths\": [\n        \"docs/plans\"\n      ]\n    },\n    {\n      \"kind\": \"contracts\",\n      \"authority\": \"inter-process promises and compatibility\",\n      \"paths\": []\n    },\n    {\n      \"kind\": \"bounded_contexts\",\n      \"authority\": \"candidate technical boundaries requiring domain review\",\n      \"paths\": []\n    },\n    {\n      \"kind\": \"implementation\",\n      \"authority\": \"current executable behavior\",\n      \"paths\": [\n        \"src\"\n      ]\n    },\n    {\n      \"kind\": \"tests\",\n      \"authority\": \"evidence that a specific behavior is checked\",\n      \"paths\": [\n        \"src/b/c_test.py\"\n      ]\n    }\n  ],\n  \"missing_groups\": [\n    \"contracts\",\n    \"bounded_contexts\"\n  ],\n  \"selection_status\": \"agent-asserted\",\n  \"governance_candidates\": {\n    \"ci_tools\": [],\n    \"recommended_verifier\": \"git-signed-commit\",\n    \"recommended_trigger\": \"git-push\"\n  },\n  \"note\": \"The map locates candidate sources. It does not establish a domain fact or source authority by itself.\",\n  \"selected_paths\": [\n    \"docs\",\n    \"src\"\n  ],\n  \"source_kinds\": {\n    \"docs\": \"unclassified\",\n    \"src\": \"implementation\"\n  },\n  \"git_state\": {\n    \"tracked_objects\": {\n      \"docs\": \"674e45b7feae2de681e1c0dae97ecb6cfa01770c\",\n      \"src\": \"9c05babfd1ef74c8b20db7db993290a8145428d1\"\n    },\n    \"dirty_sources\": []\n  },\n  \"source_snapshots\": [\n    {\n      \"path\": \"docs\",\n      \"file_count\": 2,\n      \"digest\": \"sha256:be0be3cbb456c18fad188abdbe86454eb3825a825f0a5f6acdf4042af49b73d5\",\n      \"listing_sha256\": \"sha256:53fe6dc5bcb468560da748d433668c25347c2578a6f511189e2542c9ed29f83d\"\n    },\n    {\n      \"path\": \"src\",\n      \"file_count\": 3,\n      \"digest\": \"sha256:203f62d0bf2371889272e4bd1d7cef40851a86737694847a4ff06d124c7f537f\",\n      \"listing_sha256\": \"sha256:505af66fd0a4429370f7a3bb160bb935e5c6b12bb9fc251727bd22e9e078666c\"\n    }\n  ]\n}\n"
+    }
   }
 ]

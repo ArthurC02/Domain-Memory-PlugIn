@@ -111,15 +111,19 @@ const EMPTY_SHA: &str = "0000000000000000000000000000000000000000";
 fn tool_for_hook(name: &str) -> String {
     format!(
         r##"tool_for_hook() {{
-  tool=$(git config --get domain-memory.executable) || case "$(uname -s)-$(uname -m)" in
+  tool=$(git config --get domain-memory.executable) || test -z "$engine" || case "$(uname -s)-$(uname -m)" in
     Linux-x86_64) tool="$engine/bin/linux-x86_64/domain-memory" ;;
     Darwin-*) tool="$engine/bin/macos-universal/domain-memory" ;;
     MINGW*-x86_64|MSYS*-x86_64|CYGWIN*-x86_64) tool="$engine/bin/windows-x86_64/domain-memory.exe" ;;
     *) tool="$engine/target/release/domain-memory" ;;
   esac
-  test -x "$tool" && return 0
-  hint=$(git config --get domain-memory.install-hint) || hint="build one with cargo build --release --manifest-path $engine/Cargo.toml"
-  echo "domain-memory {name}: no Domain Memory executable at $tool; $hint" >&2
+  test -n "$tool" && test -x "$tool" && return 0
+  hint=$(git config --get domain-memory.install-hint) || if test -n "$engine"; then
+    hint="build one with cargo build --release --manifest-path $engine/Cargo.toml"
+  else
+    hint="set git config domain-memory.executable to the installed executable"
+  fi
+  echo "domain-memory {name}: no Domain Memory executable${{tool:+ at $tool}}; $hint" >&2
   return 1
 }}
 "##
@@ -199,13 +203,19 @@ fn pre_commit_body() -> String {
     )
 }
 
-fn engine_directory() -> Result<PathBuf, String> {
+/// The plugin's `engine/` directory when the executable runs from one, as
+/// `engine/bin/<platform>/` or `engine/target/release/`; a release executable
+/// installed anywhere else has none, and the hooks then rely on git config.
+fn engine_directory() -> Result<Option<PathBuf>, String> {
     let executable = std::env::current_exe().map_err(|error| error.to_string())?;
-    executable
+    Ok(executable
         .ancestors()
         .nth(3)
-        .map(Path::to_path_buf)
-        .ok_or_else(|| "the executable is not inside the engine directory".to_string())
+        .filter(|engine| {
+            engine.join("Cargo.toml").is_file()
+                || engine.join("bin").join("manifest.json").is_file()
+        })
+        .map(Path::to_path_buf))
 }
 
 #[cfg(unix)]
@@ -262,7 +272,9 @@ fn install_hook(
         "#!/bin/sh\n# {marker}\nengine='{}'\nmemory='{relative}'\nexisting=\"$(git rev-parse --git-path hooks)/{backup_name}\" || exit 1\n\
          test -n \"$DOMAIN_MEMORY_GIT_TIMEOUT\" || DOMAIN_MEMORY_GIT_TIMEOUT=$(git config --get domain-memory.git-timeout) || unset DOMAIN_MEMORY_GIT_TIMEOUT\n\
          export DOMAIN_MEMORY_GIT_TIMEOUT\n",
-        shown_path(&engine_directory()?, Some(repo_root)),
+        engine_directory()?
+            .map(|engine| shown_path(&engine, Some(repo_root)))
+            .unwrap_or_default(),
     );
     std::fs::write(&hook, format!("{header}{body}"))
         .map_err(|error| py::open_error(&error, &hook))?;

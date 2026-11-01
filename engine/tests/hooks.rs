@@ -205,6 +205,7 @@ impl Sandbox {
         let engine = self.base.join(name);
         let installer = engine.join("inst").join("inst").join(INSTALLER_NAME);
         link(Path::new(EXECUTABLE), &installer);
+        fs::write(engine.join("Cargo.toml"), "").unwrap();
         for location in TOOL_LOCATIONS {
             let executable = engine.join(location);
             match tool {
@@ -1434,4 +1435,26 @@ fn the_configured_executable_and_install_hint_replace_the_engine_defaults() {
     );
     let run = sandbox.push_hook(&hook, &refs);
     assert_eq!((1, "configured verify-git-governance\n"), run.outcome());
+}
+
+#[test]
+fn a_hook_installed_by_an_executable_outside_an_engine_names_no_engine_and_asks_for_git_config() {
+    let sandbox = Sandbox::new();
+    let engine = sandbox.engine("released", &Tool::Missing);
+    fs::remove_file(engine.join("Cargo.toml")).unwrap();
+    let hook = sandbox.push_fixture(&engine);
+    assert!(
+        fs::read_to_string(&hook).unwrap().contains("\nengine=''\n"),
+        "{}",
+        fs::read_to_string(&hook).unwrap()
+    );
+    let head = sandbox.commit_file("memory/registry/extra.json");
+    let run = sandbox.push_hook(&hook, &sandbox.new_branch(&head));
+    assert_eq!(
+        (
+            1,
+            "domain-memory pre-push: no Domain Memory executable; set git config domain-memory.executable to the installed executable\n"
+        ),
+        run.outcome()
+    );
 }

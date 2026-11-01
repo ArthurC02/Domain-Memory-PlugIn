@@ -51,7 +51,7 @@ The executables themselves:
 
 On any other platform, such as Linux on ARM, build it once with `cargo build --release --locked --manifest-path engine/Cargo.toml`; it lands at `engine/target/release/domain-memory`, and `engine/rust-toolchain.toml` pins the Rust version. `engine/bin/manifest.json` records the SHA-256 of each committed executable and of the source it was built from.
 
-It needs `git` on the path and nothing else, and runs from any working directory. What a command prints and how it refuses: [output and refusals](references/script-api.md#output-and-refusals).
+It needs `git` on the path and nothing else, and runs from any working directory; `domain-memory --version` prints the release it belongs to. What a command prints and how it refuses: [output and refusals](references/script-api.md#output-and-refusals).
 
 Commands that read or change the Registry take `--registry-root <root>`: the directory that holds `registry/`, `source-map.json` and the policy, not `registry/` itself. Commands that read repository files take `--repo-root <repo>`. Run inside the repository, both may be left out: `--repo-root` is then its top level and `--registry-root` the one Domain Memory it holds, and a command refuses, naming them, when it holds several. The table below leaves both flags out; `<command> --help` lists the exact flags, and an argument a command does not take is refused with that command's usage.
 

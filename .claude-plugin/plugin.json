@@ -1,6 +1,6 @@
 {
   "name": "domain-memory",
-  "version": "6.4.0",
+  "version": "6.5.0",
   "description": "A governed, file-backed domain model that coding agents read before they code and keep current after: read reviewed DDD facts, design changes under review, maintain the Registry, and review a branch against it.",
   "author": { "name": "ArthurC02" },
   "keywords": ["ddd", "domain-model", "architecture", "code-review"],

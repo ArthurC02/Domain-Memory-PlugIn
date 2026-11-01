@@ -539,6 +539,17 @@ fn placed(data: &[u8], places: &[(&[u8], Vec<Vec<u8>>)]) -> Vec<u8> {
         &server_info(&plugin_version()),
         &server_info("{version}"),
     );
+    let data = replaced(
+        &data,
+        format!(
+            "domain-memory {}
+",
+            plugin_version()
+        )
+        .as_bytes(),
+        b"domain-memory {version}
+",
+    );
     without_os_wording(data)
 }
 

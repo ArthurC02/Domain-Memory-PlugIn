@@ -2,6 +2,20 @@
 
 Notable changes to the Domain Memory plugin, newest first. The format follows Keep a Changelog, and versions follow Semantic Versioning: a minor version adds or changes behavior, a patch version only fixes it. Versions before 0.10.0 are recorded in the repository history only.
 
+## 6.5.0
+
+### Added
+
+- `domain-memory --version` prints `domain-memory <version>`, the plugin release the executable was built from, the version `mcp-serve` reports in its server info.
+
+### Changed
+
+- `verify-sources` is one word inside a repository: a left-out `--source-map` is `source-map.json` in the one Domain Memory the repository holds, found the way `--registry-root` is, and a left-out `--policy` is the policy beside it when there is one.
+
+### Fixed
+
+- `install-git-hitl-hook` and `install-pre-commit-hook` run by an executable outside a plugin's `engine/` directory, such as one installed from a release, no longer write a machine-specific path that is not an engine into the hook. The hook names no engine, and when the executable is missing it asks for `git config domain-memory.executable` (or prints `domain-memory.install-hint`) instead of a cargo build of a directory that does not exist.
+
 ## 6.4.0
 
 ### Added
