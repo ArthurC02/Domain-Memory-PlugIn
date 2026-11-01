@@ -1,7 +1,7 @@
 {
   "name": "domain-memory",
   "displayName": "Domain Memory",
-  "version": "7.0.4",
+  "version": "7.0.5",
   "description": "A governed, file-backed domain model that coding agents read before they code and keep current after: read reviewed DDD facts, design changes under review, maintain the Registry, and review a branch against it.",
   "author": { "name": "ArthurC02" },
   "homepage": "https://github.com/ArthurC02/Domain-Memory-PlugIn#readme",

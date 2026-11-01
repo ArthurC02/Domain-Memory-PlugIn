@@ -415,9 +415,19 @@ pub struct Approval<'a> {
 }
 
 /// A person named with or without the `human:` prefix the Registry writes,
-/// so `human:ArthurC` and `ArthurC` are one reviewer.
+/// so `human:ArthurC`, ` Human:ArthurC` and `ArthurC` are one reviewer.
 pub fn person(name: &str) -> &str {
-    name.strip_prefix("human:").unwrap_or(name)
+    let name = name.trim();
+    if prefixed(name, "human:") {
+        name["human:".len()..].trim()
+    } else {
+        name
+    }
+}
+
+fn prefixed(name: &str, prefix: &str) -> bool {
+    name.get(..prefix.len())
+        .is_some_and(|head| head.eq_ignore_ascii_case(prefix))
 }
 
 pub fn record_approval(root: &Path, approval: &Approval) -> Result<(), String> {
@@ -436,7 +446,7 @@ pub fn record_approval(root: &Path, approval: &Approval) -> Result<(), String> {
     let reviewer = person(approval.reviewer);
     if ["human:", "agent:"]
         .iter()
-        .any(|prefix| reviewer.starts_with(prefix))
+        .any(|prefix| prefixed(reviewer, prefix))
         || !completed_identifier(&Value::Str(reviewer.to_string()))
     {
         return Err(format!(
