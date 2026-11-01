@@ -2,7 +2,7 @@
 # Installs the Domain Memory executable of one release and checks it against
 # that release's SHA256SUMS before it lands.
 #
-#   curl -fsSL https://github.com/ArthurC02/Domain-Memory-PlugIn/releases/download/v6.3.0/install.sh | sh -s -- --version v6.3.0
+#   curl -fsSL https://github.com/ArthurC02/Domain-Memory-PlugIn/releases/download/v6.4.0/install.sh | sh -s -- --version v6.4.0
 #
 # --version <tag>  the release to install (default: the latest release)
 # --to <dir>       where the executable lands (default: ~/.local/bin)

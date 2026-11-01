@@ -20,7 +20,7 @@ Every release is a tag, `v<version>`, with a [GitHub Release](https://github.com
 ### Claude Code
 
 ```text
-/plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v6.3.0
+/plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v6.4.0
 /plugin install domain-memory@domain-memory
 ```
 
@@ -33,7 +33,7 @@ The install name is `<plugin>@<marketplace>`, and both are called `domain-memory
       "source": {
         "source": "github",
         "repo": "ArthurC02/Domain-Memory-PlugIn",
-        "ref": "v6.3.0"
+        "ref": "v6.4.0"
       }
     }
   },
@@ -50,11 +50,11 @@ The `domain-memory` Skill is the entry point: it runs `readiness` first and pick
 One executable, checked against the release's `SHA256SUMS` before it lands:
 
 ```bash
-curl -fsSL https://github.com/ArthurC02/Domain-Memory-PlugIn/releases/download/v6.3.0/install.sh | sh -s -- --version v6.3.0 --to .domain-memory/bin
+curl -fsSL https://github.com/ArthurC02/Domain-Memory-PlugIn/releases/download/v6.4.0/install.sh | sh -s -- --version v6.4.0 --to .domain-memory/bin
 ```
 
 ```powershell
-& ([scriptblock]::Create((irm https://github.com/ArthurC02/Domain-Memory-PlugIn/releases/download/v6.3.0/install.ps1))) -Version v6.3.0 -To .domain-memory\bin
+& ([scriptblock]::Create((irm https://github.com/ArthurC02/Domain-Memory-PlugIn/releases/download/v6.4.0/install.ps1))) -Version v6.4.0 -To .domain-memory\bin
 ```
 
 Each prints where the executable landed. The hooks that `install-git-hitl-hook` and `install-pre-commit-hook` write run the executable that `git config domain-memory.executable <path>` names, and print `git config domain-memory.install-hint <text>` when it is missing, so a repository that installs it this way points the hooks at it once. Run a script from inside a git hook? Unset the variables git sets for hooks first, `unset $(git rev-parse --local-env-vars)`, or a nested `git -C <other repository>` answers for the hook's repository.
@@ -64,7 +64,7 @@ Each prints where the executable landed. The hooks that `install-git-hitl-hook` 
 Point your agent at [`AGENTS.md`](AGENTS.md). A clone runs the executable committed for its platform through one launcher, `bin/domain-memory` (`bin\domain-memory.cmd` from `cmd` or PowerShell):
 
 ```bash
-git clone --branch v6.3.0 https://github.com/ArthurC02/Domain-Memory-PlugIn.git domain-memory
+git clone --branch v6.4.0 https://github.com/ArthurC02/Domain-Memory-PlugIn.git domain-memory
 domain-memory/bin/domain-memory readiness --repo-root path/to/your/repo
 ```
 
@@ -98,7 +98,8 @@ The Skills under [`skills/`](skills/) cover these steps, and the [`domain-memory
 
 | Page | For |
 | --- | --- |
-| [`AGENTS.md`](AGENTS.md) | Vocabulary, common tasks and costly mistakes. Start here. |
+| [`references/getting-started.md`](references/getting-started.md) | Ten minutes from an empty repository to a cited fact, on a sample you can run. Start here. |
+| [`AGENTS.md`](AGENTS.md) | Vocabulary, common tasks and costly mistakes. |
 | [`references/script-api.md`](references/script-api.md) | Every command: options, guarantees, refusals |
 | [`references/proposal-lifecycle.md`](references/proposal-lifecycle.md) | The Change Package states |
 | [`references/reliability-architecture.md`](references/reliability-architecture.md) | The write protocol and the audit chain |

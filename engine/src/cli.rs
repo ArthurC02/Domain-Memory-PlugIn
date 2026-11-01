@@ -30,6 +30,7 @@ struct Action {
     kind_of_value: Type,
     choices: Option<Vec<String>>,
     default: Value,
+    discovered: bool,
 }
 
 struct Mutex {
@@ -65,6 +66,8 @@ pub enum Arg {
 pub struct Invocation {
     pub command: String,
     values: HashMap<String, Arg>,
+    /// The roots the contract marks `discovered` that the caller left out.
+    pub undiscovered: Vec<String>,
 }
 
 impl Invocation {
@@ -91,6 +94,10 @@ impl Invocation {
             Some(Arg::Text(text)) => Some(text),
             _ => None,
         }
+    }
+
+    pub fn discover(&mut self, dest: &str, found: String) {
+        self.values.insert(dest.to_string(), Arg::Text(found));
     }
 }
 
@@ -199,6 +206,7 @@ fn action_from(spec: &Value) -> Action {
             .and_then(Value::as_array)
             .map(|items| strings(Some(&Value::Array(items.to_vec())))),
         default: object.get("default").cloned().unwrap_or(Value::Null),
+        discovered: matches!(object.get("discovered"), Some(Value::Bool(true))),
     }
 }
 
@@ -289,9 +297,18 @@ pub fn parse(contract: &Contract, args: &[String]) -> Outcome {
         Ok((values, extras)) => {
             root_extras.extend(extras);
             if root_extras.is_empty() {
+                let undiscovered = command
+                    .actions
+                    .iter()
+                    .filter(|action| {
+                        action.discovered && matches!(values.get(&action.dest), Some(Arg::Absent))
+                    })
+                    .map(|action| action.dest.clone())
+                    .collect();
                 Outcome::Run(Invocation {
                     command: command.name.clone(),
                     values,
+                    undiscovered,
                 })
             } else {
                 usage(format!("unrecognized arguments: {}", root_extras.join(" ")))

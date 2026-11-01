@@ -108,14 +108,83 @@ fn run(args: &[String]) -> i32 {
             prog,
             message,
         } => refuse_usage(args, &usage, &format!("{prog}: error: {message}")),
-        Outcome::Run(invocation) => match execute(&invocation) {
-            Ok(code) => code,
-            Err(error) => {
-                emit_stderr(&format!("ERROR: {error}\n"));
-                1
+        Outcome::Run(mut invocation) => {
+            match discover_roots(&mut invocation).and_then(|()| execute(&invocation)) {
+                Ok(code) => code,
+                Err(error) => {
+                    emit_stderr(&format!("ERROR: {error}\n"));
+                    1
+                }
             }
-        },
+        }
     }
+}
+
+/// Fills in a left-out `--repo-root` with the top level of the git repository the
+/// command runs in, and a left-out `--registry-root` with the one Domain Memory
+/// that repository holds, the way `readiness` finds it.
+fn discover_roots(invocation: &mut Invocation) -> Result<(), String> {
+    if invocation.undiscovered.is_empty() {
+        return Ok(());
+    }
+    let top = || -> Result<String, String> {
+        let found = git::run_git_text(&py::resolve("."), &["rev-parse", "--show-toplevel"])?;
+        if found.code != 0 {
+            return Err(
+                "the working directory is not inside a git repository, so pass --repo-root <repo>"
+                    .to_string(),
+            );
+        }
+        Ok(py::strip(&found.stdout).to_string())
+    };
+    if invocation
+        .undiscovered
+        .iter()
+        .any(|dest| dest == "repo_root")
+    {
+        invocation.discover("repo_root", top()?);
+    }
+    if invocation
+        .undiscovered
+        .iter()
+        .any(|dest| dest == "registry_root")
+    {
+        let repo = match invocation.text("repo_root") {
+            Some(given) => py::resolve(given),
+            None => py::resolve(&top().map_err(|_| {
+                "the working directory is not inside a git repository, so pass --registry-root <root>"
+                    .to_string()
+            })?),
+        };
+        let shown = store::shown_path(&repo, None);
+        let found = match store::domain_memories_in(&repo)? {
+            store::Listed::Refused(message) => {
+                return Err(format!(
+                    "git could not list the Domain Memories {shown} holds: {message}; pass --registry-root <root>"
+                ));
+            }
+            store::Listed::Places(found) => found,
+        };
+        match found.as_slice() {
+            [one] => invocation.discover("registry_root", store::shown_path(one, None)),
+            [] => {
+                return Err(format!(
+                    "{shown} holds no Domain Memory; pass --registry-root <root>, or start one with discover-sources and init-domain-memory"
+                ));
+            }
+            several => {
+                let names: Vec<String> = several
+                    .iter()
+                    .map(|place| store::shown_path(place, Some(&repo)))
+                    .collect();
+                return Err(format!(
+                    "{shown} holds several Domain Memories: {}; pass --registry-root to choose one",
+                    names.join(", ")
+                ));
+            }
+        }
+    }
+    Ok(())
 }
 
 fn refuse_usage(args: &[String], usage: &str, error: &str) -> i32 {

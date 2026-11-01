@@ -72751,7 +72751,8 @@
     "args": [
       "refresh-sources",
       "--registry-root",
-      "{fixture}/dm"
+      "{fixture}/dm",
+      "--repo-root"
     ],
     "files": {
       "AGENTS.md": "# Agents\n",
@@ -79373,7 +79374,8 @@
   {
     "name": "reconcile-audit missing option",
     "args": [
-      "reconcile-audit"
+      "reconcile-audit",
+      "--registry-root"
     ],
     "files": {
       "AGENTS.md": "# Agents\n",
@@ -81373,7 +81375,8 @@
     "args": [
       "install-pre-commit-hook",
       "--registry-root",
-      "{fixture}/dm"
+      "{fixture}/dm",
+      "--repo-root"
     ],
     "files": {
       "AGENTS.md": "# Agents\n",
@@ -97556,7 +97559,7 @@
     }
   },
   {
-    "name": "mcp-serve needs both roots",
+    "name": "mcp-serve discovers the repository it runs in",
     "args": [
       "mcp-serve",
       "--registry-root",
@@ -130251,6 +130254,80 @@
       "t/f0509_test.go": "package a\n",
       "t/f0510_test.go": "package a\n",
       "t/f0511_test.go": "package a\n"
+    }
+  },
+  {
+    "name": "verify-evidence discovers the one Domain Memory its repository holds",
+    "git": true,
+    "args": [
+      "verify-evidence",
+      "--repo-root",
+      "{fixture}"
+    ],
+    "files": {
+      "m/registry/index.md": "---\nokf_version: \"0.2\"\n---\n# Domain Registry\n",
+      "m/registry/rules/current.md": "---\ntype: Business Rule\nstatus: stable\nevidence:\n  - path: src/a.txt\n    lines:\n      start: 1\n      end: 1\n    excerpt_sha256: sha256:b6a98d9ce9a2d9149288fa3df42d377c3e42737afdcdaf714e33c0a100b51060\n---\nRule current.\n",
+      "src/a.txt": "alpha\nbeta\n"
+    }
+  },
+  {
+    "name": "validate discovers the reference repository's Domain Memory from the working directory",
+    "reference": true,
+    "args": [
+      "validate"
+    ]
+  },
+  {
+    "name": "verify-evidence refuses to guess among several Domain Memories",
+    "git": true,
+    "args": [
+      "verify-evidence",
+      "--repo-root",
+      "{fixture}"
+    ],
+    "files": {
+      "a/registry/index.md": "---\nokf_version: \"0.2\"\n---\n# Domain Registry\n",
+      "b/registry/index.md": "---\nokf_version: \"0.2\"\n---\n# Domain Registry\n",
+      "src/a.txt": "alpha\n"
+    }
+  },
+  {
+    "name": "verify-evidence names discovery when the repository holds no Domain Memory",
+    "git": true,
+    "args": [
+      "verify-evidence",
+      "--repo-root",
+      "{fixture}"
+    ],
+    "files": {
+      "src/a.txt": "alpha\n"
+    }
+  },
+  {
+    "name": "verify-evidence cannot discover a Domain Memory outside a git repository",
+    "args": [
+      "verify-evidence",
+      "--repo-root",
+      "{fixture}"
+    ],
+    "files": {
+      "m/registry/index.md": "---\nokf_version: \"0.2\"\n---\n# Domain Registry\n"
+    }
+  },
+  {
+    "name": "an explicit --registry-root wins over discovery",
+    "git": true,
+    "args": [
+      "verify-evidence",
+      "--repo-root",
+      "{fixture}",
+      "--registry-root",
+      "{fixture}/b"
+    ],
+    "files": {
+      "a/registry/index.md": "---\nokf_version: \"0.2\"\n---\n# Domain Registry\n",
+      "b/registry/index.md": "---\nokf_version: \"0.2\"\n---\n# Domain Registry\n",
+      "src/a.txt": "alpha\n"
     }
   }
 ]

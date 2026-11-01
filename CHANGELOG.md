@@ -2,6 +2,16 @@
 
 Notable changes to the Domain Memory plugin, newest first. The format follows Keep a Changelog, and versions follow Semantic Versioning: a minor version adds or changes behavior, a patch version only fixes it. Versions before 0.10.0 are recorded in the repository history only.
 
+## 6.4.0
+
+### Added
+
+- `references/getting-started.md` walks from an empty repository to a cited candidate rule and the stale citation that follows a code change, on `examples/getting-started`, a three-file sample. `engine/tests/getting_started.rs` runs every command on the page and compares what it prints, so the page cannot drift from the executable.
+
+### Changed
+
+- Inside a repository, `--repo-root` and `--registry-root` may be left out on every command that required them: `--repo-root` becomes the top level of the git repository the command runs in, and `--registry-root` the one Domain Memory that repository holds, found the way `readiness` finds it. `validate`, `verify-evidence`, `verify-audit` and the rest become one word. A command refuses, naming them, when the repository holds none or several Domain Memories or when it runs outside a git repository; an explicit flag always wins, and the hooks keep passing both. Each command's usage and help show the two options as optional, with what they default to.
+
 ## 6.3.0
 
 ### Added

@@ -2,7 +2,7 @@
 
 A file-backed Registry of reviewed domain facts, and the commands that read it and change it under review. The next Agent inherits what this one established about the domain, instead of re-deriving it from the code and guessing where it was wrong.
 
-Read this page once. Then [the router](skills/domain-memory/SKILL.md) chooses the capability for the work at hand, [references/script-api.md](references/script-api.md) holds every command with what it guarantees and how it refuses, and [references/host-integration.md](references/host-integration.md) is for a host that dispatches work to several Agents. To change the plugin itself, read `CONTRIBUTING.md`.
+New to Domain Memory? [Getting started](references/getting-started.md) runs the first commands on a sample repository. Read this page once. Then [the router](skills/domain-memory/SKILL.md) chooses the capability for the work at hand, [references/script-api.md](references/script-api.md) holds every command with what it guarantees and how it refuses, and [references/host-integration.md](references/host-integration.md) is for a host that dispatches work to several Agents. To change the plugin itself, read `CONTRIBUTING.md`.
 
 ## Two rules that hold whoever is reading
 
@@ -53,7 +53,7 @@ On any other platform, such as Linux on ARM, build it once with `cargo build --r
 
 It needs `git` on the path and nothing else, and runs from any working directory. What a command prints and how it refuses: [output and refusals](references/script-api.md#output-and-refusals).
 
-Commands that read or change the Registry take `--registry-root <root>`: the directory that holds `registry/`, `source-map.json` and the policy, not `registry/` itself. Commands that read repository files take `--repo-root <repo>`. The table below leaves both flags out; `<command> --help` lists the exact flags, and an argument a command does not take is refused with that command's usage.
+Commands that read or change the Registry take `--registry-root <root>`: the directory that holds `registry/`, `source-map.json` and the policy, not `registry/` itself. Commands that read repository files take `--repo-root <repo>`. Run inside the repository, both may be left out: `--repo-root` is then its top level and `--registry-root` the one Domain Memory it holds, and a command refuses, naming them, when it holds several. The table below leaves both flags out; `<command> --help` lists the exact flags, and an argument a command does not take is refused with that command's usage.
 
 A host that speaks the Model Context Protocol gets the read commands as tools from [`mcp-serve`](references/script-api.md#mcp-serve), which offers no command that writes.
 

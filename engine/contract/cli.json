@@ -5,8 +5,8 @@
  "commands": {
   "lookup": {
    "prog": "domain-memory lookup",
-   "usage": "usage: domain-memory lookup [-h] --registry-root REGISTRY_ROOT\n                            --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                            --query QUERY\n",
-   "help": "usage: domain-memory lookup [-h] --registry-root REGISTRY_ROOT\n                            --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                            --query QUERY\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --query QUERY\n",
+   "usage": "usage: domain-memory lookup [-h] [--registry-root REGISTRY_ROOT]\n                            --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                            --query QUERY\n",
+   "help": "usage: domain-memory lookup [-h] [--registry-root REGISTRY_ROOT]\n                            --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                            --query QUERY\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --query QUERY\n",
    "actions": [
     {
      "dest": "help",
@@ -26,10 +26,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "asset",
@@ -70,8 +71,8 @@
   },
   "resolve-terms": {
    "prog": "domain-memory resolve-terms",
-   "usage": "usage: domain-memory resolve-terms [-h] --registry-root REGISTRY_ROOT\n                                   --query QUERY [--context CONTEXT]\n                                   [--with-mentions]\n",
-   "help": "usage: domain-memory resolve-terms [-h] --registry-root REGISTRY_ROOT\n                                   --query QUERY [--context CONTEXT]\n                                   [--with-mentions]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --query QUERY\n  --context CONTEXT\n  --with-mentions\n",
+   "usage": "usage: domain-memory resolve-terms [-h] [--registry-root REGISTRY_ROOT]\n                                   --query QUERY [--context CONTEXT]\n                                   [--with-mentions]\n",
+   "help": "usage: domain-memory resolve-terms [-h] [--registry-root REGISTRY_ROOT]\n                                   --query QUERY [--context CONTEXT]\n                                   [--with-mentions]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --query QUERY\n  --context CONTEXT\n  --with-mentions\n",
    "actions": [
     {
      "dest": "help",
@@ -91,10 +92,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "query",
@@ -134,8 +136,8 @@
   },
   "get-context": {
    "prog": "domain-memory get-context",
-   "usage": "usage: domain-memory get-context [-h] --registry-root REGISTRY_ROOT --id ID\n                                 [--summary]\n",
-   "help": "usage: domain-memory get-context [-h] --registry-root REGISTRY_ROOT --id ID\n                                 [--summary]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --id ID\n  --summary             ids and one line each, without evidence\n",
+   "usage": "usage: domain-memory get-context [-h] [--registry-root REGISTRY_ROOT] --id ID\n                                 [--summary]\n",
+   "help": "usage: domain-memory get-context [-h] [--registry-root REGISTRY_ROOT] --id ID\n                                 [--summary]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --id ID\n  --summary             ids and one line each, without evidence\n",
    "actions": [
     {
      "dest": "help",
@@ -155,10 +157,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "id",
@@ -187,8 +190,8 @@
   },
   "get-record": {
    "prog": "domain-memory get-record",
-   "usage": "usage: domain-memory get-record [-h] --registry-root REGISTRY_ROOT\n                                --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                --id ID [--changes-root CHANGES_ROOT]\n",
-   "help": "usage: domain-memory get-record [-h] --registry-root REGISTRY_ROOT\n                                --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                --id ID [--changes-root CHANGES_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --id ID\n  --changes-root CHANGES_ROOT\n",
+   "usage": "usage: domain-memory get-record [-h] [--registry-root REGISTRY_ROOT]\n                                --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                --id ID [--changes-root CHANGES_ROOT]\n",
+   "help": "usage: domain-memory get-record [-h] [--registry-root REGISTRY_ROOT]\n                                --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                --id ID [--changes-root CHANGES_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --id ID\n  --changes-root CHANGES_ROOT\n",
    "actions": [
     {
      "dest": "help",
@@ -208,10 +211,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "asset",
@@ -263,8 +267,8 @@
   },
   "dependents": {
    "prog": "domain-memory dependents",
-   "usage": "usage: domain-memory dependents [-h] --registry-root REGISTRY_ROOT\n                                --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                --id ID\n",
-   "help": "usage: domain-memory dependents [-h] --registry-root REGISTRY_ROOT\n                                --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                --id ID\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --id ID\n",
+   "usage": "usage: domain-memory dependents [-h] [--registry-root REGISTRY_ROOT]\n                                --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                --id ID\n",
+   "help": "usage: domain-memory dependents [-h] [--registry-root REGISTRY_ROOT]\n                                --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                --id ID\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --id ID\n",
    "actions": [
     {
      "dest": "help",
@@ -284,10 +288,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "asset",
@@ -328,8 +333,8 @@
   },
   "brief": {
    "prog": "domain-memory brief",
-   "usage": "usage: domain-memory brief [-h] --registry-root REGISTRY_ROOT\n                           --repo-root REPO_ROOT [--base BASE]\n                           [--asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}]\n                           [--id ID] [--markdown]\n",
-   "help": "usage: domain-memory brief [-h] --registry-root REGISTRY_ROOT\n                           --repo-root REPO_ROOT [--base BASE]\n                           [--asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}]\n                           [--id ID] [--markdown]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n  --base BASE\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --id ID\n  --markdown\n",
+   "usage": "usage: domain-memory brief [-h] [--registry-root REGISTRY_ROOT]\n                           [--repo-root REPO_ROOT] [--base BASE]\n                           [--asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}]\n                           [--id ID] [--markdown]\n",
+   "help": "usage: domain-memory brief [-h] [--registry-root REGISTRY_ROOT]\n                           [--repo-root REPO_ROOT] [--base BASE]\n                           [--asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}]\n                           [--id ID] [--markdown]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --base BASE\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --id ID\n  --markdown\n",
    "actions": [
     {
      "dest": "help",
@@ -349,10 +354,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -360,10 +366,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "base",
@@ -426,8 +433,8 @@
   },
   "export": {
    "prog": "domain-memory export",
-   "usage": "usage: domain-memory export [-h] --registry-root REGISTRY_ROOT\n                            [--repo-root REPO_ROOT] [--commit COMMIT]\n",
-   "help": "usage: domain-memory export [-h] --registry-root REGISTRY_ROOT\n                            [--repo-root REPO_ROOT] [--commit COMMIT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n  --commit COMMIT\n",
+   "usage": "usage: domain-memory export [-h] [--registry-root REGISTRY_ROOT]\n                            [--repo-root REPO_ROOT] [--commit COMMIT]\n",
+   "help": "usage: domain-memory export [-h] [--registry-root REGISTRY_ROOT]\n                            [--repo-root REPO_ROOT] [--commit COMMIT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n  --commit COMMIT\n",
    "actions": [
     {
      "dest": "help",
@@ -447,10 +454,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -554,8 +562,8 @@
   },
   "coverage": {
    "prog": "domain-memory coverage",
-   "usage": "usage: domain-memory coverage [-h] --registry-root REGISTRY_ROOT\n                              [--changes-root CHANGES_ROOT]\n                              [--repo-root REPO_ROOT]\n",
-   "help": "usage: domain-memory coverage [-h] --registry-root REGISTRY_ROOT\n                              [--changes-root CHANGES_ROOT]\n                              [--repo-root REPO_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --changes-root CHANGES_ROOT\n  --repo-root REPO_ROOT\n",
+   "usage": "usage: domain-memory coverage [-h] [--registry-root REGISTRY_ROOT]\n                              [--changes-root CHANGES_ROOT]\n                              [--repo-root REPO_ROOT]\n",
+   "help": "usage: domain-memory coverage [-h] [--registry-root REGISTRY_ROOT]\n                              [--changes-root CHANGES_ROOT]\n                              [--repo-root REPO_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --changes-root CHANGES_ROOT\n  --repo-root REPO_ROOT\n",
    "actions": [
     {
      "dest": "help",
@@ -575,10 +583,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "changes_root",
@@ -607,8 +616,8 @@
   },
   "readiness": {
    "prog": "domain-memory readiness",
-   "usage": "usage: domain-memory readiness [-h] --repo-root REPO_ROOT\n                               [--registry-root REGISTRY_ROOT]\n",
-   "help": "usage: domain-memory readiness [-h] --repo-root REPO_ROOT\n                               [--registry-root REGISTRY_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n  --registry-root REGISTRY_ROOT\n",
+   "usage": "usage: domain-memory readiness [-h] [--repo-root REPO_ROOT]\n                               [--registry-root REGISTRY_ROOT]\n",
+   "help": "usage: domain-memory readiness [-h] [--repo-root REPO_ROOT]\n                               [--registry-root REGISTRY_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --registry-root REGISTRY_ROOT\n",
    "actions": [
     {
      "dest": "help",
@@ -628,10 +637,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "registry_root",
@@ -649,8 +659,8 @@
   },
   "analyze-boundary": {
    "prog": "domain-memory analyze-boundary",
-   "usage": "usage: domain-memory analyze-boundary [-h] --registry-root REGISTRY_ROOT\n                                      --source-context SOURCE_CONTEXT\n                                      --target-context TARGET_CONTEXT\n",
-   "help": "usage: domain-memory analyze-boundary [-h] --registry-root REGISTRY_ROOT\n                                      --source-context SOURCE_CONTEXT\n                                      --target-context TARGET_CONTEXT\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --source-context SOURCE_CONTEXT\n  --target-context TARGET_CONTEXT\n",
+   "usage": "usage: domain-memory analyze-boundary [-h] [--registry-root REGISTRY_ROOT]\n                                      --source-context SOURCE_CONTEXT\n                                      --target-context TARGET_CONTEXT\n",
+   "help": "usage: domain-memory analyze-boundary [-h] [--registry-root REGISTRY_ROOT]\n                                      --source-context SOURCE_CONTEXT\n                                      --target-context TARGET_CONTEXT\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --source-context SOURCE_CONTEXT\n  --target-context TARGET_CONTEXT\n",
    "actions": [
     {
      "dest": "help",
@@ -670,10 +680,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "source_context",
@@ -702,8 +713,8 @@
   },
   "boundary-impact": {
    "prog": "domain-memory boundary-impact",
-   "usage": "usage: domain-memory boundary-impact [-h] --registry-root REGISTRY_ROOT\n                                     --repo-root REPO_ROOT --base BASE\n",
-   "help": "usage: domain-memory boundary-impact [-h] --registry-root REGISTRY_ROOT\n                                     --repo-root REPO_ROOT --base BASE\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n  --base BASE\n",
+   "usage": "usage: domain-memory boundary-impact [-h] [--registry-root REGISTRY_ROOT]\n                                     [--repo-root REPO_ROOT] --base BASE\n",
+   "help": "usage: domain-memory boundary-impact [-h] [--registry-root REGISTRY_ROOT]\n                                     [--repo-root REPO_ROOT] --base BASE\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --base BASE\n",
    "actions": [
     {
      "dest": "help",
@@ -723,10 +734,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -734,10 +746,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "base",
@@ -755,8 +768,8 @@
   },
   "probe": {
    "prog": "domain-memory probe",
-   "usage": "usage: domain-memory probe [-h] --repo-root REPO_ROOT\n                           --registry-root REGISTRY_ROOT [--policy POLICY]\n",
-   "help": "usage: domain-memory probe [-h] --repo-root REPO_ROOT\n                           --registry-root REGISTRY_ROOT [--policy POLICY]\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n  --registry-root REGISTRY_ROOT\n  --policy POLICY\n",
+   "usage": "usage: domain-memory probe [-h] [--repo-root REPO_ROOT]\n                           [--registry-root REGISTRY_ROOT] [--policy POLICY]\n",
+   "help": "usage: domain-memory probe [-h] [--repo-root REPO_ROOT]\n                           [--registry-root REGISTRY_ROOT] [--policy POLICY]\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --policy POLICY\n",
    "actions": [
     {
      "dest": "help",
@@ -776,10 +789,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "registry_root",
@@ -787,10 +801,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "policy",
@@ -808,8 +823,8 @@
   },
   "change-coupling": {
    "prog": "domain-memory change-coupling",
-   "usage": "usage: domain-memory change-coupling [-h] --repo-root REPO_ROOT [--root ROOT]\n                                     [--depth DEPTH] [--since SINCE]\n                                     [--exclude-subject EXCLUDE_SUBJECT]\n                                     [--max-modules MAX_MODULES]\n                                     [--registry-root REGISTRY_ROOT]\n                                     [--min-revisions MIN_REVISIONS]\n                                     [--min-shared MIN_SHARED]\n                                     [--min-degree MIN_DEGREE]\n                                     [--max-changeset MAX_CHANGESET]\n",
-   "help": "usage: domain-memory change-coupling [-h] --repo-root REPO_ROOT [--root ROOT]\n                                     [--depth DEPTH] [--since SINCE]\n                                     [--exclude-subject EXCLUDE_SUBJECT]\n                                     [--max-modules MAX_MODULES]\n                                     [--registry-root REGISTRY_ROOT]\n                                     [--min-revisions MIN_REVISIONS]\n                                     [--min-shared MIN_SHARED]\n                                     [--min-degree MIN_DEGREE]\n                                     [--max-changeset MAX_CHANGESET]\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n  --root ROOT\n  --depth DEPTH\n  --since SINCE\n  --exclude-subject EXCLUDE_SUBJECT\n                        repeatable regex\n  --max-modules MAX_MODULES\n  --registry-root REGISTRY_ROOT\n  --min-revisions MIN_REVISIONS\n  --min-shared MIN_SHARED\n  --min-degree MIN_DEGREE\n  --max-changeset MAX_CHANGESET\n",
+   "usage": "usage: domain-memory change-coupling [-h] [--repo-root REPO_ROOT]\n                                     [--root ROOT] [--depth DEPTH]\n                                     [--since SINCE]\n                                     [--exclude-subject EXCLUDE_SUBJECT]\n                                     [--max-modules MAX_MODULES]\n                                     [--registry-root REGISTRY_ROOT]\n                                     [--min-revisions MIN_REVISIONS]\n                                     [--min-shared MIN_SHARED]\n                                     [--min-degree MIN_DEGREE]\n                                     [--max-changeset MAX_CHANGESET]\n",
+   "help": "usage: domain-memory change-coupling [-h] [--repo-root REPO_ROOT]\n                                     [--root ROOT] [--depth DEPTH]\n                                     [--since SINCE]\n                                     [--exclude-subject EXCLUDE_SUBJECT]\n                                     [--max-modules MAX_MODULES]\n                                     [--registry-root REGISTRY_ROOT]\n                                     [--min-revisions MIN_REVISIONS]\n                                     [--min-shared MIN_SHARED]\n                                     [--min-degree MIN_DEGREE]\n                                     [--max-changeset MAX_CHANGESET]\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --root ROOT\n  --depth DEPTH\n  --since SINCE\n  --exclude-subject EXCLUDE_SUBJECT\n                        repeatable regex\n  --max-modules MAX_MODULES\n  --registry-root REGISTRY_ROOT\n  --min-revisions MIN_REVISIONS\n  --min-shared MIN_SHARED\n  --min-degree MIN_DEGREE\n  --max-changeset MAX_CHANGESET\n",
    "actions": [
     {
      "dest": "help",
@@ -829,10 +844,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "root",
@@ -949,8 +965,8 @@
   },
   "quality-gates": {
    "prog": "domain-memory quality-gates",
-   "usage": "usage: domain-memory quality-gates [-h] --repo-root REPO_ROOT\n",
-   "help": "usage: domain-memory quality-gates [-h] --repo-root REPO_ROOT\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n",
+   "usage": "usage: domain-memory quality-gates [-h] [--repo-root REPO_ROOT]\n",
+   "help": "usage: domain-memory quality-gates [-h] [--repo-root REPO_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n",
    "actions": [
     {
      "dest": "help",
@@ -970,18 +986,19 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     }
    ],
    "mutex": []
   },
   "counterfactual": {
    "prog": "domain-memory counterfactual",
-   "usage": "usage: domain-memory counterfactual [-h] --repo-root REPO_ROOT [--file FILE]\n                                    [--find FIND] [--replace REPLACE]\n                                    [--test-command TEST_COMMAND]\n                                    [--suite SUITE] [--timeout TIMEOUT]\n                                    [--cwd CWD] [--expect EXPECT]\n                                    [--obligation-id OBLIGATION_ID]\n                                    [--package-root PACKAGE_ROOT]\n",
-   "help": "usage: domain-memory counterfactual [-h] --repo-root REPO_ROOT [--file FILE]\n                                    [--find FIND] [--replace REPLACE]\n                                    [--test-command TEST_COMMAND]\n                                    [--suite SUITE] [--timeout TIMEOUT]\n                                    [--cwd CWD] [--expect EXPECT]\n                                    [--obligation-id OBLIGATION_ID]\n                                    [--package-root PACKAGE_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n  --file FILE\n  --find FIND\n  --replace REPLACE\n  --test-command TEST_COMMAND\n  --suite SUITE\n  --timeout TIMEOUT\n  --cwd CWD\n  --expect EXPECT       regular expression the failing output must match, such\n                        as the assertion message; write --expect=PATTERN when\n                        the pattern starts with -\n  --obligation-id OBLIGATION_ID\n  --package-root PACKAGE_ROOT\n",
+   "usage": "usage: domain-memory counterfactual [-h] [--repo-root REPO_ROOT] [--file FILE]\n                                    [--find FIND] [--replace REPLACE]\n                                    [--test-command TEST_COMMAND]\n                                    [--suite SUITE] [--timeout TIMEOUT]\n                                    [--cwd CWD] [--expect EXPECT]\n                                    [--obligation-id OBLIGATION_ID]\n                                    [--package-root PACKAGE_ROOT]\n",
+   "help": "usage: domain-memory counterfactual [-h] [--repo-root REPO_ROOT] [--file FILE]\n                                    [--find FIND] [--replace REPLACE]\n                                    [--test-command TEST_COMMAND]\n                                    [--suite SUITE] [--timeout TIMEOUT]\n                                    [--cwd CWD] [--expect EXPECT]\n                                    [--obligation-id OBLIGATION_ID]\n                                    [--package-root PACKAGE_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --file FILE\n  --find FIND\n  --replace REPLACE\n  --test-command TEST_COMMAND\n  --suite SUITE\n  --timeout TIMEOUT\n  --cwd CWD\n  --expect EXPECT       regular expression the failing output must match, such\n                        as the assertion message; write --expect=PATTERN when\n                        the pattern starts with -\n  --obligation-id OBLIGATION_ID\n  --package-root PACKAGE_ROOT\n",
    "actions": [
     {
      "dest": "help",
@@ -1001,10 +1018,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "file",
@@ -1152,8 +1170,8 @@
   },
   "mcp-serve": {
    "prog": "domain-memory mcp-serve",
-   "usage": "usage: domain-memory mcp-serve [-h] --registry-root REGISTRY_ROOT\n                               --repo-root REPO_ROOT\n",
-   "help": "usage: domain-memory mcp-serve [-h] --registry-root REGISTRY_ROOT\n                               --repo-root REPO_ROOT\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n",
+   "usage": "usage: domain-memory mcp-serve [-h] [--registry-root REGISTRY_ROOT]\n                               [--repo-root REPO_ROOT]\n",
+   "help": "usage: domain-memory mcp-serve [-h] [--registry-root REGISTRY_ROOT]\n                               [--repo-root REPO_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n",
    "actions": [
     {
      "dest": "help",
@@ -1173,10 +1191,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -1184,18 +1203,19 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     }
    ],
    "mutex": []
   },
   "cite": {
    "prog": "domain-memory cite",
-   "usage": "usage: domain-memory cite [-h] --repo-root REPO_ROOT --path PATH\n                          [--lines LINES] [--function FUNCTION]\n                          [--registry-root REGISTRY_ROOT] [--show]\n",
-   "help": "usage: domain-memory cite [-h] --repo-root REPO_ROOT --path PATH\n                          [--lines LINES] [--function FUNCTION]\n                          [--registry-root REGISTRY_ROOT] [--show]\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n  --path PATH\n  --lines LINES         START-END\n  --function FUNCTION   a function defined in --path (Go, Python, TypeScript,\n                        JavaScript, Java, Kotlin, Rust); cites its whole body\n  --registry-root REGISTRY_ROOT\n  --show\n",
+   "usage": "usage: domain-memory cite [-h] [--repo-root REPO_ROOT] --path PATH\n                          [--lines LINES] [--function FUNCTION]\n                          [--registry-root REGISTRY_ROOT] [--show]\n",
+   "help": "usage: domain-memory cite [-h] [--repo-root REPO_ROOT] --path PATH\n                          [--lines LINES] [--function FUNCTION]\n                          [--registry-root REGISTRY_ROOT] [--show]\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --path PATH\n  --lines LINES         START-END\n  --function FUNCTION   a function defined in --path (Go, Python, TypeScript,\n                        JavaScript, Java, Kotlin, Rust); cites its whole body\n  --registry-root REGISTRY_ROOT\n  --show\n",
    "actions": [
     {
      "dest": "help",
@@ -1215,10 +1235,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "path",
@@ -1280,8 +1301,8 @@
   },
   "verify-evidence": {
    "prog": "domain-memory verify-evidence",
-   "usage": "usage: domain-memory verify-evidence [-h] --registry-root REGISTRY_ROOT\n                                     --repo-root REPO_ROOT [--path PATH]\n                                     [--strict] [--staged]\n                                     [--package-root PACKAGE_ROOT]\n",
-   "help": "usage: domain-memory verify-evidence [-h] --registry-root REGISTRY_ROOT\n                                     --repo-root REPO_ROOT [--path PATH]\n                                     [--strict] [--staged]\n                                     [--package-root PACKAGE_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n  --path PATH\n  --strict\n  --staged\n  --package-root PACKAGE_ROOT\n",
+   "usage": "usage: domain-memory verify-evidence [-h] [--registry-root REGISTRY_ROOT]\n                                     [--repo-root REPO_ROOT] [--path PATH]\n                                     [--strict] [--staged]\n                                     [--package-root PACKAGE_ROOT]\n",
+   "help": "usage: domain-memory verify-evidence [-h] [--registry-root REGISTRY_ROOT]\n                                     [--repo-root REPO_ROOT] [--path PATH]\n                                     [--strict] [--staged]\n                                     [--package-root PACKAGE_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --path PATH\n  --strict\n  --staged\n  --package-root PACKAGE_ROOT\n",
    "actions": [
     {
      "dest": "help",
@@ -1301,10 +1322,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -1312,10 +1334,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "path",
@@ -1366,8 +1389,8 @@
   },
   "recite": {
    "prog": "domain-memory recite",
-   "usage": "usage: domain-memory recite [-h] --registry-root REGISTRY_ROOT\n                            --repo-root REPO_ROOT\n                            --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                            --id ID --path PATH [--lines LINES]\n                            [--replace REPLACE] [--onto ONTO]\n",
-   "help": "usage: domain-memory recite [-h] --registry-root REGISTRY_ROOT\n                            --repo-root REPO_ROOT\n                            --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                            --id ID --path PATH [--lines LINES]\n                            [--replace REPLACE] [--onto ONTO]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --id ID\n  --path PATH\n  --lines LINES\n  --replace REPLACE\n  --onto ONTO\n",
+   "usage": "usage: domain-memory recite [-h] [--registry-root REGISTRY_ROOT]\n                            [--repo-root REPO_ROOT]\n                            --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                            --id ID --path PATH [--lines LINES]\n                            [--replace REPLACE] [--onto ONTO]\n",
+   "help": "usage: domain-memory recite [-h] [--registry-root REGISTRY_ROOT]\n                            [--repo-root REPO_ROOT]\n                            --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                            --id ID --path PATH [--lines LINES]\n                            [--replace REPLACE] [--onto ONTO]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --id ID\n  --path PATH\n  --lines LINES\n  --replace REPLACE\n  --onto ONTO\n",
    "actions": [
     {
      "dest": "help",
@@ -1387,10 +1410,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -1398,10 +1422,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "asset",
@@ -1486,8 +1511,8 @@
   },
   "relocate-evidence": {
    "prog": "domain-memory relocate-evidence",
-   "usage": "usage: domain-memory relocate-evidence [-h] --registry-root REGISTRY_ROOT\n                                       --repo-root REPO_ROOT --from MOVED_FROM\n                                       --to MOVED_TO\n",
-   "help": "usage: domain-memory relocate-evidence [-h] --registry-root REGISTRY_ROOT\n                                       --repo-root REPO_ROOT --from MOVED_FROM\n                                       --to MOVED_TO\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n  --from MOVED_FROM\n  --to MOVED_TO\n",
+   "usage": "usage: domain-memory relocate-evidence [-h] [--registry-root REGISTRY_ROOT]\n                                       [--repo-root REPO_ROOT]\n                                       --from MOVED_FROM --to MOVED_TO\n",
+   "help": "usage: domain-memory relocate-evidence [-h] [--registry-root REGISTRY_ROOT]\n                                       [--repo-root REPO_ROOT]\n                                       --from MOVED_FROM --to MOVED_TO\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --from MOVED_FROM\n  --to MOVED_TO\n",
    "actions": [
     {
      "dest": "help",
@@ -1507,10 +1532,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -1518,10 +1544,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "moved_from",
@@ -1550,8 +1577,8 @@
   },
   "discover-sources": {
    "prog": "domain-memory discover-sources",
-   "usage": "usage: domain-memory discover-sources [-h] --repo-root REPO_ROOT\n                                      [--output OUTPUT]\n                                      [--implementation-root IMPLEMENTATION_ROOT]\n                                      [--excluded-directory EXCLUDED_DIRECTORY]\n                                      [--decision-root DECISION_ROOT]\n                                      [--boundary-marker BOUNDARY_MARKER]\n",
-   "help": "usage: domain-memory discover-sources [-h] --repo-root REPO_ROOT\n                                      [--output OUTPUT]\n                                      [--implementation-root IMPLEMENTATION_ROOT]\n                                      [--excluded-directory EXCLUDED_DIRECTORY]\n                                      [--decision-root DECISION_ROOT]\n                                      [--boundary-marker BOUNDARY_MARKER]\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n  --output OUTPUT\n  --implementation-root IMPLEMENTATION_ROOT\n                        repeatable\n  --excluded-directory EXCLUDED_DIRECTORY\n                        repeatable\n  --decision-root DECISION_ROOT\n                        repeatable\n  --boundary-marker BOUNDARY_MARKER\n                        repeatable\n",
+   "usage": "usage: domain-memory discover-sources [-h] [--repo-root REPO_ROOT]\n                                      [--output OUTPUT]\n                                      [--implementation-root IMPLEMENTATION_ROOT]\n                                      [--excluded-directory EXCLUDED_DIRECTORY]\n                                      [--decision-root DECISION_ROOT]\n                                      [--boundary-marker BOUNDARY_MARKER]\n",
+   "help": "usage: domain-memory discover-sources [-h] [--repo-root REPO_ROOT]\n                                      [--output OUTPUT]\n                                      [--implementation-root IMPLEMENTATION_ROOT]\n                                      [--excluded-directory EXCLUDED_DIRECTORY]\n                                      [--decision-root DECISION_ROOT]\n                                      [--boundary-marker BOUNDARY_MARKER]\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --output OUTPUT\n  --implementation-root IMPLEMENTATION_ROOT\n                        repeatable\n  --excluded-directory EXCLUDED_DIRECTORY\n                        repeatable\n  --decision-root DECISION_ROOT\n                        repeatable\n  --boundary-marker BOUNDARY_MARKER\n                        repeatable\n",
    "actions": [
     {
      "dest": "help",
@@ -1571,10 +1598,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "output",
@@ -1636,8 +1664,8 @@
   },
   "verify-sources": {
    "prog": "domain-memory verify-sources",
-   "usage": "usage: domain-memory verify-sources [-h] --repo-root REPO_ROOT\n                                    --source-map SOURCE_MAP [--policy POLICY]\n",
-   "help": "usage: domain-memory verify-sources [-h] --repo-root REPO_ROOT\n                                    --source-map SOURCE_MAP [--policy POLICY]\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n  --source-map SOURCE_MAP\n  --policy POLICY\n",
+   "usage": "usage: domain-memory verify-sources [-h] [--repo-root REPO_ROOT]\n                                    --source-map SOURCE_MAP [--policy POLICY]\n",
+   "help": "usage: domain-memory verify-sources [-h] [--repo-root REPO_ROOT]\n                                    --source-map SOURCE_MAP [--policy POLICY]\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --source-map SOURCE_MAP\n  --policy POLICY\n",
    "actions": [
     {
      "dest": "help",
@@ -1657,10 +1685,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "source_map",
@@ -1689,8 +1718,8 @@
   },
   "scan-secrets": {
    "prog": "domain-memory scan-secrets",
-   "usage": "usage: domain-memory scan-secrets [-h] --repo-root REPO_ROOT\n",
-   "help": "usage: domain-memory scan-secrets [-h] --repo-root REPO_ROOT\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n",
+   "usage": "usage: domain-memory scan-secrets [-h] [--repo-root REPO_ROOT]\n",
+   "help": "usage: domain-memory scan-secrets [-h] [--repo-root REPO_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n",
    "actions": [
     {
      "dest": "help",
@@ -1710,18 +1739,19 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     }
    ],
    "mutex": []
   },
   "init-domain-memory": {
    "prog": "domain-memory init-domain-memory",
-   "usage": "usage: domain-memory init-domain-memory [-h] --repo-root REPO_ROOT\n                                        --output OUTPUT --source SOURCE\n                                        --storage-mode {tracked,ignored,external}\n                                        --data-classification {public,internal,confidential,restricted}\n                                        --review-mode {local-draft-only,scm-verified}\n                                        --source-authority SOURCE_AUTHORITY\n                                        [--review-verifier {git-signed-commit,none}]\n                                        [--review-trigger {git-commit,git-push,none}]\n                                        [--ci-requirement {required,optional,none}]\n                                        [--authorized-signer AUTHORIZED_SIGNER]\n                                        [--distinct-signer]\n                                        [--implementation-root IMPLEMENTATION_ROOT]\n                                        [--excluded-directory EXCLUDED_DIRECTORY]\n                                        [--decision-root DECISION_ROOT]\n                                        [--boundary-marker BOUNDARY_MARKER]\n                                        [--include INCLUDE]\n                                        [--exclude EXCLUDE]\n",
-   "help": "usage: domain-memory init-domain-memory [-h] --repo-root REPO_ROOT\n                                        --output OUTPUT --source SOURCE\n                                        --storage-mode {tracked,ignored,external}\n                                        --data-classification {public,internal,confidential,restricted}\n                                        --review-mode {local-draft-only,scm-verified}\n                                        --source-authority SOURCE_AUTHORITY\n                                        [--review-verifier {git-signed-commit,none}]\n                                        [--review-trigger {git-commit,git-push,none}]\n                                        [--ci-requirement {required,optional,none}]\n                                        [--authorized-signer AUTHORIZED_SIGNER]\n                                        [--distinct-signer]\n                                        [--implementation-root IMPLEMENTATION_ROOT]\n                                        [--excluded-directory EXCLUDED_DIRECTORY]\n                                        [--decision-root DECISION_ROOT]\n                                        [--boundary-marker BOUNDARY_MARKER]\n                                        [--include INCLUDE]\n                                        [--exclude EXCLUDE]\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n  --output OUTPUT       Registry directory to create, inside the repository\n  --source SOURCE       repeatable\n  --storage-mode {tracked,ignored,external}\n  --data-classification {public,internal,confidential,restricted}\n  --review-mode {local-draft-only,scm-verified}\n  --source-authority SOURCE_AUTHORITY\n                        who confirms the selected sources are the right ones,\n                        such as the domain owner's name\n  --review-verifier {git-signed-commit,none}\n  --review-trigger {git-commit,git-push,none}\n  --ci-requirement {required,optional,none}\n  --authorized-signer AUTHORIZED_SIGNER\n  --distinct-signer\n  --implementation-root IMPLEMENTATION_ROOT\n                        repeatable\n  --excluded-directory EXCLUDED_DIRECTORY\n                        repeatable\n  --decision-root DECISION_ROOT\n                        repeatable\n  --boundary-marker BOUNDARY_MARKER\n                        repeatable\n  --include INCLUDE\n  --exclude EXCLUDE\n",
+   "usage": "usage: domain-memory init-domain-memory [-h] [--repo-root REPO_ROOT]\n                                        --output OUTPUT --source SOURCE\n                                        --storage-mode {tracked,ignored,external}\n                                        --data-classification {public,internal,confidential,restricted}\n                                        --review-mode {local-draft-only,scm-verified}\n                                        --source-authority SOURCE_AUTHORITY\n                                        [--review-verifier {git-signed-commit,none}]\n                                        [--review-trigger {git-commit,git-push,none}]\n                                        [--ci-requirement {required,optional,none}]\n                                        [--authorized-signer AUTHORIZED_SIGNER]\n                                        [--distinct-signer]\n                                        [--implementation-root IMPLEMENTATION_ROOT]\n                                        [--excluded-directory EXCLUDED_DIRECTORY]\n                                        [--decision-root DECISION_ROOT]\n                                        [--boundary-marker BOUNDARY_MARKER]\n                                        [--include INCLUDE]\n                                        [--exclude EXCLUDE]\n",
+   "help": "usage: domain-memory init-domain-memory [-h] [--repo-root REPO_ROOT]\n                                        --output OUTPUT --source SOURCE\n                                        --storage-mode {tracked,ignored,external}\n                                        --data-classification {public,internal,confidential,restricted}\n                                        --review-mode {local-draft-only,scm-verified}\n                                        --source-authority SOURCE_AUTHORITY\n                                        [--review-verifier {git-signed-commit,none}]\n                                        [--review-trigger {git-commit,git-push,none}]\n                                        [--ci-requirement {required,optional,none}]\n                                        [--authorized-signer AUTHORIZED_SIGNER]\n                                        [--distinct-signer]\n                                        [--implementation-root IMPLEMENTATION_ROOT]\n                                        [--excluded-directory EXCLUDED_DIRECTORY]\n                                        [--decision-root DECISION_ROOT]\n                                        [--boundary-marker BOUNDARY_MARKER]\n                                        [--include INCLUDE]\n                                        [--exclude EXCLUDE]\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --output OUTPUT       Registry directory to create, inside the repository\n  --source SOURCE       repeatable\n  --storage-mode {tracked,ignored,external}\n  --data-classification {public,internal,confidential,restricted}\n  --review-mode {local-draft-only,scm-verified}\n  --source-authority SOURCE_AUTHORITY\n                        who confirms the selected sources are the right ones,\n                        such as the domain owner's name\n  --review-verifier {git-signed-commit,none}\n  --review-trigger {git-commit,git-push,none}\n  --ci-requirement {required,optional,none}\n  --authorized-signer AUTHORIZED_SIGNER\n  --distinct-signer\n  --implementation-root IMPLEMENTATION_ROOT\n                        repeatable\n  --excluded-directory EXCLUDED_DIRECTORY\n                        repeatable\n  --decision-root DECISION_ROOT\n                        repeatable\n  --boundary-marker BOUNDARY_MARKER\n                        repeatable\n  --include INCLUDE\n  --exclude EXCLUDE\n",
    "actions": [
     {
      "dest": "help",
@@ -1741,10 +1771,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "output",
@@ -1961,8 +1992,8 @@
   },
   "confirm-sources": {
    "prog": "domain-memory confirm-sources",
-   "usage": "usage: domain-memory confirm-sources [-h] --registry-root REGISTRY_ROOT\n                                     --repo-root REPO_ROOT\n                                     --confirmed-by CONFIRMED_BY\n",
-   "help": "usage: domain-memory confirm-sources [-h] --registry-root REGISTRY_ROOT\n                                     --repo-root REPO_ROOT\n                                     --confirmed-by CONFIRMED_BY\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n  --confirmed-by CONFIRMED_BY\n",
+   "usage": "usage: domain-memory confirm-sources [-h] [--registry-root REGISTRY_ROOT]\n                                     [--repo-root REPO_ROOT]\n                                     --confirmed-by CONFIRMED_BY\n",
+   "help": "usage: domain-memory confirm-sources [-h] [--registry-root REGISTRY_ROOT]\n                                     [--repo-root REPO_ROOT]\n                                     --confirmed-by CONFIRMED_BY\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --confirmed-by CONFIRMED_BY\n",
    "actions": [
     {
      "dest": "help",
@@ -1982,10 +2013,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -1993,10 +2025,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "confirmed_by",
@@ -2014,8 +2047,8 @@
   },
   "refresh-sources": {
    "prog": "domain-memory refresh-sources",
-   "usage": "usage: domain-memory refresh-sources [-h] --registry-root REGISTRY_ROOT\n                                     --repo-root REPO_ROOT\n",
-   "help": "usage: domain-memory refresh-sources [-h] --registry-root REGISTRY_ROOT\n                                     --repo-root REPO_ROOT\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n",
+   "usage": "usage: domain-memory refresh-sources [-h] [--registry-root REGISTRY_ROOT]\n                                     [--repo-root REPO_ROOT]\n",
+   "help": "usage: domain-memory refresh-sources [-h] [--registry-root REGISTRY_ROOT]\n                                     [--repo-root REPO_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n",
    "actions": [
     {
      "dest": "help",
@@ -2035,10 +2068,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -2046,18 +2080,19 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     }
    ],
    "mutex": []
   },
   "refresh-listing": {
    "prog": "domain-memory refresh-listing",
-   "usage": "usage: domain-memory refresh-listing [-h] --registry-root REGISTRY_ROOT\n                                     --repo-root REPO_ROOT\n",
-   "help": "usage: domain-memory refresh-listing [-h] --registry-root REGISTRY_ROOT\n                                     --repo-root REPO_ROOT\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n",
+   "usage": "usage: domain-memory refresh-listing [-h] [--registry-root REGISTRY_ROOT]\n                                     [--repo-root REPO_ROOT]\n",
+   "help": "usage: domain-memory refresh-listing [-h] [--registry-root REGISTRY_ROOT]\n                                     [--repo-root REPO_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n",
    "actions": [
     {
      "dest": "help",
@@ -2077,10 +2112,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -2088,18 +2124,19 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     }
    ],
    "mutex": []
   },
   "refine-sources": {
    "prog": "domain-memory refine-sources",
-   "usage": "usage: domain-memory refine-sources [-h] --registry-root REGISTRY_ROOT\n                                    --repo-root REPO_ROOT [--source SOURCE]\n                                    [--add ADD] [--remove REMOVE]\n",
-   "help": "usage: domain-memory refine-sources [-h] --registry-root REGISTRY_ROOT\n                                    --repo-root REPO_ROOT [--source SOURCE]\n                                    [--add ADD] [--remove REMOVE]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n  --source SOURCE       repeatable\n  --add ADD\n  --remove REMOVE\n",
+   "usage": "usage: domain-memory refine-sources [-h] [--registry-root REGISTRY_ROOT]\n                                    [--repo-root REPO_ROOT] [--source SOURCE]\n                                    [--add ADD] [--remove REMOVE]\n",
+   "help": "usage: domain-memory refine-sources [-h] [--registry-root REGISTRY_ROOT]\n                                    [--repo-root REPO_ROOT] [--source SOURCE]\n                                    [--add ADD] [--remove REMOVE]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --source SOURCE       repeatable\n  --add ADD\n  --remove REMOVE\n",
    "actions": [
     {
      "dest": "help",
@@ -2119,10 +2156,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -2130,10 +2168,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "source",
@@ -2334,8 +2373,8 @@
   },
   "validate": {
    "prog": "domain-memory validate",
-   "usage": "usage: domain-memory validate [-h] --registry-root REGISTRY_ROOT\n                              [--repo-root REPO_ROOT] [--require-reviewed]\n",
-   "help": "usage: domain-memory validate [-h] --registry-root REGISTRY_ROOT\n                              [--repo-root REPO_ROOT] [--require-reviewed]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n  --require-reviewed\n",
+   "usage": "usage: domain-memory validate [-h] [--registry-root REGISTRY_ROOT]\n                              [--repo-root REPO_ROOT] [--require-reviewed]\n",
+   "help": "usage: domain-memory validate [-h] [--registry-root REGISTRY_ROOT]\n                              [--repo-root REPO_ROOT] [--require-reviewed]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n  --require-reviewed\n",
    "actions": [
     {
      "dest": "help",
@@ -2355,10 +2394,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -2387,8 +2427,8 @@
   },
   "recover-registry-update": {
    "prog": "domain-memory recover-registry-update",
-   "usage": "usage: domain-memory recover-registry-update [-h]\n                                             --registry-root REGISTRY_ROOT\n                                             [--repo-root REPO_ROOT] [--force]\n",
-   "help": "usage: domain-memory recover-registry-update [-h]\n                                             --registry-root REGISTRY_ROOT\n                                             [--repo-root REPO_ROOT] [--force]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n  --force\n",
+   "usage": "usage: domain-memory recover-registry-update [-h]\n                                             [--registry-root REGISTRY_ROOT]\n                                             [--repo-root REPO_ROOT] [--force]\n",
+   "help": "usage: domain-memory recover-registry-update [-h]\n                                             [--registry-root REGISTRY_ROOT]\n                                             [--repo-root REPO_ROOT] [--force]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n  --force\n",
    "actions": [
     {
      "dest": "help",
@@ -2408,10 +2448,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -2440,8 +2481,8 @@
   },
   "demote-local-reviews": {
    "prog": "domain-memory demote-local-reviews",
-   "usage": "usage: domain-memory demote-local-reviews [-h] --registry-root REGISTRY_ROOT\n                                          --repo-root REPO_ROOT\n",
-   "help": "usage: domain-memory demote-local-reviews [-h] --registry-root REGISTRY_ROOT\n                                          --repo-root REPO_ROOT\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n",
+   "usage": "usage: domain-memory demote-local-reviews [-h] [--registry-root REGISTRY_ROOT]\n                                          [--repo-root REPO_ROOT]\n",
+   "help": "usage: domain-memory demote-local-reviews [-h] [--registry-root REGISTRY_ROOT]\n                                          [--repo-root REPO_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n",
    "actions": [
     {
      "dest": "help",
@@ -2461,10 +2502,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -2472,18 +2514,19 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     }
    ],
    "mutex": []
   },
   "upsert-candidate": {
    "prog": "domain-memory upsert-candidate",
-   "usage": "usage: domain-memory upsert-candidate [-h] --registry-root REGISTRY_ROOT\n                                      --repo-root REPO_ROOT\n                                      --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                      --record-file RECORD_FILE\n",
-   "help": "usage: domain-memory upsert-candidate [-h] --registry-root REGISTRY_ROOT\n                                      --repo-root REPO_ROOT\n                                      --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                      --record-file RECORD_FILE\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --record-file RECORD_FILE\n                        repeatable: one record per file\n",
+   "usage": "usage: domain-memory upsert-candidate [-h] [--registry-root REGISTRY_ROOT]\n                                      [--repo-root REPO_ROOT]\n                                      --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                      --record-file RECORD_FILE\n",
+   "help": "usage: domain-memory upsert-candidate [-h] [--registry-root REGISTRY_ROOT]\n                                      [--repo-root REPO_ROOT]\n                                      --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                      --record-file RECORD_FILE\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --record-file RECORD_FILE\n                        repeatable: one record per file\n",
    "actions": [
     {
      "dest": "help",
@@ -2503,10 +2546,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -2514,10 +2558,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "asset",
@@ -2558,8 +2603,8 @@
   },
   "retract-candidate": {
    "prog": "domain-memory retract-candidate",
-   "usage": "usage: domain-memory retract-candidate [-h] --registry-root REGISTRY_ROOT\n                                       --repo-root REPO_ROOT\n                                       --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                       --id ID --reason REASON\n",
-   "help": "usage: domain-memory retract-candidate [-h] --registry-root REGISTRY_ROOT\n                                       --repo-root REPO_ROOT\n                                       --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                       --id ID --reason REASON\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --id ID               repeatable: every record is withdrawn in one update\n  --reason REASON\n",
+   "usage": "usage: domain-memory retract-candidate [-h] [--registry-root REGISTRY_ROOT]\n                                       [--repo-root REPO_ROOT]\n                                       --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                       --id ID --reason REASON\n",
+   "help": "usage: domain-memory retract-candidate [-h] [--registry-root REGISTRY_ROOT]\n                                       [--repo-root REPO_ROOT]\n                                       --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                       --id ID --reason REASON\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --id ID               repeatable: every record is withdrawn in one update\n  --reason REASON\n",
    "actions": [
     {
      "dest": "help",
@@ -2579,10 +2624,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -2590,10 +2636,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "asset",
@@ -2645,8 +2692,8 @@
   },
   "promote-candidate": {
    "prog": "domain-memory promote-candidate",
-   "usage": "usage: domain-memory promote-candidate [-h] --package-root PACKAGE_ROOT\n                                       --registry-root REGISTRY_ROOT\n                                       --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                       --id ID [--amend]\n                                       [--repo-root REPO_ROOT] [--cite CITE]\n                                       [--cite-function CITE_FUNCTION]\n                                       [--drop-cite DROP_CITE]\n",
-   "help": "usage: domain-memory promote-candidate [-h] --package-root PACKAGE_ROOT\n                                       --registry-root REGISTRY_ROOT\n                                       --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                       --id ID [--amend]\n                                       [--repo-root REPO_ROOT] [--cite CITE]\n                                       [--cite-function CITE_FUNCTION]\n                                       [--drop-cite DROP_CITE]\n\noptions:\n  -h, --help            show this help message and exit\n  --package-root PACKAGE_ROOT\n  --registry-root REGISTRY_ROOT\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --id ID\n  --amend               a reviewed record: copy it without its review fields\n                        and supersede the proposal that reviewed it\n  --repo-root REPO_ROOT\n  --cite CITE           repeatable PATH:START-END to add to the promoted\n                        record's evidence\n  --cite-function CITE_FUNCTION\n                        repeatable PATH:NAME, a function the file defines, to\n                        add as evidence\n  --drop-cite DROP_CITE\n                        repeatable PATH:START-END to remove from the promoted\n                        record's evidence\n",
+   "usage": "usage: domain-memory promote-candidate [-h] --package-root PACKAGE_ROOT\n                                       [--registry-root REGISTRY_ROOT]\n                                       --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                       --id ID [--amend]\n                                       [--repo-root REPO_ROOT] [--cite CITE]\n                                       [--cite-function CITE_FUNCTION]\n                                       [--drop-cite DROP_CITE]\n",
+   "help": "usage: domain-memory promote-candidate [-h] --package-root PACKAGE_ROOT\n                                       [--registry-root REGISTRY_ROOT]\n                                       --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n                                       --id ID [--amend]\n                                       [--repo-root REPO_ROOT] [--cite CITE]\n                                       [--cite-function CITE_FUNCTION]\n                                       [--drop-cite DROP_CITE]\n\noptions:\n  -h, --help            show this help message and exit\n  --package-root PACKAGE_ROOT\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --asset {contexts,vocabulary,aggregates,rules,contracts,interactions,decisions,events,capabilities,value-objects,dependency-policies}\n  --id ID\n  --amend               a reviewed record: copy it without its review fields\n                        and supersede the proposal that reviewed it\n  --repo-root REPO_ROOT\n  --cite CITE           repeatable PATH:START-END to add to the promoted\n                        record's evidence\n  --cite-function CITE_FUNCTION\n                        repeatable PATH:NAME, a function the file defines, to\n                        add as evidence\n  --drop-cite DROP_CITE\n                        repeatable PATH:START-END to remove from the promoted\n                        record's evidence\n",
    "actions": [
     {
      "dest": "help",
@@ -2677,10 +2724,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "asset",
@@ -2776,8 +2824,8 @@
   },
   "harvest-candidates": {
    "prog": "domain-memory harvest-candidates",
-   "usage": "usage: domain-memory harvest-candidates [-h] --registry-root REGISTRY_ROOT\n                                        --repo-root REPO_ROOT\n                                        --from-root FROM_ROOT\n                                        [--context-map CONTEXT_MAP]\n                                        [--keep-duplicates]\n",
-   "help": "usage: domain-memory harvest-candidates [-h] --registry-root REGISTRY_ROOT\n                                        --repo-root REPO_ROOT\n                                        --from-root FROM_ROOT\n                                        [--context-map CONTEXT_MAP]\n                                        [--keep-duplicates]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n  --from-root FROM_ROOT\n  --context-map CONTEXT_MAP\n                        repeatable CANDIDATE=GOLD, over the pairing found by\n                        path or name\n  --keep-duplicates\n",
+   "usage": "usage: domain-memory harvest-candidates [-h] [--registry-root REGISTRY_ROOT]\n                                        [--repo-root REPO_ROOT]\n                                        --from-root FROM_ROOT\n                                        [--context-map CONTEXT_MAP]\n                                        [--keep-duplicates]\n",
+   "help": "usage: domain-memory harvest-candidates [-h] [--registry-root REGISTRY_ROOT]\n                                        [--repo-root REPO_ROOT]\n                                        --from-root FROM_ROOT\n                                        [--context-map CONTEXT_MAP]\n                                        [--keep-duplicates]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --from-root FROM_ROOT\n  --context-map CONTEXT_MAP\n                        repeatable CANDIDATE=GOLD, over the pairing found by\n                        path or name\n  --keep-duplicates\n",
    "actions": [
     {
      "dest": "help",
@@ -2797,10 +2845,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -2808,10 +2857,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "from_root",
@@ -2851,8 +2901,8 @@
   },
   "harvest": {
    "prog": "domain-memory harvest",
-   "usage": "usage: domain-memory harvest [-h] --registry-root REGISTRY_ROOT\n                             --repo-root REPO_ROOT --spec SPEC\n                             [--changes-root CHANGES_ROOT]\n                             [--through {draft,verified}]\n",
-   "help": "usage: domain-memory harvest [-h] --registry-root REGISTRY_ROOT\n                             --repo-root REPO_ROOT --spec SPEC\n                             [--changes-root CHANGES_ROOT]\n                             [--through {draft,verified}]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n  --spec SPEC\n  --changes-root CHANGES_ROOT\n  --through {draft,verified}\n",
+   "usage": "usage: domain-memory harvest [-h] [--registry-root REGISTRY_ROOT]\n                             [--repo-root REPO_ROOT] --spec SPEC\n                             [--changes-root CHANGES_ROOT]\n                             [--through {draft,verified}]\n",
+   "help": "usage: domain-memory harvest [-h] [--registry-root REGISTRY_ROOT]\n                             [--repo-root REPO_ROOT] --spec SPEC\n                             [--changes-root CHANGES_ROOT]\n                             [--through {draft,verified}]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --spec SPEC\n  --changes-root CHANGES_ROOT\n  --through {draft,verified}\n",
    "actions": [
     {
      "dest": "help",
@@ -2872,10 +2922,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -2883,10 +2934,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "spec",
@@ -2929,8 +2981,8 @@
   },
   "discard-harvest": {
    "prog": "domain-memory discard-harvest",
-   "usage": "usage: domain-memory discard-harvest [-h] [--package-root PACKAGE_ROOT]\n                                     [--spec SPEC]\n                                     [--changes-root CHANGES_ROOT]\n                                     --registry-root REGISTRY_ROOT\n                                     --repo-root REPO_ROOT --reason REASON\n",
-   "help": "usage: domain-memory discard-harvest [-h] [--package-root PACKAGE_ROOT]\n                                     [--spec SPEC]\n                                     [--changes-root CHANGES_ROOT]\n                                     --registry-root REGISTRY_ROOT\n                                     --repo-root REPO_ROOT --reason REASON\n\noptions:\n  -h, --help            show this help message and exit\n  --package-root PACKAGE_ROOT\n  --spec SPEC\n  --changes-root CHANGES_ROOT\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n  --reason REASON\n",
+   "usage": "usage: domain-memory discard-harvest [-h] [--package-root PACKAGE_ROOT]\n                                     [--spec SPEC]\n                                     [--changes-root CHANGES_ROOT]\n                                     [--registry-root REGISTRY_ROOT]\n                                     [--repo-root REPO_ROOT] --reason REASON\n",
+   "help": "usage: domain-memory discard-harvest [-h] [--package-root PACKAGE_ROOT]\n                                     [--spec SPEC]\n                                     [--changes-root CHANGES_ROOT]\n                                     [--registry-root REGISTRY_ROOT]\n                                     [--repo-root REPO_ROOT] --reason REASON\n\noptions:\n  -h, --help            show this help message and exit\n  --package-root PACKAGE_ROOT\n  --spec SPEC\n  --changes-root CHANGES_ROOT\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --reason REASON\n",
    "actions": [
     {
      "dest": "help",
@@ -2983,10 +3035,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -2994,10 +3047,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "reason",
@@ -3015,8 +3069,8 @@
   },
   "submit-proposal": {
    "prog": "domain-memory submit-proposal",
-   "usage": "usage: domain-memory submit-proposal [-h] --package-root PACKAGE_ROOT\n                                     --registry-root REGISTRY_ROOT\n                                     --repo-root REPO_ROOT\n",
-   "help": "usage: domain-memory submit-proposal [-h] --package-root PACKAGE_ROOT\n                                     --registry-root REGISTRY_ROOT\n                                     --repo-root REPO_ROOT\n\noptions:\n  -h, --help            show this help message and exit\n  --package-root PACKAGE_ROOT\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n",
+   "usage": "usage: domain-memory submit-proposal [-h] --package-root PACKAGE_ROOT\n                                     [--registry-root REGISTRY_ROOT]\n                                     [--repo-root REPO_ROOT]\n",
+   "help": "usage: domain-memory submit-proposal [-h] --package-root PACKAGE_ROOT\n                                     [--registry-root REGISTRY_ROOT]\n                                     [--repo-root REPO_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --package-root PACKAGE_ROOT\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n",
    "actions": [
     {
      "dest": "help",
@@ -3047,10 +3101,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -3058,10 +3113,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     }
    ],
    "mutex": []
@@ -3240,8 +3296,8 @@
   },
   "verify-proposal": {
    "prog": "domain-memory verify-proposal",
-   "usage": "usage: domain-memory verify-proposal [-h] --package-root PACKAGE_ROOT\n                                     --registry-root REGISTRY_ROOT\n                                     --repo-root REPO_ROOT\n",
-   "help": "usage: domain-memory verify-proposal [-h] --package-root PACKAGE_ROOT\n                                     --registry-root REGISTRY_ROOT\n                                     --repo-root REPO_ROOT\n\noptions:\n  -h, --help            show this help message and exit\n  --package-root PACKAGE_ROOT\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n",
+   "usage": "usage: domain-memory verify-proposal [-h] --package-root PACKAGE_ROOT\n                                     [--registry-root REGISTRY_ROOT]\n                                     [--repo-root REPO_ROOT]\n",
+   "help": "usage: domain-memory verify-proposal [-h] --package-root PACKAGE_ROOT\n                                     [--registry-root REGISTRY_ROOT]\n                                     [--repo-root REPO_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --package-root PACKAGE_ROOT\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n",
    "actions": [
     {
      "dest": "help",
@@ -3272,10 +3328,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -3283,18 +3340,19 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     }
    ],
    "mutex": []
   },
   "rebase-proposal": {
    "prog": "domain-memory rebase-proposal",
-   "usage": "usage: domain-memory rebase-proposal [-h] --package-root PACKAGE_ROOT\n                                     --registry-root REGISTRY_ROOT\n                                     --repo-root REPO_ROOT\n",
-   "help": "usage: domain-memory rebase-proposal [-h] --package-root PACKAGE_ROOT\n                                     --registry-root REGISTRY_ROOT\n                                     --repo-root REPO_ROOT\n\noptions:\n  -h, --help            show this help message and exit\n  --package-root PACKAGE_ROOT\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n",
+   "usage": "usage: domain-memory rebase-proposal [-h] --package-root PACKAGE_ROOT\n                                     [--registry-root REGISTRY_ROOT]\n                                     [--repo-root REPO_ROOT]\n",
+   "help": "usage: domain-memory rebase-proposal [-h] --package-root PACKAGE_ROOT\n                                     [--registry-root REGISTRY_ROOT]\n                                     [--repo-root REPO_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --package-root PACKAGE_ROOT\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n",
    "actions": [
     {
      "dest": "help",
@@ -3325,10 +3383,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -3336,18 +3395,19 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     }
    ],
    "mutex": []
   },
   "record-test-result": {
    "prog": "domain-memory record-test-result",
-   "usage": "usage: domain-memory record-test-result [-h] --package-root PACKAGE_ROOT\n                                        --registry-root REGISTRY_ROOT\n                                        --repo-root REPO_ROOT\n                                        --obligation OBLIGATION\n                                        --command-profile COMMAND_PROFILE\n                                        [--timeout TIMEOUT] [--cwd CWD]\n",
-   "help": "usage: domain-memory record-test-result [-h] --package-root PACKAGE_ROOT\n                                        --registry-root REGISTRY_ROOT\n                                        --repo-root REPO_ROOT\n                                        --obligation OBLIGATION\n                                        --command-profile COMMAND_PROFILE\n                                        [--timeout TIMEOUT] [--cwd CWD]\n\noptions:\n  -h, --help            show this help message and exit\n  --package-root PACKAGE_ROOT\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n  --obligation OBLIGATION\n  --command-profile COMMAND_PROFILE\n                        a label for the kind of run, one of the policy's\n                        approved_command_profiles; it never expands into a\n                        command\n  --timeout TIMEOUT\n  --cwd CWD\n",
+   "usage": "usage: domain-memory record-test-result [-h] --package-root PACKAGE_ROOT\n                                        [--registry-root REGISTRY_ROOT]\n                                        [--repo-root REPO_ROOT]\n                                        --obligation OBLIGATION\n                                        --command-profile COMMAND_PROFILE\n                                        [--timeout TIMEOUT] [--cwd CWD]\n",
+   "help": "usage: domain-memory record-test-result [-h] --package-root PACKAGE_ROOT\n                                        [--registry-root REGISTRY_ROOT]\n                                        [--repo-root REPO_ROOT]\n                                        --obligation OBLIGATION\n                                        --command-profile COMMAND_PROFILE\n                                        [--timeout TIMEOUT] [--cwd CWD]\n\noptions:\n  -h, --help            show this help message and exit\n  --package-root PACKAGE_ROOT\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --obligation OBLIGATION\n  --command-profile COMMAND_PROFILE\n                        a label for the kind of run, one of the policy's\n                        approved_command_profiles; it never expands into a\n                        command\n  --timeout TIMEOUT\n  --cwd CWD\n",
    "actions": [
     {
      "dest": "help",
@@ -3378,10 +3438,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -3389,10 +3450,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "obligation",
@@ -3443,8 +3505,8 @@
   },
   "ship-package": {
    "prog": "domain-memory ship-package",
-   "usage": "usage: domain-memory ship-package [-h] --package-root PACKAGE_ROOT\n                                  --registry-root REGISTRY_ROOT\n                                  --repo-root REPO_ROOT [--commit COMMIT]\n",
-   "help": "usage: domain-memory ship-package [-h] --package-root PACKAGE_ROOT\n                                  --registry-root REGISTRY_ROOT\n                                  --repo-root REPO_ROOT [--commit COMMIT]\n\noptions:\n  -h, --help            show this help message and exit\n  --package-root PACKAGE_ROOT\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n  --commit COMMIT\n",
+   "usage": "usage: domain-memory ship-package [-h] --package-root PACKAGE_ROOT\n                                  [--registry-root REGISTRY_ROOT]\n                                  [--repo-root REPO_ROOT] [--commit COMMIT]\n",
+   "help": "usage: domain-memory ship-package [-h] --package-root PACKAGE_ROOT\n                                  [--registry-root REGISTRY_ROOT]\n                                  [--repo-root REPO_ROOT] [--commit COMMIT]\n\noptions:\n  -h, --help            show this help message and exit\n  --package-root PACKAGE_ROOT\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --commit COMMIT\n",
    "actions": [
     {
      "dest": "help",
@@ -3475,10 +3537,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -3486,10 +3549,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "commit",
@@ -3576,8 +3640,8 @@
   },
   "amend-policy": {
    "prog": "domain-memory amend-policy",
-   "usage": "usage: domain-memory amend-policy [-h] --registry-root REGISTRY_ROOT\n                                  [--set FIELD=VALUE] --reason REASON\n                                  [--verifier VERIFIER]\n",
-   "help": "usage: domain-memory amend-policy [-h] --registry-root REGISTRY_ROOT\n                                  [--set FIELD=VALUE] --reason REASON\n                                  [--verifier VERIFIER]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --set FIELD=VALUE\n  --reason REASON\n  --verifier VERIFIER\n",
+   "usage": "usage: domain-memory amend-policy [-h] [--registry-root REGISTRY_ROOT]\n                                  [--set FIELD=VALUE] --reason REASON\n                                  [--verifier VERIFIER]\n",
+   "help": "usage: domain-memory amend-policy [-h] [--registry-root REGISTRY_ROOT]\n                                  [--set FIELD=VALUE] --reason REASON\n                                  [--verifier VERIFIER]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --set FIELD=VALUE\n  --reason REASON\n  --verifier VERIFIER\n",
    "actions": [
     {
      "dest": "help",
@@ -3597,10 +3661,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "set",
@@ -3640,8 +3705,8 @@
   },
   "init-signing-key": {
    "prog": "domain-memory init-signing-key",
-   "usage": "usage: domain-memory init-signing-key [-h] --repo-root REPO_ROOT\n                                      --principal PRINCIPAL\n                                      [--key-file KEY_FILE] [--force]\n                                      [--sign-every-commit]\n",
-   "help": "usage: domain-memory init-signing-key [-h] --repo-root REPO_ROOT\n                                      --principal PRINCIPAL\n                                      [--key-file KEY_FILE] [--force]\n                                      [--sign-every-commit]\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n  --principal PRINCIPAL\n  --key-file KEY_FILE\n  --force\n  --sign-every-commit\n",
+   "usage": "usage: domain-memory init-signing-key [-h] [--repo-root REPO_ROOT]\n                                      --principal PRINCIPAL\n                                      [--key-file KEY_FILE] [--force]\n                                      [--sign-every-commit]\n",
+   "help": "usage: domain-memory init-signing-key [-h] [--repo-root REPO_ROOT]\n                                      --principal PRINCIPAL\n                                      [--key-file KEY_FILE] [--force]\n                                      [--sign-every-commit]\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --principal PRINCIPAL\n  --key-file KEY_FILE\n  --force\n  --sign-every-commit\n",
    "actions": [
     {
      "dest": "help",
@@ -3661,10 +3726,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "principal",
@@ -3819,8 +3885,8 @@
   },
   "verify-git-governance": {
    "prog": "domain-memory verify-git-governance",
-   "usage": "usage: domain-memory verify-git-governance [-h] --registry-root REGISTRY_ROOT\n                                           --repo-root REPO_ROOT\n                                           (--commit COMMIT | --stdin)\n",
-   "help": "usage: domain-memory verify-git-governance [-h] --registry-root REGISTRY_ROOT\n                                           --repo-root REPO_ROOT\n                                           (--commit COMMIT | --stdin)\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n  --commit COMMIT\n  --stdin               Read the commits, one per line, from standard input\n",
+   "usage": "usage: domain-memory verify-git-governance [-h]\n                                           [--registry-root REGISTRY_ROOT]\n                                           [--repo-root REPO_ROOT]\n                                           (--commit COMMIT | --stdin)\n",
+   "help": "usage: domain-memory verify-git-governance [-h]\n                                           [--registry-root REGISTRY_ROOT]\n                                           [--repo-root REPO_ROOT]\n                                           (--commit COMMIT | --stdin)\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --commit COMMIT\n  --stdin               Read the commits, one per line, from standard input\n",
    "actions": [
     {
      "dest": "help",
@@ -3840,10 +3906,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -3851,10 +3918,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "commit",
@@ -3891,8 +3959,8 @@
   },
   "audit-attestations": {
    "prog": "domain-memory audit-attestations",
-   "usage": "usage: domain-memory audit-attestations [-h] --repo-root REPO_ROOT\n                                        --changes-root CHANGES_ROOT\n",
-   "help": "usage: domain-memory audit-attestations [-h] --repo-root REPO_ROOT\n                                        --changes-root CHANGES_ROOT\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n  --changes-root CHANGES_ROOT\n",
+   "usage": "usage: domain-memory audit-attestations [-h] [--repo-root REPO_ROOT]\n                                        --changes-root CHANGES_ROOT\n",
+   "help": "usage: domain-memory audit-attestations [-h] [--repo-root REPO_ROOT]\n                                        --changes-root CHANGES_ROOT\n\noptions:\n  -h, --help            show this help message and exit\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n  --changes-root CHANGES_ROOT\n",
    "actions": [
     {
      "dest": "help",
@@ -3912,10 +3980,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "changes_root",
@@ -3933,8 +4002,8 @@
   },
   "verify-audit": {
    "prog": "domain-memory verify-audit",
-   "usage": "usage: domain-memory verify-audit [-h] --registry-root REGISTRY_ROOT\n                                  [--changes-root CHANGES_ROOT]\n                                  [--against AGAINST]\n",
-   "help": "usage: domain-memory verify-audit [-h] --registry-root REGISTRY_ROOT\n                                  [--changes-root CHANGES_ROOT]\n                                  [--against AGAINST]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --changes-root CHANGES_ROOT\n  --against AGAINST\n",
+   "usage": "usage: domain-memory verify-audit [-h] [--registry-root REGISTRY_ROOT]\n                                  [--changes-root CHANGES_ROOT]\n                                  [--against AGAINST]\n",
+   "help": "usage: domain-memory verify-audit [-h] [--registry-root REGISTRY_ROOT]\n                                  [--changes-root CHANGES_ROOT]\n                                  [--against AGAINST]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --changes-root CHANGES_ROOT\n  --against AGAINST\n",
    "actions": [
     {
      "dest": "help",
@@ -3954,10 +4023,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "changes_root",
@@ -3986,8 +4056,8 @@
   },
   "reconcile-audit": {
    "prog": "domain-memory reconcile-audit",
-   "usage": "usage: domain-memory reconcile-audit [-h] --registry-root REGISTRY_ROOT\n",
-   "help": "usage: domain-memory reconcile-audit [-h] --registry-root REGISTRY_ROOT\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n",
+   "usage": "usage: domain-memory reconcile-audit [-h] [--registry-root REGISTRY_ROOT]\n",
+   "help": "usage: domain-memory reconcile-audit [-h] [--registry-root REGISTRY_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n",
    "actions": [
     {
      "dest": "help",
@@ -4007,18 +4077,19 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     }
    ],
    "mutex": []
   },
   "refresh-indexes": {
    "prog": "domain-memory refresh-indexes",
-   "usage": "usage: domain-memory refresh-indexes [-h] --registry-root REGISTRY_ROOT\n",
-   "help": "usage: domain-memory refresh-indexes [-h] --registry-root REGISTRY_ROOT\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n",
+   "usage": "usage: domain-memory refresh-indexes [-h] [--registry-root REGISTRY_ROOT]\n",
+   "help": "usage: domain-memory refresh-indexes [-h] [--registry-root REGISTRY_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n",
    "actions": [
     {
      "dest": "help",
@@ -4038,18 +4109,19 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     }
    ],
    "mutex": []
   },
   "install-git-hitl-hook": {
    "prog": "domain-memory install-git-hitl-hook",
-   "usage": "usage: domain-memory install-git-hitl-hook [-h] --registry-root REGISTRY_ROOT\n                                           --repo-root REPO_ROOT\n",
-   "help": "usage: domain-memory install-git-hitl-hook [-h] --registry-root REGISTRY_ROOT\n                                           --repo-root REPO_ROOT\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n",
+   "usage": "usage: domain-memory install-git-hitl-hook [-h]\n                                           [--registry-root REGISTRY_ROOT]\n                                           [--repo-root REPO_ROOT]\n",
+   "help": "usage: domain-memory install-git-hitl-hook [-h]\n                                           [--registry-root REGISTRY_ROOT]\n                                           [--repo-root REPO_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n",
    "actions": [
     {
      "dest": "help",
@@ -4069,10 +4141,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -4080,18 +4153,19 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     }
    ],
    "mutex": []
   },
   "install-pre-commit-hook": {
    "prog": "domain-memory install-pre-commit-hook",
-   "usage": "usage: domain-memory install-pre-commit-hook [-h]\n                                             --registry-root REGISTRY_ROOT\n                                             --repo-root REPO_ROOT\n",
-   "help": "usage: domain-memory install-pre-commit-hook [-h]\n                                             --registry-root REGISTRY_ROOT\n                                             --repo-root REPO_ROOT\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n",
+   "usage": "usage: domain-memory install-pre-commit-hook [-h]\n                                             [--registry-root REGISTRY_ROOT]\n                                             [--repo-root REPO_ROOT]\n",
+   "help": "usage: domain-memory install-pre-commit-hook [-h]\n                                             [--registry-root REGISTRY_ROOT]\n                                             [--repo-root REPO_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n",
    "actions": [
     {
      "dest": "help",
@@ -4111,10 +4185,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -4122,18 +4197,19 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     }
    ],
    "mutex": []
   },
   "governance-readiness": {
    "prog": "domain-memory governance-readiness",
-   "usage": "usage: domain-memory governance-readiness [-h] --registry-root REGISTRY_ROOT\n                                          --repo-root REPO_ROOT\n",
-   "help": "usage: domain-memory governance-readiness [-h] --registry-root REGISTRY_ROOT\n                                          --repo-root REPO_ROOT\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n  --repo-root REPO_ROOT\n",
+   "usage": "usage: domain-memory governance-readiness [-h] [--registry-root REGISTRY_ROOT]\n                                          [--repo-root REPO_ROOT]\n",
+   "help": "usage: domain-memory governance-readiness [-h] [--registry-root REGISTRY_ROOT]\n                                          [--repo-root REPO_ROOT]\n\noptions:\n  -h, --help            show this help message and exit\n  --registry-root REGISTRY_ROOT\n                        default: the one Domain Memory the repository holds\n  --repo-root REPO_ROOT\n                        default: the top level of the git repository the\n                        command runs in\n",
    "actions": [
     {
      "dest": "help",
@@ -4153,10 +4229,11 @@
       "--registry-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     },
     {
      "dest": "repo_root",
@@ -4164,10 +4241,11 @@
       "--repo-root"
      ],
      "kind": "store",
-     "required": true,
+     "required": false,
      "type": "path",
      "choices": null,
-     "default": null
+     "default": null,
+     "discovered": true
     }
    ],
    "mutex": []
