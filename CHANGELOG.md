@@ -12,6 +12,10 @@ Notable changes to the Domain Memory plugin, newest first. The format follows Ke
 
 - Inside a repository, `--repo-root` and `--registry-root` may be left out on every command that required them: `--repo-root` becomes the top level of the git repository the command runs in, and `--registry-root` the one Domain Memory that repository holds, found the way `readiness` finds it. `validate`, `verify-evidence`, `verify-audit` and the rest become one word. A command refuses, naming them, when the repository holds none or several Domain Memories or when it runs outside a git repository; an explicit flag always wins, and the hooks keep passing both. Each command's usage and help show the two options as optional, with what they default to.
 
+### Fixed
+
+- `expected_output` refuses to skip the cases that read the reference repository when `CI` is set, so a CI run that loses `DOMAIN_MEMORY_REFERENCE_REPO` fails instead of passing on fewer cases.
+
 ## 6.3.0
 
 ### Added

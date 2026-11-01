@@ -1016,6 +1016,12 @@ fn main() {
             )
         })
     });
+    if repo.is_none() && std::env::var_os("CI").is_some() {
+        println!(
+            "Set DOMAIN_MEMORY_REFERENCE_REPO to a clone of {REFERENCE_REPOSITORY}: CI runs every case, so it does not skip the ones that read it."
+        );
+        std::process::exit(1);
+    }
     let binary = std::env::var_os("DOMAIN_MEMORY_BINARY")
         .map(PathBuf::from)
         .unwrap_or_else(|| PathBuf::from(env!("CARGO_BIN_EXE_domain-memory")));
