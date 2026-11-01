@@ -15,16 +15,57 @@ Every new agent session starts out knowing nothing about your domain. It works o
 
 ## Install
 
-Every release is a tag, `v<version>`, with a [GitHub Release](https://github.com/ArthurC02/Domain-Memory-PlugIn/releases) carrying the executables, their `SHA256SUMS` and a build provenance attestation. Pin a tag, so the Skills an agent reads and the executable your hooks and CI run are the same version.
+Pick the line for where you work. Each installs the latest release; [pinning](#pin-a-version-for-a-team) shows how to hold a team to one.
 
-### Claude Code
+**Claude Code**, in any session:
 
 ```text
-/plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v6.5.0
+/plugin marketplace add ArthurC02/Domain-Memory-PlugIn
 /plugin install domain-memory@domain-memory
 ```
 
-The install name is `<plugin>@<marketplace>`, and both are called `domain-memory`. Without `#<tag>` the marketplace follows `main`. To declare it for everyone who works in a repository, put this in its `.claude/settings.json`; Claude Code honours it once the folder is trusted, and offers each person the install:
+The `domain-memory` Skill is the entry point: it runs `readiness` first and picks the capability the work needs.
+
+**The command line**, on macOS, Linux or Git Bash (needs `curl`):
+
+```bash
+curl -fsSL https://github.com/ArthurC02/Domain-Memory-PlugIn/releases/latest/download/install.sh | sh
+```
+
+**The command line** on Windows, in PowerShell; it adds itself to your PATH:
+
+```powershell
+irm https://github.com/ArthurC02/Domain-Memory-PlugIn/releases/latest/download/install.ps1 | iex
+```
+
+Both check the executable against the release's `SHA256SUMS` before it lands, print the version they installed, and say so when the install folder (`~/.local/bin` by default) is not on PATH. Then, inside your repository: `domain-memory readiness`.
+
+**GitHub Actions**:
+
+```yaml
+- uses: ArthurC02/Domain-Memory-PlugIn@v6.6.0
+- run: |
+    domain-memory validate
+    domain-memory verify-evidence
+    domain-memory verify-audit
+```
+
+The action installs the release named by its tag and puts it on PATH. Inside a repository no command needs `--repo-root` or `--registry-root`.
+
+### Git hooks
+
+With `domain-memory` on PATH, from inside the repository:
+
+```bash
+domain-memory install-pre-commit-hook
+domain-memory install-git-hitl-hook
+```
+
+The pre-commit hook stops a commit whose staged code no longer matches what the Registry cites; the pre-push hook checks the signatures on Registry commits. They find the executable through `git config domain-memory.executable` if set, then the plugin a clone of this repository holds, then PATH, and an installer run from a release records its own path in the clone's git config. A missing executable stops the hook with the install line above. Hooks regenerate nothing on an upgrade: they call whatever executable they find.
+
+### Pin a version for a team
+
+Pin the same tag everywhere, so the Skills an agent reads, the hooks and CI run one release. In Claude Code, `/plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v6.6.0`; to declare it for everyone who opens the repository, add this to its `.claude/settings.json`, or run `claude plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v6.6.0 --scope project` then `claude plugin install domain-memory@domain-memory --scope project`:
 
 ```json
 {
@@ -33,7 +74,7 @@ The install name is `<plugin>@<marketplace>`, and both are called `domain-memory
       "source": {
         "source": "github",
         "repo": "ArthurC02/Domain-Memory-PlugIn",
-        "ref": "v6.5.0"
+        "ref": "v6.6.0"
       }
     }
   },
@@ -43,32 +84,18 @@ The install name is `<plugin>@<marketplace>`, and both are called `domain-memory
 }
 ```
 
-The `domain-memory` Skill is the entry point: it runs `readiness` first and picks the smallest of the seven capabilities.
+Claude Code honours it once the folder is trusted. On the command line, pin with `DOMAIN_MEMORY_VERSION=v6.6.0` in front of `sh` (`$env:DOMAIN_MEMORY_VERSION = 'v6.6.0'` before `irm` in PowerShell); `DOMAIN_MEMORY_INSTALL_DIR` chooses the folder. In GitHub Actions the action's tag is the pin. Every release is a tag `v<version>`, and its [GitHub Release](https://github.com/ArthurC02/Domain-Memory-PlugIn/releases) carries the executables, `SHA256SUMS` and a build provenance attestation (`gh attestation verify <file> -R ArthurC02/Domain-Memory-PlugIn`).
 
-### Git hooks, CI and scripts
+### Upgrading
 
-One executable, checked against the release's `SHA256SUMS` before it lands:
-
-```bash
-curl -fsSL https://github.com/ArthurC02/Domain-Memory-PlugIn/releases/download/v6.5.0/install.sh | sh -s -- --version v6.5.0 --to .domain-memory/bin
-```
-
-```powershell
-& ([scriptblock]::Create((irm https://github.com/ArthurC02/Domain-Memory-PlugIn/releases/download/v6.5.0/install.ps1))) -Version v6.5.0 -To .domain-memory\bin
-```
-
-Each prints where the executable landed. The hooks that `install-git-hitl-hook` and `install-pre-commit-hook` write run the executable that `git config domain-memory.executable <path>` names, and print `git config domain-memory.install-hint <text>` when it is missing, so a repository that installs it this way points the hooks at it once. Run a script from inside a git hook? Unset the variables git sets for hooks first, `unset $(git rev-parse --local-env-vars)`, or a nested `git -C <other repository>` answers for the hook's repository.
+- Claude Code: `claude plugin marketplace update domain-memory`, then `claude plugin update domain-memory@domain-memory`; with a pinned `ref`, move it to the new tag first.
+- The command line: run the install line again. `domain-memory --version` says what you have.
+- GitHub Actions: move the action's tag.
+- Git hooks keep working; the [CHANGELOG](CHANGELOG.md) says when a release changes them enough to re-run `install-pre-commit-hook` or `install-git-hitl-hook`.
 
 ### Any other agent, or from a clone
 
-Point your agent at [`AGENTS.md`](AGENTS.md). A clone runs the executable committed for its platform through one launcher, `bin/domain-memory` (`bin\domain-memory.cmd` from `cmd` or PowerShell):
-
-```bash
-git clone --branch v6.5.0 https://github.com/ArthurC02/Domain-Memory-PlugIn.git domain-memory
-domain-memory/bin/domain-memory readiness --repo-root path/to/your/repo
-```
-
-Linux x86-64, macOS (Apple silicon and Intel) and Windows x86-64 have a committed executable. On any other platform, build it with `cargo build --release --locked --manifest-path engine/Cargo.toml`; the launcher runs that build.
+Point your agent at [`AGENTS.md`](AGENTS.md). A clone runs the executable committed for its platform through one launcher, `bin/domain-memory` (`bin\domain-memory.cmd` from `cmd` or PowerShell). Linux x86-64, macOS (Apple silicon and Intel) and Windows x86-64 have one; on any other platform, `cargo build --release --locked --manifest-path engine/Cargo.toml` builds it and the launcher runs that build.
 
 ### MCP
 

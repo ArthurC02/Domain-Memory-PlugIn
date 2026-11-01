@@ -2,6 +2,22 @@
 
 Notable changes to the Domain Memory plugin, newest first. The format follows Keep a Changelog, and versions follow Semantic Versioning: a minor version adds or changes behavior, a patch version only fixes it. Versions before 0.10.0 are recorded in the repository history only.
 
+## 6.6.0
+
+Installing is one line per place, from a newcomer's trial (SkillHub feedback 270–279) and the conventions of uv, deno, mise and cargo-dist.
+
+### Added
+
+- `action.yml`: `uses: ArthurC02/Domain-Memory-PlugIn@v<version>` installs that release in GitHub Actions, checked against its `SHA256SUMS`, and puts it on PATH; the `version` input chooses another, and the `path` output names the executable.
+- The hooks find `domain-memory` on PATH when neither `git config domain-memory.executable` nor a plugin's `engine/` names one, so an install on PATH needs no configuration.
+- `install-pre-commit-hook` and `install-git-hitl-hook`, run by an executable outside a plugin's `engine/` directory, record it as `git config domain-memory.executable` when the clone names none, and say which executable the hook runs.
+- `README.md` has one install line per place (Claude Code, the command line on macOS, Linux and Windows, GitHub Actions), the hooks, pinning a version for a team in `.claude/settings.json` or with the `claude plugin` commands, and upgrading.
+
+### Changed
+
+- `install.sh` and `install.ps1` are run from the latest release's address with no arguments, take `DOMAIN_MEMORY_VERSION` and `DOMAIN_MEMORY_INSTALL_DIR` from the environment as well as `--version` and `--to`, print the version they installed, and say when the folder is not on PATH. `install.ps1` adds its folder to the user's PATH unless `DOMAIN_MEMORY_NO_MODIFY_PATH` is set.
+- A hook that finds no executable names the install line instead of a cargo build when it has no engine. Existing hooks keep working; re-run `install-pre-commit-hook` and `install-git-hitl-hook` to get the PATH lookup.
+
 ## 6.5.0
 
 ### Added

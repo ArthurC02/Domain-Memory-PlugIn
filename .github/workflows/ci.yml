@@ -57,3 +57,24 @@ jobs:
           awk '/^DIFF /{if(n++<10&&block)print "::error title=Recorded output differs::" block; block=substr($0,6); next} /^     /&&block{block=block "%0A" substr($0,6)} END{if(n<=10&&block)print "::error title=Recorded output differs::" block}' "$log"
           grep -E '^[0-9]+ of [0-9]+ cases match|^Set DOMAIN_MEMORY|panicked' "$log" | sed 's/^/::error::/'
           exit 1
+
+  setup-action:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - id: setup
+        uses: ./
+        with:
+          version: v6.5.0
+      - name: The installed executable is on PATH
+        shell: bash
+        run: |
+          test "$(domain-memory --version)" = "domain-memory 6.5.0"
+          test -x "${{ steps.setup.outputs.path }}"

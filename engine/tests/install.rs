@@ -142,7 +142,7 @@ fn install_sh_installs_a_release_whose_digest_matches() {
     assert!(run.status.success(), "{}", text(&run.stderr));
     let installed = to.join(INSTALLED);
     assert!(
-        text(&run.stdout).contains("Installed v0.0.0-test of Domain Memory at "),
+        text(&run.stdout).contains(&format!("Installed domain-memory {} at ", plugin_version())),
         "{}",
         text(&run.stdout)
     );
@@ -173,6 +173,7 @@ fn install_ps1(base: &str, to: &Path) -> Output {
         .args(["-Version", "v0.0.0-test", "-To"])
         .arg(to)
         .env("DOMAIN_MEMORY_DOWNLOAD_URL", base)
+        .env("DOMAIN_MEMORY_NO_MODIFY_PATH", "1")
         .output()
         .unwrap()
 }
@@ -204,4 +205,29 @@ fn install_ps1_refuses_a_release_whose_digest_differs_and_installs_nothing() {
         text(&run.stderr)
     );
     assert!(!to.join(INSTALLED).exists());
+}
+
+fn plugin_version() -> String {
+    let manifest =
+        std::fs::read_to_string(plugin().join(".claude-plugin").join("plugin.json")).unwrap();
+    let after = manifest.split("\"version\": \"").nth(1).unwrap();
+    after[..after.find('"').unwrap()].to_string()
+}
+
+#[test]
+fn install_sh_takes_its_directory_from_the_environment() {
+    let (base, to) = release("sh-env", None);
+    let run = Command::new("sh")
+        .arg(plugin().join("install.sh"))
+        .env("DOMAIN_MEMORY_DOWNLOAD_URL", &base)
+        .env("DOMAIN_MEMORY_INSTALL_DIR", &to)
+        .output()
+        .unwrap();
+    assert!(run.status.success(), "{}", text(&run.stderr));
+    assert!(to.join(INSTALLED).is_file());
+    assert!(
+        text(&run.stdout).contains("is not on PATH; add it"),
+        "{}",
+        text(&run.stdout)
+    );
 }

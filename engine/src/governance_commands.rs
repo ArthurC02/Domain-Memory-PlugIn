@@ -146,26 +146,38 @@ pub fn reconcile_audit(invocation: &Invocation) -> Result<i32, String> {
     Ok(0)
 }
 
+/// Says which executable the hook will run when this install recorded it.
+fn report_wired(repo_root: &std::path::Path) -> Result<(), String> {
+    if let Some(executable) = git_governance::wire_executable(repo_root)? {
+        emit_stdout(&format!(
+            "The hook runs {executable}, recorded as git config domain-memory.executable\n"
+        ));
+    }
+    Ok(())
+}
+
 pub fn install_git_hitl_hook(invocation: &Invocation) -> Result<i32, String> {
-    let hook = git_governance::install_pre_push_hook(
-        &resolved(invocation, "registry_root"),
-        &resolved(invocation, "repo_root"),
-    )?;
+    let repo_root = resolved(invocation, "repo_root");
+    let hook =
+        git_governance::install_pre_push_hook(&resolved(invocation, "registry_root"), &repo_root)?;
     emit_stdout(&format!(
         "Installed Git HITL pre-push hook: {}\n",
         py::shown(&hook)
     ));
+    report_wired(&repo_root)?;
     Ok(0)
 }
 
 pub fn install_pre_commit_hook(invocation: &Invocation) -> Result<i32, String> {
+    let repo_root = resolved(invocation, "repo_root");
     let hook = git_governance::install_pre_commit_hook(
         &resolved(invocation, "registry_root"),
-        &resolved(invocation, "repo_root"),
+        &repo_root,
     )?;
     emit_stdout(&format!(
         "Installed Domain Memory pre-commit hook: {}\n",
         py::shown(&hook)
     ));
+    report_wired(&repo_root)?;
     Ok(0)
 }

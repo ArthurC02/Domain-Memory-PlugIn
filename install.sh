@@ -1,16 +1,18 @@
 #!/bin/sh
-# Installs the Domain Memory executable of one release and checks it against
-# that release's SHA256SUMS before it lands.
+# Installs the Domain Memory executable of one release, after checking it
+# against that release's SHA256SUMS.
 #
-#   curl -fsSL https://github.com/ArthurC02/Domain-Memory-PlugIn/releases/download/v6.5.0/install.sh | sh -s -- --version v6.5.0
+#   curl -fsSL https://github.com/ArthurC02/Domain-Memory-PlugIn/releases/latest/download/install.sh | sh
 #
-# --version <tag>  the release to install (default: the latest release)
-# --to <dir>       where the executable lands (default: ~/.local/bin)
+# Options, as a flag or in the environment:
+#   --version <tag>  DOMAIN_MEMORY_VERSION      the release (default: the latest)
+#   --to <dir>       DOMAIN_MEMORY_INSTALL_DIR  where it lands (default: ~/.local/bin)
+# so a pinned install reads: curl -fsSL <url> | DOMAIN_MEMORY_VERSION=v6.6.0 sh
 # DOMAIN_MEMORY_DOWNLOAD_URL replaces the release's download address, for a mirror.
 set -eu
 
-version=latest
-to="$HOME/.local/bin"
+version=${DOMAIN_MEMORY_VERSION:-latest}
+to=${DOMAIN_MEMORY_INSTALL_DIR:-$HOME/.local/bin}
 while [ $# -gt 0 ]; do
   case $1 in
     --version) version=$2; shift 2 ;;
@@ -53,5 +55,9 @@ fi
 mkdir -p "$to"
 chmod +x "$work/$asset"
 mv -f "$work/$asset" "$to/$name"
-echo "Installed $version of Domain Memory at $to/$name"
-echo "Git hooks find it with: git config domain-memory.executable $to/$name"
+installed=$("$to/$name" --version 2>/dev/null) || installed="Domain Memory $version"
+echo "Installed $installed at $to/$name"
+case ":$PATH:" in
+  *":$to:"*) echo "Try it: domain-memory readiness" ;;
+  *) echo "$to is not on PATH; add it to run domain-memory by name and let git hooks find it: export PATH=\"$to:\$PATH\"" ;;
+esac

@@ -98,6 +98,20 @@ fn make_executable(path: &Path) {
 #[cfg(not(unix))]
 fn make_executable(_path: &Path) {}
 
+/// PATH without the directories that hold a `domain-memory` executable, such as
+/// the target directory cargo adds on Windows, so a hook's PATH lookup only finds
+/// what a test puts there.
+fn path_without_domain_memory() -> std::ffi::OsString {
+    let path = std::env::var_os("PATH").unwrap_or_default();
+    let kept: Vec<PathBuf> = std::env::split_paths(&path)
+        .filter(|directory| {
+            !directory.join("domain-memory").is_file()
+                && !directory.join("domain-memory.exe").is_file()
+        })
+        .collect();
+    std::env::join_paths(kept).unwrap()
+}
+
 fn write_script(path: &Path, body: &str) {
     fs::create_dir_all(path.parent().unwrap()).unwrap();
     fs::write(path, format!("#!/bin/sh\n{body}\n")).unwrap();
@@ -233,7 +247,8 @@ impl Sandbox {
             .env("GIT_TERMINAL_PROMPT", "0")
             .env_remove("DOMAIN_MEMORY_GIT_TIMEOUT")
             .env_remove("DOMAIN_MEMORY_HOOK_VERBOSE")
-            .env_remove("DOMAIN_MEMORY_SIGNING_KEY");
+            .env_remove("DOMAIN_MEMORY_SIGNING_KEY")
+            .env("PATH", path_without_domain_memory());
         command
     }
 
@@ -1438,22 +1453,69 @@ fn the_configured_executable_and_install_hint_replace_the_engine_defaults() {
 }
 
 #[test]
-fn a_hook_installed_by_an_executable_outside_an_engine_names_no_engine_and_asks_for_git_config() {
+fn a_hook_installed_by_an_executable_outside_an_engine_records_it_and_otherwise_points_at_the_installer()
+ {
     let sandbox = Sandbox::new();
     let engine = sandbox.engine("released", &Tool::Missing);
     fs::remove_file(engine.join("Cargo.toml")).unwrap();
     let hook = sandbox.push_fixture(&engine);
+    let text = fs::read_to_string(&hook).unwrap();
     assert!(
-        fs::read_to_string(&hook).unwrap().contains("\nengine=''\n"),
-        "{}",
-        fs::read_to_string(&hook).unwrap()
+        text.contains(
+            "
+engine=''
+"
+        ),
+        "{text}"
     );
+    let recorded = sandbox.git(&["config", "--get", "domain-memory.executable"]);
+    assert!(recorded.trim_end().ends_with(INSTALLER_NAME), "{recorded}");
+    sandbox.git(&["config", "--unset", "domain-memory.executable"]);
     let head = sandbox.commit_file("memory/registry/extra.json");
     let run = sandbox.push_hook(&hook, &sandbox.new_branch(&head));
     assert_eq!(
         (
             1,
-            "domain-memory pre-push: no Domain Memory executable; set git config domain-memory.executable to the installed executable\n"
+            "domain-memory pre-push: no Domain Memory executable; install it on PATH with curl -fsSL https://github.com/ArthurC02/Domain-Memory-PlugIn/releases/latest/download/install.sh | sh, or set git config domain-memory.executable to it
+"
+        ),
+        run.outcome()
+    );
+}
+
+#[test]
+fn a_hook_without_an_engine_finds_the_executable_on_path() {
+    let sandbox = Sandbox::new();
+    let engine = sandbox.engine("released-on-path", &Tool::Missing);
+    fs::remove_file(engine.join("Cargo.toml")).unwrap();
+    let hook = sandbox.push_fixture(&engine);
+    sandbox.git(&["config", "--unset", "domain-memory.executable"]);
+    let bin = sandbox.base.join("on-path");
+    write_script(
+        &bin.join("domain-memory"),
+        "echo \"on path $1\" >&2
+exit 1",
+    );
+    let head = sandbox.commit_file("memory/registry/extra.json");
+    let refs = sandbox.new_branch(&head);
+    let path = std::env::join_paths(
+        std::iter::once(bin).chain(std::env::split_paths(&path_without_domain_memory())),
+    )
+    .unwrap();
+    let run = sandbox.run_hook(
+        &hook,
+        &HookCall {
+            args: &["origin", "https://example.com/repo.git"],
+            stdin: &refs,
+            env: &[("PATH", path.to_str().unwrap())],
+            ..HookCall::default()
+        },
+    );
+    assert_eq!(
+        (
+            1,
+            "on path verify-git-governance
+"
         ),
         run.outcome()
     );

@@ -1,0 +1,32 @@
+name: Set up Domain Memory
+description: Install the Domain Memory executable of one release, checked against its SHA256SUMS, and put it on PATH.
+author: ArthurC02
+branding:
+  icon: book-open
+  color: blue
+
+inputs:
+  version:
+    description: The release to install, such as v6.6.0, or latest. Defaults to the tag this action is used at, else the latest release.
+    required: false
+    default: ''
+
+outputs:
+  path:
+    description: The installed executable.
+    value: ${{ steps.install.outputs.path }}
+
+runs:
+  using: composite
+  steps:
+    - id: install
+      shell: bash
+      env:
+        DOMAIN_MEMORY_VERSION: ${{ inputs.version || (startsWith(github.action_ref, 'v') && github.action_ref) || 'latest' }}
+        DOMAIN_MEMORY_INSTALL_DIR: ${{ runner.temp }}/domain-memory
+      run: |
+        sh "$GITHUB_ACTION_PATH/install.sh"
+        echo "$DOMAIN_MEMORY_INSTALL_DIR" >> "$GITHUB_PATH"
+        name=domain-memory
+        test "$RUNNER_OS" != Windows || name=domain-memory.exe
+        echo "path=$DOMAIN_MEMORY_INSTALL_DIR/$name" >> "$GITHUB_OUTPUT"

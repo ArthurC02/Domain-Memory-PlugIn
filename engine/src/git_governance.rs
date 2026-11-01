@@ -107,21 +107,27 @@ pub fn verify_git_governance(
 }
 
 const EMPTY_SHA: &str = "0000000000000000000000000000000000000000";
+const INSTALL_HINT: &str = "install it on PATH with curl -fsSL https://github.com/ArthurC02/Domain-Memory-PlugIn/releases/latest/download/install.sh | sh, or set git config domain-memory.executable to it";
 
 fn tool_for_hook(name: &str) -> String {
     format!(
         r##"tool_for_hook() {{
-  tool=$(git config --get domain-memory.executable) || test -z "$engine" || case "$(uname -s)-$(uname -m)" in
-    Linux-x86_64) tool="$engine/bin/linux-x86_64/domain-memory" ;;
-    Darwin-*) tool="$engine/bin/macos-universal/domain-memory" ;;
-    MINGW*-x86_64|MSYS*-x86_64|CYGWIN*-x86_64) tool="$engine/bin/windows-x86_64/domain-memory.exe" ;;
-    *) tool="$engine/target/release/domain-memory" ;;
-  esac
+  tool=$(git config --get domain-memory.executable) || {{
+    test -z "$engine" || case "$(uname -s)-$(uname -m)" in
+      Linux-x86_64) tool="$engine/bin/linux-x86_64/domain-memory" ;;
+      Darwin-*) tool="$engine/bin/macos-universal/domain-memory" ;;
+      MINGW*-x86_64|MSYS*-x86_64|CYGWIN*-x86_64) tool="$engine/bin/windows-x86_64/domain-memory.exe" ;;
+      *) tool="$engine/target/release/domain-memory" ;;
+    esac
+    if ! {{ test -n "$tool" && test -x "$tool"; }}; then
+      found=$(command -v domain-memory) && tool=$found
+    fi
+  }}
   test -n "$tool" && test -x "$tool" && return 0
   hint=$(git config --get domain-memory.install-hint) || if test -n "$engine"; then
     hint="build one with cargo build --release --manifest-path $engine/Cargo.toml"
   else
-    hint="set git config domain-memory.executable to the installed executable"
+    hint="{INSTALL_HINT}"
   fi
   echo "domain-memory {name}: no Domain Memory executable${{tool:+ at $tool}}; $hint" >&2
   return 1
@@ -280,6 +286,30 @@ fn install_hook(
         .map_err(|error| py::open_error(&error, &hook))?;
     make_executable(&hook)?;
     Ok(hook)
+}
+
+/// Records this executable as `domain-memory.executable` in the clone's git
+/// config when it runs outside a plugin's `engine/` directory and the clone names
+/// none yet, so the hooks it installs find it; returns the path it recorded.
+pub fn wire_executable(repo_root: &Path) -> Result<Option<String>, String> {
+    if engine_directory()?.is_some() {
+        return Ok(None);
+    }
+    let configured =
+        git::run_git_text(repo_root, &["config", "--get", "domain-memory.executable"])?;
+    if configured.code == 0 {
+        return Ok(None);
+    }
+    let executable = std::env::current_exe().map_err(|error| error.to_string())?;
+    let shown = shown_path(&executable, None);
+    let set = git::run_git_text(repo_root, &["config", "domain-memory.executable", &shown])?;
+    if set.code != 0 {
+        return Err(format!(
+            "could not record {shown} as git config domain-memory.executable: {}",
+            py::strip(&set.stderr)
+        ));
+    }
+    Ok(Some(shown))
 }
 
 pub fn install_pre_push_hook(registry_root: &Path, repo_root: &Path) -> Result<PathBuf, String> {
