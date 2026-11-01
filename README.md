@@ -43,7 +43,7 @@ Both check the executable against the release's `SHA256SUMS` before it lands, pr
 **GitHub Actions**:
 
 ```yaml
-- uses: ArthurC02/Domain-Memory-PlugIn@v6.9.0
+- uses: ArthurC02/Domain-Memory-PlugIn@v7.0.0
 - run: |
     domain-memory validate
     domain-memory verify-evidence
@@ -65,7 +65,7 @@ The pre-commit hook stops a commit whose staged code no longer matches what the 
 
 ### Pin a version for a team
 
-Pin the same tag everywhere, so the Skills an agent reads, the hooks and CI run one release. In Claude Code, `/plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v6.9.0`; to declare it for everyone who opens the repository, add this to its `.claude/settings.json`, or run `claude plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v6.9.0 --scope project` then `claude plugin install domain-memory@domain-memory --scope project`:
+Pin the same tag everywhere, so the Skills an agent reads, the hooks and CI run one release. In Claude Code, `/plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v7.0.0`; to declare it for everyone who opens the repository, add this to its `.claude/settings.json`, or run `claude plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v7.0.0 --scope project` then `claude plugin install domain-memory@domain-memory --scope project`:
 
 ```json
 {
@@ -74,7 +74,7 @@ Pin the same tag everywhere, so the Skills an agent reads, the hooks and CI run 
       "source": {
         "source": "github",
         "repo": "ArthurC02/Domain-Memory-PlugIn",
-        "ref": "v6.9.0"
+        "ref": "v7.0.0"
       }
     }
   },
@@ -84,7 +84,7 @@ Pin the same tag everywhere, so the Skills an agent reads, the hooks and CI run 
 }
 ```
 
-Claude Code honours it once the folder is trusted. On the command line, pin with `DOMAIN_MEMORY_VERSION=v6.9.0` in front of `sh` (`$env:DOMAIN_MEMORY_VERSION = 'v6.9.0'` before `irm` in PowerShell); `DOMAIN_MEMORY_INSTALL_DIR` chooses the folder, and `DOMAIN_MEMORY_SHA256SUMS_SHA256` pins the digest of the release's `SHA256SUMS`. In GitHub Actions the action's tag or commit SHA is the pin. Every release is a tag `v<version>`, and its [GitHub Release](https://github.com/ArthurC02/Domain-Memory-PlugIn/releases) carries the executables, `SHA256SUMS` and a build provenance attestation (`gh attestation verify <file> -R ArthurC02/Domain-Memory-PlugIn`).
+Claude Code honours it once the folder is trusted. On the command line, pin with `DOMAIN_MEMORY_VERSION=v7.0.0` in front of `sh` (`$env:DOMAIN_MEMORY_VERSION = 'v7.0.0'` before `irm` in PowerShell); `DOMAIN_MEMORY_INSTALL_DIR` chooses the folder, and `DOMAIN_MEMORY_SHA256SUMS_SHA256` pins the digest of the release's `SHA256SUMS`. In GitHub Actions the action's tag or commit SHA is the pin. Every release is a tag `v<version>`, and its [GitHub Release](https://github.com/ArthurC02/Domain-Memory-PlugIn/releases) carries the executables, `SHA256SUMS` and a build provenance attestation (`gh attestation verify <file> -R ArthurC02/Domain-Memory-PlugIn`).
 
 ### Upgrading
 
@@ -95,11 +95,11 @@ Claude Code honours it once the folder is trusted. On the command line, pin with
 
 ### Any other agent, or from a clone
 
-Point your agent at [`AGENTS.md`](AGENTS.md). A clone runs the executable committed for its platform through one launcher, `scripts/domain-memory` (`scripts\domain-memory.cmd` from `cmd` or PowerShell). Linux x86-64, macOS (Apple silicon and Intel) and Windows x86-64 have one; on any other platform, `cargo build --release --locked --manifest-path engine/Cargo.toml` builds it and the launcher runs that build.
+Point your agent at [`AGENTS.md`](plugins/domain-memory/AGENTS.md). A clone runs the executable committed for its platform through one launcher, `plugins/domain-memory/scripts/domain-memory` (`plugins\domain-memory\scripts\domain-memory.cmd` from `cmd` or PowerShell). Linux x86-64, macOS (Apple silicon and Intel) and Windows x86-64 have one; on any other platform, `cargo build --release --locked --manifest-path engine/Cargo.toml` builds it and the launcher runs that build once it is on PATH.
 
 ### MCP
 
-`domain-memory mcp-serve --registry-root <root> --repo-root <repo>` serves thirteen read commands as Model Context Protocol tools over stdio. It offers no tool that writes. See [`mcp-serve`](references/script-api.md#mcp-serve).
+`domain-memory mcp-serve --registry-root <root> --repo-root <repo>` serves thirteen read commands as Model Context Protocol tools over stdio. It offers no tool that writes. See [`mcp-serve`](plugins/domain-memory/references/script-api.md#mcp-serve).
 
 ## How it works
 
@@ -119,18 +119,18 @@ Point your agent at [`AGENTS.md`](AGENTS.md). A clone runs the executable commit
 4. **Maintain.** Once the code is merged, re-cite evidence that moved and record what the model learned.
 5. **Review.** Check the Registry, the evidence and the audit chain, or review a branch for what it does to the domain model with `brief --base <branch point>`.
 
-The Skills under [`skills/`](skills/) cover these steps, and the [`domain-memory`](skills/domain-memory/SKILL.md) Skill routes a request to the smallest one that fits.
+The Skills under [`skills/`](plugins/domain-memory/skills/) cover these steps, and the [`domain-memory`](plugins/domain-memory/skills/domain-memory/SKILL.md) Skill routes a request to the smallest one that fits.
 
 ## Documentation
 
 | Page | For |
 | --- | --- |
-| [`references/getting-started.md`](references/getting-started.md) | Ten minutes from an empty repository to a cited fact, on a sample you can run. Start here. |
-| [`AGENTS.md`](AGENTS.md) | Vocabulary, common tasks and costly mistakes. |
-| [`references/script-api.md`](references/script-api.md) | Every command: options, guarantees, refusals |
-| [`references/proposal-lifecycle.md`](references/proposal-lifecycle.md) | The Change Package states |
-| [`references/reliability-architecture.md`](references/reliability-architecture.md) | The write protocol and the audit chain |
-| [`references/host-integration.md`](references/host-integration.md) | Hosts that dispatch work to several agents |
+| [`references/getting-started.md`](plugins/domain-memory/references/getting-started.md) | Ten minutes from an empty repository to a cited fact, on a sample you can run. Start here. |
+| [`AGENTS.md`](plugins/domain-memory/AGENTS.md) | Vocabulary, common tasks and costly mistakes. |
+| [`references/script-api.md`](plugins/domain-memory/references/script-api.md) | Every command: options, guarantees, refusals |
+| [`references/proposal-lifecycle.md`](plugins/domain-memory/references/proposal-lifecycle.md) | The Change Package states |
+| [`references/reliability-architecture.md`](plugins/domain-memory/references/reliability-architecture.md) | The write protocol and the audit chain |
+| [`references/host-integration.md`](plugins/domain-memory/references/host-integration.md) | Hosts that dispatch work to several agents |
 | [`CHANGELOG.md`](CHANGELOG.md) | Release history |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Building, testing and changing the plugin |
 

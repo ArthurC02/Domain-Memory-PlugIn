@@ -69,21 +69,24 @@ const STATE_AFTER_SUBMISSION: [&str; 5] = [
 const TEMPLATES: [(&str, &str); 5] = [
     (
         REQUIREMENT_FILE,
-        include_str!("../../templates/requirement-normalization.json"),
+        include_str!("../../plugins/domain-memory/templates/requirement-normalization.json"),
     ),
     (
         PROPOSAL_FILE,
-        include_str!("../../templates/domain-change-proposal.json"),
+        include_str!("../../plugins/domain-memory/templates/domain-change-proposal.json"),
     ),
     (
         OBLIGATIONS_FILE,
-        include_str!("../../templates/test-obligations.json"),
+        include_str!("../../plugins/domain-memory/templates/test-obligations.json"),
     ),
     (
         EVIDENCE_FILE,
-        include_str!("../../templates/evidence-bundle.json"),
+        include_str!("../../plugins/domain-memory/templates/evidence-bundle.json"),
     ),
-    ("draft-pr.md", include_str!("../../templates/draft-pr.md")),
+    (
+        "draft-pr.md",
+        include_str!("../../plugins/domain-memory/templates/draft-pr.md"),
+    ),
 ];
 
 fn get<'a>(object: &'a Object, key: &str) -> &'a Value {

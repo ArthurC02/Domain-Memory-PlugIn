@@ -62,11 +62,16 @@ fn engine() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))
 }
 
-fn plugin() -> PathBuf {
+fn repository() -> PathBuf {
     engine()
         .parent()
-        .expect("the plugin holds the engine")
+        .expect("the repository holds the engine")
         .to_path_buf()
+}
+
+/// The plugin folder: what an install copies, executables included.
+fn plugin() -> PathBuf {
+    repository().join("plugins").join("domain-memory")
 }
 
 fn files_under(directory: &Path, found: &mut Vec<PathBuf>) {
@@ -83,8 +88,8 @@ fn files_under(directory: &Path, found: &mut Vec<PathBuf>) {
 }
 
 fn relative(path: &Path) -> String {
-    path.strip_prefix(plugin())
-        .expect("a source inside the plugin")
+    path.strip_prefix(repository())
+        .expect("a source inside the repository")
         .components()
         .map(|part| part.as_os_str().to_string_lossy().into_owned())
         .collect::<Vec<_>>()
@@ -116,7 +121,7 @@ fn source_sha256() -> String {
 }
 
 fn bin() -> PathBuf {
-    engine().join("bin")
+    plugin().join("engine").join("bin")
 }
 
 fn expected_manifest() -> String {
@@ -155,7 +160,7 @@ fn problems() -> Vec<String> {
     let text = std::fs::read_to_string(bin().join("manifest.json")).unwrap_or_default();
     let Ok(manifest) = json::loads(&text) else {
         return vec![format!(
-            "bin/manifest.json is missing or unreadable; {REBUILD}"
+            "plugins/domain-memory/engine/bin/manifest.json is missing or unreadable; {REBUILD}"
         )];
     };
     let mut found = Vec::new();
@@ -167,19 +172,22 @@ fn problems() -> Vec<String> {
     for platform in &PLATFORMS {
         let path = bin().join(platform.name);
         if !path.is_file() {
-            found.push(format!("bin/{} is missing; {REBUILD}", platform.name));
+            found.push(format!(
+                "plugins/domain-memory/engine/bin/{} is missing; {REBUILD}",
+                platform.name
+            ));
         } else if recorded(&manifest, &["binaries", platform.name, "sha256"])
             != Some(sha256::hex_digest(&read(&path)))
         {
             found.push(format!(
-                "bin/{} is not the binary the manifest records; {REBUILD}",
+                "plugins/domain-memory/engine/bin/{} is not the binary the manifest records; {REBUILD}",
                 platform.name
             ));
         }
     }
     if found.is_empty() && text != expected_manifest() {
         found.push(format!(
-            "bin/manifest.json is not the manifest the binaries give; {REBUILD}"
+            "plugins/domain-memory/engine/bin/manifest.json is not the manifest the binaries give; {REBUILD}"
         ));
     }
     found

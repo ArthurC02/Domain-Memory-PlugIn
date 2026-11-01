@@ -4,7 +4,8 @@ use crate::json::{self, Value};
 use crate::py;
 
 const CONTRACT: &str = include_str!("../contract/cli.json");
-const PLUGIN_MANIFEST: &str = include_str!("../../.claude-plugin/plugin.json");
+const PLUGIN_MANIFEST: &str =
+    include_str!("../../plugins/domain-memory/.claude-plugin/plugin.json");
 
 /// The plugin's version, from the manifest the executable embeds.
 pub fn plugin_version() -> String {

@@ -524,7 +524,7 @@ fn server_info(version: &str) -> Vec<u8> {
 }
 
 fn plugin_version() -> String {
-    let manifest = read_json(&engine().join("../.claude-plugin/plugin.json"));
+    let manifest = read_json(&engine().join("../plugins/domain-memory/.claude-plugin/plugin.json"));
     text(&manifest, "version").to_string()
 }
 
@@ -1018,8 +1018,9 @@ fn main() {
     let engine = engine();
     let plugin = engine
         .parent()
-        .expect("the plugin holds the engine")
-        .to_path_buf();
+        .expect("the repository holds the engine")
+        .join("plugins")
+        .join("domain-memory");
     let repo = std::env::var_os("DOMAIN_MEMORY_REFERENCE_REPO").map(|path| {
         std::path::absolute(&path).unwrap_or_else(|error| {
             panic!(

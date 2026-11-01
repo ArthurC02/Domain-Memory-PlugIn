@@ -365,7 +365,8 @@ fn entry_errors(key: &str, items: &[Value]) -> Vec<String> {
         .collect()
 }
 
-const POLICY_TEMPLATE: &str = include_str!("../../templates/domain-memory-policy.json");
+const POLICY_TEMPLATE: &str =
+    include_str!("../../plugins/domain-memory/templates/domain-memory-policy.json");
 
 pub struct NewPolicy<'a> {
     pub storage_mode: &'a str,

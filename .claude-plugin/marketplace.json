@@ -5,7 +5,7 @@
   "plugins": [
     {
       "name": "domain-memory",
-      "source": "./",
+      "source": "./plugins/domain-memory",
       "description": "A governed, file-backed domain model that coding agents read before they code and keep current after."
     }
   ]

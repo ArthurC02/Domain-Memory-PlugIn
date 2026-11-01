@@ -33,11 +33,16 @@ fn with_roots(arguments: &[String], roots: &[&str]) -> Vec<String> {
     all
 }
 
-fn plugin() -> PathBuf {
+fn repository() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR"))
         .parent()
-        .expect("the engine sits inside the plugin")
+        .expect("the repository holds the engine")
         .to_path_buf()
+}
+
+/// The plugin folder: everything an install copies.
+fn plugin() -> PathBuf {
+    repository().join("plugins").join("domain-memory")
 }
 
 fn read(path: &Path) -> String {
@@ -54,7 +59,7 @@ fn member<'a>(value: &'a Value, key: &str) -> &'a Value {
 }
 
 fn contract() -> Value {
-    let path = plugin().join("engine/contract/cli.json");
+    let path = repository().join("engine/contract/cli.json");
     json::parse(&read(&path)).unwrap_or_else(|()| panic!("{} is not JSON", path.display()))
 }
 
@@ -379,7 +384,7 @@ fn refusal(command: &CommandContract, arguments: &[String]) -> Option<String> {
 }
 
 fn engine_commands() -> Vec<String> {
-    let dispatch = read(&plugin().join("engine/src/main.rs"));
+    let dispatch = read(&repository().join("engine/src/main.rs"));
     let mut names: Vec<String> = dispatch
         .lines()
         .filter_map(|line| {
@@ -625,4 +630,44 @@ fn the_plugin_installs_everywhere_and_its_skills_meet_the_agent_skills_specifica
             "{name}: keep SKILL.md under 500 lines"
         );
     }
+}
+
+fn files_in(directory: &Path, found: &mut Vec<PathBuf>) {
+    for entry in std::fs::read_dir(directory).unwrap() {
+        let path = entry.unwrap().path();
+        if path.is_dir() {
+            files_in(&path, found);
+        } else {
+            found.push(path);
+        }
+    }
+}
+
+#[test]
+fn the_plugin_folder_passes_the_plugin_directorys_blocking_checks() {
+    let mut files = Vec::new();
+    files_in(&plugin(), &mut files);
+    for file in &files {
+        let size = std::fs::metadata(file).unwrap().len();
+        assert!(size < 5 * 1024 * 1024, "{} is over 5 MiB", file.display());
+        let name = file.file_name().unwrap().to_string_lossy();
+        assert!(
+            !["Thumbs.db", ".DS_Store", "desktop.ini"].contains(&name.as_ref()),
+            "{} is a system file the directory refuses",
+            file.display()
+        );
+    }
+    let attributes = read(&repository().join(".gitattributes"));
+    for refused in ["export-ignore", "export-subst", "filter="] {
+        assert!(
+            !attributes.contains(refused),
+            ".gitattributes uses {refused}"
+        );
+    }
+    let readme = read(&plugin().join("README.md"));
+    let prose: String = readme.split("```").step_by(2).collect();
+    assert!(
+        prose.split_whitespace().count() >= 40,
+        "the plugin README needs 40 words outside code"
+    );
 }

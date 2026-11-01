@@ -21,11 +21,11 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            binary: bin/linux-x86_64/domain-memory
+            binary: ../plugins/domain-memory/engine/bin/linux-x86_64/domain-memory
           - os: macos-latest
-            binary: bin/macos-universal/domain-memory
+            binary: ../plugins/domain-memory/engine/bin/macos-universal/domain-memory
           - os: windows-latest
-            binary: bin/windows-x86_64/domain-memory.exe
+            binary: ../plugins/domain-memory/engine/bin/windows-x86_64/domain-memory.exe
     defaults:
       run:
         shell: bash

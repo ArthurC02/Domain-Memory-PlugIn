@@ -2,7 +2,7 @@
 
 Ten minutes from an empty repository to a cited candidate fact, and to the check that notices when the code moves away from it. Every command and output on this page is run by `engine/tests/getting_started.rs` against `examples/getting-started`, so what you see is what the current executable prints.
 
-You need `git` and the executable: [install one](../README.md#install), or use `scripts/domain-memory` from a clone. The commands below call it `domain-memory`.
+You need `git` and the executable: [install one](../README.md#install), or use `scripts/domain-memory` in this plugin folder. The commands below call it `domain-memory`.
 
 ## 1. A repository with some code
 

@@ -7,11 +7,15 @@
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
-fn plugin() -> PathBuf {
+fn repository() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR"))
         .parent()
         .unwrap()
         .to_path_buf()
+}
+
+fn plugin() -> PathBuf {
+    repository().join("plugins").join("domain-memory")
 }
 
 fn copy_tree(from: &Path, to: &Path) {

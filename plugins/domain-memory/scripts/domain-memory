@@ -1,0 +1,12 @@
+#!/bin/sh
+# Runs the Domain Memory executable this plugin bundles for the machine's
+# platform, so a caller names one path on Linux, macOS and Git Bash on Windows.
+engine="$(dirname -- "$0")/../engine"
+case "$(uname -s)-$(uname -m)" in
+  Linux-x86_64) exec "$engine/bin/linux-x86_64/domain-memory" "$@" ;;
+  Darwin-*) exec "$engine/bin/macos-universal/domain-memory" "$@" ;;
+  MINGW*-x86_64|MSYS*-x86_64|CYGWIN*-x86_64) exec "$engine/bin/windows-x86_64/domain-memory.exe" "$@" ;;
+esac
+found=$(command -v domain-memory) && exec "$found" "$@"
+echo "domain-memory: the plugin bundles no executable for $(uname -s)-$(uname -m); build one from https://github.com/ArthurC02/Domain-Memory-PlugIn with cargo build --release --locked --manifest-path engine/Cargo.toml and put it on PATH" >&2
+exit 127

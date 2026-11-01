@@ -22,11 +22,15 @@ const INSTALLED: &str = if cfg!(windows) {
     "domain-memory"
 };
 
-fn plugin() -> PathBuf {
+fn repository() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR"))
         .parent()
         .unwrap()
         .to_path_buf()
+}
+
+fn plugin() -> PathBuf {
+    repository().join("plugins").join("domain-memory")
 }
 
 fn scratch(name: &str) -> PathBuf {
@@ -91,7 +95,7 @@ fn release(name: &str, sums_digest: Option<&str>) -> (String, PathBuf) {
 
 fn install_sh(base: &str, to: &Path) -> Output {
     Command::new("sh")
-        .arg(plugin().join("install.sh"))
+        .arg(repository().join("install.sh"))
         .args(["--version", "v0.0.0-test", "--to"])
         .arg(to)
         .env("DOMAIN_MEMORY_DOWNLOAD_URL", base)
@@ -169,7 +173,7 @@ fn install_sh_refuses_a_release_whose_digest_differs_and_installs_nothing() {
 fn install_ps1(base: &str, to: &Path) -> Output {
     Command::new("powershell")
         .args(["-NoProfile", "-ExecutionPolicy", "Bypass", "-File"])
-        .arg(plugin().join("install.ps1"))
+        .arg(repository().join("install.ps1"))
         .args(["-Version", "v0.0.0-test", "-To"])
         .arg(to)
         .env("DOMAIN_MEMORY_DOWNLOAD_URL", base)
@@ -218,7 +222,7 @@ fn plugin_version() -> String {
 fn install_sh_takes_its_directory_from_the_environment() {
     let (base, to) = release("sh-env", None);
     let run = Command::new("sh")
-        .arg(plugin().join("install.sh"))
+        .arg(repository().join("install.sh"))
         .env("DOMAIN_MEMORY_DOWNLOAD_URL", &base)
         .env("DOMAIN_MEMORY_INSTALL_DIR", &to)
         .output()
@@ -238,7 +242,7 @@ fn install_sh_names_a_missing_release_and_reads_a_bare_number_as_its_tag() {
     std::fs::create_dir_all(root.join("dist")).unwrap();
     let base = serve(root.join("dist"));
     let run = Command::new("sh")
-        .arg(plugin().join("install.sh"))
+        .arg(repository().join("install.sh"))
         .args(["--version", "9.9.9", "--to"])
         .arg(root.join("bin"))
         .env("DOMAIN_MEMORY_DOWNLOAD_URL", &base)
@@ -258,7 +262,7 @@ fn install_sh_names_a_missing_release_and_reads_a_bare_number_as_its_tag() {
 fn install_sh_refuses_sums_other_than_the_pinned_ones() {
     let (base, to) = release("sh-pinned", None);
     let run = Command::new("sh")
-        .arg(plugin().join("install.sh"))
+        .arg(repository().join("install.sh"))
         .args(["--version", "v0.0.0-test", "--to"])
         .arg(&to)
         .env("DOMAIN_MEMORY_DOWNLOAD_URL", &base)
@@ -292,7 +296,7 @@ fn install_ps1_names_a_missing_release_and_refuses_unpinned_sums() {
     let (base, to) = release("ps1-pinned", None);
     let pinned = Command::new("powershell")
         .args(["-NoProfile", "-ExecutionPolicy", "Bypass", "-File"])
-        .arg(plugin().join("install.ps1"))
+        .arg(repository().join("install.ps1"))
         .args(["-Version", "0.0.0-test", "-To"])
         .arg(&to)
         .env("DOMAIN_MEMORY_DOWNLOAD_URL", &base)
@@ -313,7 +317,7 @@ fn install_ps1_names_a_missing_release_and_refuses_unpinned_sums() {
 fn install_sh_refuses_a_sums_pin_without_a_version() {
     let root = scratch("sh-sums-latest");
     let run = Command::new("sh")
-        .arg(plugin().join("install.sh"))
+        .arg(repository().join("install.sh"))
         .args(["--to"])
         .arg(root.join("bin"))
         .env(

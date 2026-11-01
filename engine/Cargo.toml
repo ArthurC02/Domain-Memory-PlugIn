@@ -22,6 +22,10 @@ test = false
 lto = true
 codegen-units = 1
 strip = true
+# Sized for the plugin directory, which refuses a file over 5 MiB: the macOS
+# universal executable holds two architectures.
+opt-level = "s"
+panic = "abort"
 
 [lints.rust]
 unsafe_code = "forbid"

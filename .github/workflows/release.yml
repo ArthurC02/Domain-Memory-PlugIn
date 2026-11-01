@@ -24,7 +24,7 @@ jobs:
           persist-credentials: false
       - name: The tag names the plugin's version
         run: |
-          version=$(sed -n 's/^ *"version": "\(.*\)",$/\1/p' .claude-plugin/plugin.json)
+          version=$(sed -n 's/^ *"version": "\(.*\)",$/\1/p' plugins/domain-memory/.claude-plugin/plugin.json)
           test "$GITHUB_REF_NAME" = "v$version" || { echo "::error::tag $GITHUB_REF_NAME does not name plugin.json's version $version"; exit 1; }
       - name: Install the pinned Rust toolchain
         working-directory: engine
@@ -35,9 +35,9 @@ jobs:
       - name: Collect the assets
         run: |
           mkdir dist
-          cp engine/bin/linux-x86_64/domain-memory dist/domain-memory-linux-x86_64
-          cp engine/bin/macos-universal/domain-memory dist/domain-memory-macos-universal
-          cp engine/bin/windows-x86_64/domain-memory.exe dist/domain-memory-windows-x86_64.exe
+          cp plugins/domain-memory/engine/bin/linux-x86_64/domain-memory dist/domain-memory-linux-x86_64
+          cp plugins/domain-memory/engine/bin/macos-universal/domain-memory dist/domain-memory-macos-universal
+          cp plugins/domain-memory/engine/bin/windows-x86_64/domain-memory.exe dist/domain-memory-windows-x86_64.exe
           cp install.sh install.ps1 dist/
           (cd dist && sha256sum -- * > SHA256SUMS)
           cat dist/SHA256SUMS

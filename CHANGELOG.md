@@ -2,6 +2,22 @@
 
 Notable changes to the Domain Memory plugin, newest first. The format follows Keep a Changelog, and versions follow Semantic Versioning: a minor version adds or changes behavior, a patch version only fixes it. Versions before 0.10.0 are recorded in the repository history only.
 
+## 7.0.0
+
+The plugin is its own folder, `plugins/domain-memory/`, which passes the plugin directory's blocking checks: an install copies only what the plugin runs.
+
+### Changed
+
+- **Layout (breaking for clones and vendored copies):** the manifest, Skills, references, templates, the agent guide `AGENTS.md`, the getting-started example, the launchers (`scripts/`) and the executables (`engine/bin/`) moved under `plugins/domain-memory/`. The marketplace entry points there, so `/plugin install domain-memory@domain-memory` and `claude plugin update` need nothing new. A clone or a vendored copy that ran `engine/bin/<platform>/domain-memory` runs `plugins/domain-memory/engine/bin/<platform>/domain-memory`; hooks installed from the old path keep falling back to `domain-memory.executable` and PATH, so re-run the install commands from the new one. The engine source, its tests and recorded outputs stay in `engine/` at the repository root, and the root `AGENTS.md` points at the plugin's.
+- The executables are built for size (`opt-level = "s"`, `panic = "abort"`): every file in the plugin folder stays under the directory's 5 MiB limit, the macOS universal build included. On SkillHub's Registry the commands run as fast as before, within run-to-run noise.
+- `.gitattributes` no longer uses `export-ignore`, which stops the directory's validation; GitHub's source archives now carry the engine's tests and recordings.
+- A launcher on a platform with no bundled build runs `domain-memory` from PATH, and otherwise says where to build one.
+
+### Added
+
+- `plugins/domain-memory/README.md`, the listing README, says what the plugin runs: the bundled executable and `git`, on the repository it is given, with no network access.
+- A docs test holds the plugin folder to the directory's blocking checks: every file under 5 MiB, no system files, no `export-ignore`, `export-subst` or `filter` in `.gitattributes`, and a README of at least 40 words.
+
 ## 6.9.0
 
 The plugin keeps to Claude Code's plugin rules everywhere a plugin installs, and its Skills to the Agent Skills specification.
