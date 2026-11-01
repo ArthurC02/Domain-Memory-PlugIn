@@ -8,7 +8,7 @@
 #   -To <dir>       DOMAIN_MEMORY_INSTALL_DIR     where it lands (default: %LOCALAPPDATA%\Programs\domain-memory\bin)
 #                   DOMAIN_MEMORY_NO_MODIFY_PATH  set to leave PATH alone
 #                   DOMAIN_MEMORY_SHA256SUMS_SHA256  the digest SHA256SUMS must have, to pin it too
-# so a pinned install reads: $env:DOMAIN_MEMORY_VERSION = 'v6.8.0'; irm <url> | iex
+# so a pinned install reads: $env:DOMAIN_MEMORY_VERSION = 'v6.8.1'; irm <url> | iex
 # DOMAIN_MEMORY_DOWNLOAD_URL replaces the release's download address, for a mirror.
 param(
     [string]$Version = $(if ($env:DOMAIN_MEMORY_VERSION) { $env:DOMAIN_MEMORY_VERSION } else { 'latest' }),
@@ -21,6 +21,9 @@ if (-not [Environment]::Is64BitOperatingSystem -or $env:PROCESSOR_ARCHITECTURE -
     throw 'install.ps1: releases carry an executable for Windows on x86-64 only; build one from a clone with cargo build --release --locked --manifest-path engine/Cargo.toml'
 }
 if ($Version -match '^[0-9]') { $Version = "v$Version" }
+if ($env:DOMAIN_MEMORY_SHA256SUMS_SHA256 -and $Version -eq 'latest') {
+    throw "install.ps1: DOMAIN_MEMORY_SHA256SUMS_SHA256 pins one release's checksums, so the next release would break it; set DOMAIN_MEMORY_VERSION to that release too"
+}
 $asset = 'domain-memory-windows-x86_64.exe'
 $releases = 'https://github.com/ArthurC02/Domain-Memory-PlugIn/releases'
 $base = $env:DOMAIN_MEMORY_DOWNLOAD_URL

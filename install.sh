@@ -8,7 +8,7 @@
 #   --version <tag>  DOMAIN_MEMORY_VERSION      the release (default: the latest)
 #   --to <dir>       DOMAIN_MEMORY_INSTALL_DIR  where it lands (default: ~/.local/bin)
 #                    DOMAIN_MEMORY_SHA256SUMS_SHA256  the digest SHA256SUMS must have, to pin it too
-# so a pinned install reads: curl -fsSL <url> | DOMAIN_MEMORY_VERSION=v6.8.0 sh
+# so a pinned install reads: curl -fsSL <url> | DOMAIN_MEMORY_VERSION=v6.8.1 sh
 # DOMAIN_MEMORY_DOWNLOAD_URL replaces the release's download address, for a mirror.
 set -eu
 
@@ -22,6 +22,10 @@ while [ $# -gt 0 ]; do
   esac
 done
 case $version in [0-9]*) version=v$version ;; esac
+if [ -n "${DOMAIN_MEMORY_SHA256SUMS_SHA256:-}" ] && [ "$version" = latest ]; then
+  echo "install.sh: DOMAIN_MEMORY_SHA256SUMS_SHA256 pins one release's checksums, so the next release would break it; set DOMAIN_MEMORY_VERSION to that release too" >&2
+  exit 2
+fi
 
 case "$(uname -s)-$(uname -m)" in
   Linux-x86_64) asset=domain-memory-linux-x86_64 name=domain-memory ;;

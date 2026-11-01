@@ -10,8 +10,8 @@ use crate::fnmatch::fnmatchcase;
 use crate::git::{self, Failure};
 use crate::json::{Object, Value};
 use crate::listing::{
-    EXCLUDED_DIRECTORIES, Repository, ignored_among, ignored_relatives, tracked_listing_of,
-    untracked_files,
+    EXCLUDED_DIRECTORIES, Repository, ignored_among, ignored_relatives, tracked_files,
+    tracked_listing_of,
 };
 use crate::okf::truthy;
 use crate::policy::validate_policy;
@@ -491,14 +491,22 @@ fn source_files(
             }
         }
     }
-    let names: Vec<String> = chosen.iter().map(|(named, _)| named.clone()).collect();
-    let ignored = ignored_relatives(root, &names)?;
-    let untracked = untracked_files(root)?;
-    let mut kept: Vec<PathBuf> = chosen
-        .into_iter()
-        .filter(|(named, _)| !ignored.contains(named) && !untracked.contains(named))
-        .map(|(_, path)| path)
-        .collect();
+    let mut kept: Vec<PathBuf> = match tracked_files(root)? {
+        Some(tracked) => chosen
+            .into_iter()
+            .filter(|(named, _)| tracked.contains(named))
+            .map(|(_, path)| path)
+            .collect(),
+        None => {
+            let names: Vec<String> = chosen.iter().map(|(named, _)| named.clone()).collect();
+            let ignored = ignored_relatives(root, &names)?;
+            chosen
+                .into_iter()
+                .filter(|(named, _)| !ignored.contains(named))
+                .map(|(_, path)| path)
+                .collect()
+        }
+    };
     kept.sort_by_key(|path| path_key(path));
     Ok(kept)
 }

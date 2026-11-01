@@ -308,3 +308,27 @@ fn install_ps1_names_a_missing_release_and_refuses_unpinned_sums() {
     );
     assert!(!to.join(INSTALLED).exists());
 }
+
+#[test]
+fn install_sh_refuses_a_sums_pin_without_a_version() {
+    let root = scratch("sh-sums-latest");
+    let run = Command::new("sh")
+        .arg(plugin().join("install.sh"))
+        .args(["--to"])
+        .arg(root.join("bin"))
+        .env(
+            "DOMAIN_MEMORY_DOWNLOAD_URL",
+            "http://127.0.0.1:9/unreachable",
+        )
+        .env("DOMAIN_MEMORY_SHA256SUMS_SHA256", "0".repeat(64))
+        .env_remove("DOMAIN_MEMORY_VERSION")
+        .output()
+        .unwrap();
+    assert_eq!(Some(2), run.status.code(), "{}", text(&run.stdout));
+    assert!(
+        text(&run.stderr).contains("set DOMAIN_MEMORY_VERSION to that release too"),
+        "{}",
+        text(&run.stderr)
+    );
+    assert!(!root.join("bin").exists());
+}

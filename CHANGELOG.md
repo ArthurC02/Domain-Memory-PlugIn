@@ -2,6 +2,14 @@
 
 Notable changes to the Domain Memory plugin, newest first. The format follows Keep a Changelog, and versions follow Semantic Versioning: a minor version adds or changes behavior, a patch version only fixes it. Versions before 0.10.0 are recorded in the repository history only.
 
+## 6.8.1
+
+### Fixed
+
+- `probe` and `readiness` are as fast as in 6.7.0 again (SkillHub feedback 298): the tracked-only filter of 6.8.0 reads git's index once per run and filters in memory, instead of walking the working tree for untracked files on every snapshot and listing, and a selection it filters needs no separate `git check-ignore`.
+- `install.sh` and `install.ps1` refuse `DOMAIN_MEMORY_SHA256SUMS_SHA256` without a version (299): a checksum pin names one release, so the latest one would break it at the next release.
+- `README.md` says the hooks note a PATH fallback only when they need the executable (300).
+
 ## 6.8.0
 
 A brief says what it did not review, and a scratch file stays local (SkillHub feedback 287–297).

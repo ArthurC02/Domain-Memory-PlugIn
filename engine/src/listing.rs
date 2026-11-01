@@ -1,6 +1,7 @@
 use std::collections::HashSet;
 use std::fs;
 use std::path::{Path, PathBuf};
+use std::sync::{Arc, Mutex};
 
 use crate::git::{self, Failure};
 use crate::py::{self, Raised};
@@ -53,27 +54,32 @@ pub fn listing_of(root: &Path, excluded: &HashSet<String>) -> Result<Files, Stri
 /// reaches a committed listing or snapshot.
 pub fn tracked_listing_of(root: &Path, excluded: &HashSet<String>) -> Result<Files, String> {
     let mut files = listing_of(root, excluded)?;
-    let untracked = untracked_files(root)?;
-    files.entries.retain(|entry| !untracked.contains(entry));
+    if let Some(tracked) = tracked_files(root)? {
+        files.entries.retain(|entry| tracked.contains(entry));
+    }
     Ok(files)
 }
 
-/// Untracked, unignored files relative to `root`, or none when git is missing
-/// or the repository tracks nothing yet, as a new one is listed from its tree.
-pub fn untracked_files(root: &Path) -> Result<HashSet<String>, String> {
-    let run = |arguments: &[&str]| match git::run_git(root, arguments, None) {
-        Err(error) if error.kind == Failure::Invalid => Err(error.message),
-        Err(_) => Ok(None),
-        Ok(done) if done.code != 0 => Ok(None),
-        Ok(done) => Ok(Some(done.stdout)),
-    };
-    match run(&["ls-files", "-z"])? {
-        Some(tracked) if !tracked.is_empty() => {}
-        _ => return Ok(HashSet::new()),
+type Tracked = Option<Arc<HashSet<String>>>;
+
+/// The files git tracks under `root`, relative to it, read from the index once
+/// per root and process; none when git is missing or the repository tracks
+/// nothing yet, as a new one is listed from its tree.
+pub fn tracked_files(root: &Path) -> Result<Tracked, String> {
+    static READ: Mutex<Vec<(PathBuf, Tracked)>> = Mutex::new(Vec::new());
+    let mut read = READ.lock().unwrap_or_else(|poisoned| poisoned.into_inner());
+    if let Some((_, tracked)) = read.iter().find(|(seen, _)| seen == root) {
+        return Ok(tracked.clone());
     }
-    Ok(run(&["ls-files", "--others", "--exclude-standard", "-z"])?
-        .map(|listed| nul_separated(&listed).collect())
-        .unwrap_or_default())
+    let tracked = match git::run_git(root, &["ls-files", "-z"], None) {
+        Err(error) if error.kind == Failure::Invalid => return Err(error.message),
+        Ok(done) if done.code == 0 && !done.stdout.is_empty() => {
+            Some(Arc::new(nul_separated(&done.stdout).collect()))
+        }
+        _ => None,
+    };
+    read.push((root.to_path_buf(), tracked.clone()));
+    Ok(tracked)
 }
 
 fn git_ignored_entries(root: &Path) -> Result<Option<HashSet<String>>, String> {
