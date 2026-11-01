@@ -454,7 +454,10 @@ pub fn record_approval(root: &Path, approval: &Approval) -> Result<(), String> {
             approval.reviewer
         ));
     }
-    if get(&proposal, "proposer").as_str().map(person) == Some(reviewer) {
+    if get(&proposal, "proposer")
+        .as_str()
+        .is_some_and(|proposer| person(proposer).eq_ignore_ascii_case(reviewer))
+    {
         return Err("the proposer cannot approve the proposal".to_string());
     }
     let timestamp = match approval.approved_at {

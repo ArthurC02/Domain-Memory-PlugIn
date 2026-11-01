@@ -2,6 +2,12 @@
 
 Notable changes to the Domain Memory plugin, newest first. The format follows Keep a Changelog, and versions follow Semantic Versioning: a minor version adds or changes behavior, a patch version only fixes it. Versions before 0.10.0 are recorded in the repository history only.
 
+## 7.0.6
+
+### Fixed
+
+- `record-approval` compares the reviewer with the proposer ignoring letter case, as GitHub logins and most identity providers do, so a proposer `human:ArthurC` cannot approve as `--reviewer arthurc`. The approval still stores the name as typed (Infra 315).
+
 ## 7.0.5
 
 ### Fixed

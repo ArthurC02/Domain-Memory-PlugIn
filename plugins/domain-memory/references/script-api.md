@@ -301,7 +301,7 @@ Keeps the status the proposal died in, its reason, and its replacement, rather t
 
 `record-approval --package-root <path> --role <role> --reviewer <identity> --scope <scope> [--approved-at <ISO-8601>] [--registry-root <path>] [--repo-root <repo>]`
 
-Takes `--registry-root` and `--repo-root` as the other steps of the flow do and reads neither. `--reviewer` is the name of the person who approves, given as `ArthurC` or `human:ArthurC`; the approval stores the bare name, and the record it reviews is verified by `human:<name>`. Rejects self-approval, comparing names with and without `human:`, a reviewer that still begins with `human:` or `agent:` once one `human:` is removed, and duplicate approval for the same role and revision.
+Takes `--registry-root` and `--repo-root` as the other steps of the flow do and reads neither. `--reviewer` is the name of the person who approves, given as `ArthurC` or `human:ArthurC`; the approval stores the bare name, and the record it reviews is verified by `human:<name>`. Rejects self-approval, comparing names with or without `human:` and ignoring letter case, a reviewer that still begins with `human:` or `agent:` once one `human:` is removed, and duplicate approval for the same role and revision.
 
 ### `record-test-result`
 

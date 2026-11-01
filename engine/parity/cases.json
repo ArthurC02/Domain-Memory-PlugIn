@@ -111826,7 +111826,7 @@
     "writes": true
   },
   {
-    "name": "record-approval accepts a reviewer who differs from the proposer in case",
+    "name": "record-approval refuses the proposer named in another case",
     "args": [
       "record-approval",
       "--package-root",
