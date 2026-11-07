@@ -7,7 +7,7 @@ branding:
 
 inputs:
   version:
-    description: The release to install, such as v7.0.6, or latest. Defaults to the release of the commit this action is used at, whether pinned by tag or by SHA.
+    description: The release to install, such as v7.0.7, or latest. Defaults to the release of the commit this action is used at, whether pinned by tag or by SHA.
     required: false
     default: ''
   sha256sums:

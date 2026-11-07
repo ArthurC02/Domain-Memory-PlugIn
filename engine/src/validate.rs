@@ -154,6 +154,18 @@ fn required_fields(asset: &str) -> &'static [&'static str] {
         .map_or(&[], |(_, fields)| fields)
 }
 
+/// The fields `validate` requires of a reviewed record that this one lacks,
+/// apart from the `verified` list that applying its Change Package writes.
+// ponytail: evidence stays a ship-package check, as candidates may lack it;
+// add it here once the recorded package fixtures carry citations.
+pub fn reviewed_gaps(asset: &str, record: &Object) -> Vec<&'static str> {
+    required_fields(asset)
+        .iter()
+        .copied()
+        .filter(|field| *field != "verified" && !record.get(field).is_some_and(truthy))
+        .collect()
+}
+
 fn entry_status_errors(
     asset: &str,
     entry: &Object,

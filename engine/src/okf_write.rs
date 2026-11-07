@@ -83,10 +83,15 @@ pub fn encode(asset: &str, record: &Object) -> Result<String, String> {
         .find(|(key, _)| RESERVED_KEYS.contains(&key.as_str()))
     {
         return Err(format!(
-            "{asset}/{} has a field named {key}, which the concept format reserves",
+            "{asset}/{} has a field named {key}, which the concept format reserves{}",
             record
                 .get("id")
-                .map_or_else(|| "null".to_string(), message_text)
+                .map_or_else(|| "null".to_string(), message_text),
+            match title_field(asset) {
+                Some(field) if key == "title" =>
+                    format!("; a {asset} record's title is its {field}, so give {field} instead"),
+                _ => String::new(),
+            }
         ));
     }
     for (key, value) in remaining.iter() {

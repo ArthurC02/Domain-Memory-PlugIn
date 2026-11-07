@@ -362,6 +362,7 @@ pub fn submit_proposal(root: &Path, registry_root: &Path, repo_root: &Path) -> R
     let mut evidence = load_json(&evidence_path)?;
     evidence.insert("registry_revision", revision);
     let mut errors = validate_change_package(root, None, None, None)?;
+    errors.extend(crate::changes::reviewed_gap_errors(&proposal));
     errors.extend(unconfirmed_evidence_errors(&proposal, registry_root)?);
     if !errors.is_empty() {
         return Err(format!("draft proposal is invalid: {}", errors.join("; ")));

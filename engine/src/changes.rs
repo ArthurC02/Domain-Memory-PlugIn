@@ -122,6 +122,27 @@ fn parsed_updates(proposal: &Object) -> Vec<ParsedUpdate> {
     }
 }
 
+/// Registry updates whose records would be reviewed without the fields a
+/// reviewed record needs; checked from submission on, since a draft is still
+/// being written and a submitted package is frozen.
+pub fn reviewed_gap_errors(proposal: &Object) -> Vec<String> {
+    parsed_updates(proposal)
+        .iter()
+        .filter_map(|update| {
+            let gaps = crate::validate::reviewed_gaps(&update.asset, update.record.as_ref()?);
+            (!gaps.is_empty()).then(|| {
+                format!(
+                    "registry update {}/{} would be reviewed but missing {}; ship-package refuses to apply it, so add {} before submit-proposal",
+                    update.asset,
+                    update.record_id,
+                    gaps.join(", "),
+                    if gaps.len() == 1 { "it" } else { "them" }
+                )
+            })
+        })
+        .collect()
+}
+
 fn registry_update_errors(proposal: &Object) -> Vec<String> {
     match proposal.get("registry_updates") {
         None | Some(Value::Null) => Vec::new(),
@@ -1354,6 +1375,9 @@ pub fn validate_change_package(
     errors.extend(proposal_field_errors(proposal));
     errors.extend(registry_update_errors(proposal));
     let status = get(proposal, "status");
+    if status_in(status, &SUBMITTED_OR_LATER) && !status_in(status, &SETTLED_STATUSES) {
+        errors.extend(reviewed_gap_errors(proposal));
+    }
     let revision = get(proposal, "proposal_revision");
     let list_of = |key: &str| -> Vec<Value> {
         match get(proposal, key) {

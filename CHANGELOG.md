@@ -2,6 +2,13 @@
 
 Notable changes to the Domain Memory plugin, newest first. The format follows Keep a Changelog, and versions follow Semantic Versioning: a minor version adds or changes behavior, a patch version only fixes it. Versions before 0.10.0 are recorded in the repository history only.
 
+## 7.0.7
+
+### Fixed
+
+- A Change Package whose registry update would become a reviewed record without a field that a reviewed record needs, such as a vocabulary term without `name`, is refused by `submit-proposal` and by `validate-change-package` from `submitted` on, including `--as-status submitted`. The error is "registry update <asset>/<id> would be reviewed but missing <fields>". In 7.0.6, every step through approval passed, and only `ship-package` refused, after the package was frozen and signed (Infra 316). A draft is not checked, since it is still being written. A missing evidence list is still caught only by `ship-package`.
+- `upsert-candidate` refuses a `title` field with the field to use instead: "a vocabulary record's title is its name, so give name instead".
+
 ## 7.0.6
 
 ### Fixed

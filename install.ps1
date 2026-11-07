@@ -8,7 +8,7 @@
 #   -To <dir>       DOMAIN_MEMORY_INSTALL_DIR     where it lands (default: %LOCALAPPDATA%\Programs\domain-memory\bin)
 #                   DOMAIN_MEMORY_NO_MODIFY_PATH  set to leave PATH alone
 #                   DOMAIN_MEMORY_SHA256SUMS_SHA256  the digest SHA256SUMS must have, to pin it too
-# so a pinned install reads: $env:DOMAIN_MEMORY_VERSION = 'v7.0.6'; irm <url> | iex
+# so a pinned install reads: $env:DOMAIN_MEMORY_VERSION = 'v7.0.7'; irm <url> | iex
 # DOMAIN_MEMORY_DOWNLOAD_URL replaces the release's download address, for a mirror.
 param(
     [string]$Version = $(if ($env:DOMAIN_MEMORY_VERSION) { $env:DOMAIN_MEMORY_VERSION } else { 'latest' }),

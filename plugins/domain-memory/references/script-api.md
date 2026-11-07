@@ -277,7 +277,7 @@ Read-only. For every citation under `from`, a file or a directory, finds the cit
 
 `submit-proposal --package-root <path> --registry-root <path> --repo-root <repo>`
 
-Captures the exact Git HEAD and Registry digest before changing a valid draft to `submitted`. Refuses an obligation whose check runs `go test` without `-v` or `-json`, which `record-test-result` could not record, and a promoted record citing a path outside the confirmed sources, which `ship-package` would refuse to review, so the refusal comes before approval and the signed commit.
+Captures the exact Git HEAD and Registry digest before changing a valid draft to `submitted`. Refuses an obligation whose check runs `go test` without `-v` or `-json`, which `record-test-result` could not record, and a promoted record citing a path outside the confirmed sources, which `ship-package` would refuse to review, and a registry update whose record would be reviewed without a field a reviewed record needs (a vocabulary term without `name`), so the refusal comes before approval and the signed commit. `validate-change-package` reports the same missing fields from `submitted` on, and with `--as-status submitted`.
 
 ### `list-proposals`
 
