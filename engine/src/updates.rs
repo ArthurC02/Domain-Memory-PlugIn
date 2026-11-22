@@ -231,8 +231,10 @@ pub fn upsert_candidate(
     }
     let source_map = source_map_for(root)?;
     let kinds = SourceKinds::of(&source_map);
-    let mut result = Upserted::default();
-    result.repeated = repeated;
+    let mut result = Upserted {
+        repeated,
+        ..Default::default()
+    };
     let mut event = operation_event("upsert-candidate", Some(asset));
     match batch.as_slice() {
         [only] => event.insert("record_id", Value::Str(id_of(only))),

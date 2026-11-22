@@ -2,6 +2,12 @@
 
 Notable changes to the Domain Memory plugin, newest first. The format follows Keep a Changelog, and versions follow Semantic Versioning: a minor version adds or changes behavior, a patch version only fixes it. Versions before 0.10.0 are recorded in the repository history only.
 
+## 7.2.1
+
+### Fixed
+
+- The 7.2.0 source does not pass `cargo clippy -D warnings`, which CI runs, so its commit left the repository red: `upsert-candidate` assigned a field after `Upserted::default()`. The executables it ships behave the same; this release is the lint fix and a rebuild.
+
 ## 7.2.0
 
 A citation whose text is not unique in its file is said at the moment it is written, and a `refresh-citations` run that leaves work behind says so.
