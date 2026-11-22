@@ -982,9 +982,39 @@ fn blessed(directory: &Path, pin: &str, outcomes: Vec<(String, Value)>) {
         compact: false,
     };
     let text = json::dumps(&Value::Object(recording), style) + "\n";
+    let local_paths = local_paths(&text);
+    assert!(
+        local_paths.is_empty(),
+        "{} would record paths that exist only on this machine, so it would pass here and fail in CI: {}. Record with DOMAIN_MEMORY_BINARY set to the executable under plugins/domain-memory/engine/bin, which is the one CI runs; a binary elsewhere, such as one in engine/target, puts its own directory into the recorded text where nothing masks it.",
+        target.display(),
+        local_paths.join("; ")
+    );
     std::fs::write(&target, text)
         .unwrap_or_else(|error| panic!("cannot write {}: {error}", target.display()));
     println!("wrote {}", target.display());
+}
+
+/// Where a recording names this checkout: the engine directory or the tree
+/// that holds it, spelled as the recorded text would spell it. Nothing masks
+/// those, because a case is written to reach the repository through
+/// `{repo}`, `{fixture}`, `{scratch}` or `{plugin}`; one appearing in the
+/// output means the executable that produced it lives outside
+/// `plugins/domain-memory/engine/bin`, and the recording holds a path no
+/// other machine has. Checked when recording rather than left to whoever
+/// runs it, since the recording is green on the platform that wrote it and
+/// red only in CI.
+fn local_paths(text: &str) -> Vec<String> {
+    let engine = engine();
+    let mut found = BTreeSet::new();
+    for directory in [engine.as_path(), engine.parent().unwrap_or(&engine)] {
+        for spelling in spellings(directory) {
+            let spelling = String::from_utf8_lossy(&spelling).to_string();
+            if text.contains(&spelling) {
+                found.insert(spelling);
+            }
+        }
+    }
+    found.into_iter().collect()
 }
 
 fn option_value(name: &str) -> Option<String> {
