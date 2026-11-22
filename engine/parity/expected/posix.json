@@ -3147,12 +3147,12 @@
   },
   "cite function Commented of src/h.go": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/h.go:3-6 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/h.go\",\n  \"lines\": {\n    \"start\": 3,\n    \"end\": 6\n  },\n  \"content_sha256\": \"sha256:b0cc247b9a4131db647660f7f8d630aea245c12691cf70dfea041d5aa051c8d9\",\n  \"excerpt_sha256\": \"sha256:ad129238b473e53d0d49578aa051383f30969f582fe80a0c7f24664baae38751\"\n}\n"
   },
   "cite function Generic of src/a.go": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/a.go:14-16 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/a.go\",\n  \"lines\": {\n    \"start\": 14,\n    \"end\": 16\n  },\n  \"content_sha256\": \"sha256:a50fd5bf302258d84ef548b03a4ac9a8db89a4a8d1f519b591bb99e0ed462b42\",\n  \"excerpt_sha256\": \"sha256:43fd3225aad31fce63059ef0acee7eda099a88285001b8af12e0a1037a5f82ce\"\n}\n"
   },
   "cite function Hidden of src/h.go": {
@@ -3162,17 +3162,17 @@
   },
   "cite function Method of src/a.go": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/a.go:7-12 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/a.go\",\n  \"lines\": {\n    \"start\": 7,\n    \"end\": 12\n  },\n  \"content_sha256\": \"sha256:a50fd5bf302258d84ef548b03a4ac9a8db89a4a8d1f519b591bb99e0ed462b42\",\n  \"excerpt_sha256\": \"sha256:4817e6737e9acd006a4bf3a9223766e32a34f382d4e33284f54614e1e686ff80\"\n}\n"
   },
   "cite function Plain of src/a.go": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/a.go:3-5 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/a.go\",\n  \"lines\": {\n    \"start\": 3,\n    \"end\": 5\n  },\n  \"content_sha256\": \"sha256:a50fd5bf302258d84ef548b03a4ac9a8db89a4a8d1f519b591bb99e0ed462b42\",\n  \"excerpt_sha256\": \"sha256:41e3a13f5a6d5b9f3a537aec66e1a19b09a7e9a1ba6ad5b4fcf0cac7677145c1\"\n}\n"
   },
   "cite function Strs of src/a.go": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/a.go:18-23 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/a.go\",\n  \"lines\": {\n    \"start\": 18,\n    \"end\": 23\n  },\n  \"content_sha256\": \"sha256:a50fd5bf302258d84ef548b03a4ac9a8db89a4a8d1f519b591bb99e0ed462b42\",\n  \"excerpt_sha256\": \"sha256:b89011f96951ba0434785ee8ef1b76c806bc000c76c07e206babeddc75fedb18\"\n}\n"
   },
   "cite function Thing of src/k.java": {
@@ -3192,12 +3192,12 @@
   },
   "cite function after a type word with a word character beyond ascii": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/M.java:2-3 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/M.java\",\n  \"lines\": {\n    \"start\": 2,\n    \"end\": 3\n  },\n  \"content_sha256\": \"sha256:b226565699db9aa0f87624c7767bc4c73303655591bc4b4ee52f1cf2d4634b7d\",\n  \"excerpt_sha256\": \"sha256:a5c4cc96f3de3c5ac704dd671d0a50aeebe1f661c9822714bae070d12c718264\"\n}\n"
   },
   "cite function arrow of src/c.ts": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/c.ts:5-7 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/c.ts\",\n  \"lines\": {\n    \"start\": 5,\n    \"end\": 7\n  },\n  \"content_sha256\": \"sha256:3c1d309670e48a295504b202490efdb07de2ff2c01100b846f4ad77c525467ae\",\n  \"excerpt_sha256\": \"sha256:5e4972bacd8f3e90a383cbe72892bc5a68ab9244d6384d2fb66b67b8e79cdb02\"\n}\n"
   },
   "cite function cmp of src/c.ts": {
@@ -3222,67 +3222,67 @@
   },
   "cite function expr of src/c.ts": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/c.ts:9-9 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/c.ts\",\n  \"lines\": {\n    \"start\": 9,\n    \"end\": 9\n  },\n  \"content_sha256\": \"sha256:3c1d309670e48a295504b202490efdb07de2ff2c01100b846f4ad77c525467ae\",\n  \"excerpt_sha256\": \"sha256:9cc8adbb1c4f5219f68555e159c26810eb2bb6e18b0c98789ac50fb7f6c0e30a\"\n}\n"
   },
   "cite function ext of src/f.kt": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/f.kt:7-7 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/f.kt\",\n  \"lines\": {\n    \"start\": 7,\n    \"end\": 7\n  },\n  \"content_sha256\": \"sha256:b5e7ddc65b0630cdecbbaa0f370cefbc077e4bafafe9b71ec6d361796d231788\",\n  \"excerpt_sha256\": \"sha256:d19d6b44cd3dc4ba75d4a10001ef41c03108ce930c6ec8d7cd5e78642162267f\"\n}\n"
   },
   "cite function ffi of src/g.rs": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/g.rs:10-12 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/g.rs\",\n  \"lines\": {\n    \"start\": 10,\n    \"end\": 12\n  },\n  \"content_sha256\": \"sha256:084c604a274f42b55859a11ca47b3c9a2744ba3d46ca9f9753ab07cc2ef833e6\",\n  \"excerpt_sha256\": \"sha256:c65c44f990ba700d87d5b42d671492415ece6f986e067d6c99b8baca92d551fa\"\n}\n"
   },
   "cite function fn2 of src/c.ts": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/c.ts:19-21 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/c.ts\",\n  \"lines\": {\n    \"start\": 19,\n    \"end\": 21\n  },\n  \"content_sha256\": \"sha256:3c1d309670e48a295504b202490efdb07de2ff2c01100b846f4ad77c525467ae\",\n  \"excerpt_sha256\": \"sha256:120719e05c2dc17d0d3a8482c19157b7421f4b15acdf1b8af331e8b7bac1372b\"\n}\n"
   },
   "cite function gen of src/c.ts": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/c.ts:30-32 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/c.ts\",\n  \"lines\": {\n    \"start\": 30,\n    \"end\": 32\n  },\n  \"content_sha256\": \"sha256:3c1d309670e48a295504b202490efdb07de2ff2c01100b846f4ad77c525467ae\",\n  \"excerpt_sha256\": \"sha256:5d6d0d50338961f29886f492f5b5b2b12f860f64d8016b4b3122a5595c9bc20d\"\n}\n"
   },
   "cite function gen of src/g.rs": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/g.rs:14-16 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/g.rs\",\n  \"lines\": {\n    \"start\": 14,\n    \"end\": 16\n  },\n  \"content_sha256\": \"sha256:084c604a274f42b55859a11ca47b3c9a2744ba3d46ca9f9753ab07cc2ef833e6\",\n  \"excerpt_sha256\": \"sha256:53e9f5726e04defd0aab4396050dc6c4af0c170c709b93da33f6dc04b5b99473\"\n}\n"
   },
   "cite function helper of src/c.ts": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/c.ts:27-27 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/c.ts\",\n  \"lines\": {\n    \"start\": 27,\n    \"end\": 27\n  },\n  \"content_sha256\": \"sha256:3c1d309670e48a295504b202490efdb07de2ff2c01100b846f4ad77c525467ae\",\n  \"excerpt_sha256\": \"sha256:449b9f55a74c9e258fdf3f7447020c5a1796ceb59f1612824d444d69bc4c933d\"\n}\n"
   },
   "cite function later of src/b.py": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/b.py:11-12 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/b.py\",\n  \"lines\": {\n    \"start\": 11,\n    \"end\": 12\n  },\n  \"content_sha256\": \"sha256:a911228507ebc9159a6a491b5d41834a15cb4a3bc8906959caaeca7e68b4ec49\",\n  \"excerpt_sha256\": \"sha256:73bceea00f0284379f844bd336554df6f9fdfb03741e8a5efce4f160e3f4ccc9\"\n}\n"
   },
   "cite function lazy of src/d.js": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/d.js:7-7 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/d.js\",\n  \"lines\": {\n    \"start\": 7,\n    \"end\": 7\n  },\n  \"content_sha256\": \"sha256:9e2f3e2d05bdd4586661bbc52e10beab55ecd9764c906782398bb6380ba4909e\",\n  \"excerpt_sha256\": \"sha256:52b64ce9d504b3b13fdce01dd68c4c686725b6c1e20019b75805f29a7a0cab17\"\n}\n"
   },
   "cite function lifetime of src/g.rs": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/g.rs:5-8 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/g.rs\",\n  \"lines\": {\n    \"start\": 5,\n    \"end\": 8\n  },\n  \"content_sha256\": \"sha256:084c604a274f42b55859a11ca47b3c9a2744ba3d46ca9f9753ab07cc2ef833e6\",\n  \"excerpt_sha256\": \"sha256:11c3f0119fdcdc3d6e72cff57775bc3d4c1d132c7ed08716103e9d9b2838b422\"\n}\n"
   },
   "cite function make of src/k.java": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/k.java:2-5 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/k.java\",\n  \"lines\": {\n    \"start\": 2,\n    \"end\": 5\n  },\n  \"content_sha256\": \"sha256:d339d4e100c24eb5060dc50abe5981db3fe5aeb7d32dd0b094a8e8aeb32e31a1\",\n  \"excerpt_sha256\": \"sha256:8de4a6a8208bf17a9acabc4f4a3449120b370981e0c648bb4db3ed852f9886a7\"\n}\n"
   },
   "cite function method of src/b.py": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/b.py:16-19 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/b.py\",\n  \"lines\": {\n    \"start\": 16,\n    \"end\": 19\n  },\n  \"content_sha256\": \"sha256:a911228507ebc9159a6a491b5d41834a15cb4a3bc8906959caaeca7e68b4ec49\",\n  \"excerpt_sha256\": \"sha256:d0137d8a7a1c4e724ebea869654b17e3ba735f33ad92b721b93468cffab83f81\"\n}\n"
   },
   "cite function method of src/c.ts": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/c.ts:24-26 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/c.ts\",\n  \"lines\": {\n    \"start\": 24,\n    \"end\": 26\n  },\n  \"content_sha256\": \"sha256:3c1d309670e48a295504b202490efdb07de2ff2c01100b846f4ad77c525467ae\",\n  \"excerpt_sha256\": \"sha256:3026ceb41dae75aeb1b4836ada78dd44604692a329e44342df25647052311617\"\n}\n"
   },
   "cite function name that holds a regular expression dot": {
@@ -3302,7 +3302,7 @@
   },
   "cite function of of src/e.java": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/e.java:2-4 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/e.java\",\n  \"lines\": {\n    \"start\": 2,\n    \"end\": 4\n  },\n  \"content_sha256\": \"sha256:8e872dbf4a3da0f9894e5b902b0623a717d3803fbc54cd4d6d220ed16c780b89\",\n  \"excerpt_sha256\": \"sha256:0cacc93ea3780d26d049855307fdd95a391274f18b59c9187f45a732a9efda6c\"\n}\n"
   },
   "cite function other of src/b.py": {
@@ -3312,42 +3312,42 @@
   },
   "cite function plain of src/c.ts": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/c.ts:1-3 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/c.ts\",\n  \"lines\": {\n    \"start\": 1,\n    \"end\": 3\n  },\n  \"content_sha256\": \"sha256:3c1d309670e48a295504b202490efdb07de2ff2c01100b846f4ad77c525467ae\",\n  \"excerpt_sha256\": \"sha256:47344410b0fc6efbd840f465ce6e821d415c850a30d20f9f923443fd576ee284\"\n}\n"
   },
   "cite function plain of src/d.js": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/d.js:1-5 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/d.js\",\n  \"lines\": {\n    \"start\": 1,\n    \"end\": 5\n  },\n  \"content_sha256\": \"sha256:9e2f3e2d05bdd4586661bbc52e10beab55ecd9764c906782398bb6380ba4909e\",\n  \"excerpt_sha256\": \"sha256:1b70a3f80befca808edf69847b0366c644981bc63a8fd81ca5869b407bc842d5\"\n}\n"
   },
   "cite function plain of src/f.kt": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/f.kt:1-3 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/f.kt\",\n  \"lines\": {\n    \"start\": 1,\n    \"end\": 3\n  },\n  \"content_sha256\": \"sha256:b5e7ddc65b0630cdecbbaa0f370cefbc077e4bafafe9b71ec6d361796d231788\",\n  \"excerpt_sha256\": \"sha256:933284ff5a832043ff1457dc761c8f2c34197774f55dcb8b8ee156d2c5df9941\"\n}\n"
   },
   "cite function plain of src/g.rs": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/g.rs:1-3 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/g.rs\",\n  \"lines\": {\n    \"start\": 1,\n    \"end\": 3\n  },\n  \"content_sha256\": \"sha256:084c604a274f42b55859a11ca47b3c9a2744ba3d46ca9f9753ab07cc2ef833e6\",\n  \"excerpt_sha256\": \"sha256:5112019849d820a83c48ae8ac7b1034cbe1e9c8111bc8f652b79b68cbfbf9713\"\n}\n"
   },
   "cite function r of src/d.js": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/d.js:6-6 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/d.js\",\n  \"lines\": {\n    \"start\": 6,\n    \"end\": 6\n  },\n  \"content_sha256\": \"sha256:9e2f3e2d05bdd4586661bbc52e10beab55ecd9764c906782398bb6380ba4909e\",\n  \"excerpt_sha256\": \"sha256:321c9ade8574d35ad7e712389a18c87453a1a1e6dea94cf29111f47b9ef64edf\"\n}\n"
   },
   "cite function short of src/f.kt": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/f.kt:5-5 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/f.kt\",\n  \"lines\": {\n    \"start\": 5,\n    \"end\": 5\n  },\n  \"content_sha256\": \"sha256:b5e7ddc65b0630cdecbbaa0f370cefbc077e4bafafe9b71ec6d361796d231788\",\n  \"excerpt_sha256\": \"sha256:5a317a4d2794da84e5515453a075c73745e1309ac3635ea25c70fcd6567befff\"\n}\n"
   },
   "cite function single of src/c.ts": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/c.ts:11-11 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/c.ts\",\n  \"lines\": {\n    \"start\": 11,\n    \"end\": 11\n  },\n  \"content_sha256\": \"sha256:3c1d309670e48a295504b202490efdb07de2ff2c01100b846f4ad77c525467ae\",\n  \"excerpt_sha256\": \"sha256:0def609de733afa4325f7e0576ba48f227e725f6bc10bf80ee21b3a7560bb1bb\"\n}\n"
   },
   "cite function str of src/f.kt": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/f.kt:9-9 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/f.kt\",\n  \"lines\": {\n    \"start\": 9,\n    \"end\": 9\n  },\n  \"content_sha256\": \"sha256:b5e7ddc65b0630cdecbbaa0f370cefbc077e4bafafe9b71ec6d361796d231788\",\n  \"excerpt_sha256\": \"sha256:5500842ab5eeb297c7b3e307c219201d7e5ee1444bce8f24342d3e33d197016c\"\n}\n"
   },
   "cite function table of src/e.java": {
@@ -3357,22 +3357,22 @@
   },
   "cite function tick of src/i.ts": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/i.ts:1-4 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/i.ts\",\n  \"lines\": {\n    \"start\": 1,\n    \"end\": 4\n  },\n  \"content_sha256\": \"sha256:8133be17b0785ab96a598fde2f9a60f0f7bed630862082923cb53f5075319775\",\n  \"excerpt_sha256\": \"sha256:8133be17b0785ab96a598fde2f9a60f0f7bed630862082923cb53f5075319775\"\n}\n"
   },
   "cite function top of src/b.py": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/b.py:4-8 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/b.py\",\n  \"lines\": {\n    \"start\": 4,\n    \"end\": 8\n  },\n  \"content_sha256\": \"sha256:a911228507ebc9159a6a491b5d41834a15cb4a3bc8906959caaeca7e68b4ec49\",\n  \"excerpt_sha256\": \"sha256:2dce5b1f33ab3c33d35254afc146c978ddd009249c87bdca7d110ed75230ecd8\"\n}\n"
   },
   "cite function typed of src/c.ts": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/c.ts:13-17 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/c.ts\",\n  \"lines\": {\n    \"start\": 13,\n    \"end\": 17\n  },\n  \"content_sha256\": \"sha256:3c1d309670e48a295504b202490efdb07de2ff2c01100b846f4ad77c525467ae\",\n  \"excerpt_sha256\": \"sha256:934e2b3e499d4cfe1be324446c21baacd4537a64016b5e93230aec0d5ea72364\"\n}\n"
   },
   "cite function use of src/e.java": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/e.java:10-12 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/e.java\",\n  \"lines\": {\n    \"start\": 10,\n    \"end\": 12\n  },\n  \"content_sha256\": \"sha256:8e872dbf4a3da0f9894e5b902b0623a717d3803fbc54cd4d6d220ed16c780b89\",\n  \"excerpt_sha256\": \"sha256:214eb2de366a3cba28f1bbc925582df735ee6c9da7ec953026f6b600fde578d3\"\n}\n"
   },
   "cite function weird of src/j.rs": {
@@ -3387,7 +3387,7 @@
   },
   "cite inside the source map": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/a.go:3-3 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/a.go\",\n  \"lines\": {\n    \"start\": 3,\n    \"end\": 3\n  },\n  \"content_sha256\": \"sha256:a50fd5bf302258d84ef548b03a4ac9a8db89a4a8d1f519b591bb99e0ed462b42\",\n  \"excerpt_sha256\": \"sha256:c672084ce5fdc57ea59b385d285729c8a1509ce0f1e84ab056e293543f78f0a4\",\n  \"source_kind\": \"domain\"\n}\n"
   },
   "cite lines ''": {
@@ -3412,7 +3412,7 @@
   },
   "cite lines '1-6'": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/text.txt:1-6 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/text.txt\",\n  \"lines\": {\n    \"start\": 1,\n    \"end\": 6\n  },\n  \"content_sha256\": \"sha256:4768181f18f566bd3a48f9cd200ec198f9b490b28ea375610f0ae1768e0f1ec8\",\n  \"excerpt_sha256\": \"sha256:4768181f18f566bd3a48f9cd200ec198f9b490b28ea375610f0ae1768e0f1ec8\"\n}\n"
   },
   "cite lines '1-7'": {
@@ -3442,7 +3442,7 @@
   },
   "cite lines '6-6'": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/text.txt:6-6 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/text.txt\",\n  \"lines\": {\n    \"start\": 6,\n    \"end\": 6\n  },\n  \"content_sha256\": \"sha256:4768181f18f566bd3a48f9cd200ec198f9b490b28ea375610f0ae1768e0f1ec8\",\n  \"excerpt_sha256\": \"sha256:fe2547fe2604b445e70fc9d819062960552f9145bdb043b51986e478a4806a2b\"\n}\n"
   },
   "cite lines 'a-b'": {
@@ -3452,32 +3452,32 @@
   },
   "cite lines '١-٢'": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/text.txt:1-2 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/text.txt\",\n  \"lines\": {\n    \"start\": 1,\n    \"end\": 2\n  },\n  \"content_sha256\": \"sha256:4768181f18f566bd3a48f9cd200ec198f9b490b28ea375610f0ae1768e0f1ec8\",\n  \"excerpt_sha256\": \"sha256:c3f9c8c283a2b1f2f1896f27a01cbe3cddc0c9d93f752e4639035a0f5b36f6e8\"\n}\n"
   },
   "cite outside the source map": {
    "exit": 0,
-   "stderr": "NOTE: src/text.txt is outside the confirmed sources. A candidate may rest on it, but ship-package refuses to review a record whose evidence rests outside the confirmed sources; cite a source the corpus covers, or have the developer confirm this path before the record is reviewed.\n",
+   "stderr": "NOTE: the text of src/text.txt:1-1 occurs once in the file, so a later edit can still find it.\nNOTE: src/text.txt is outside the confirmed sources. A candidate may rest on it, but ship-package refuses to review a record whose evidence rests outside the confirmed sources; cite a source the corpus covers, or have the developer confirm this path before the record is reviewed.\n",
    "stdout": "{\n  \"path\": \"src/text.txt\",\n  \"lines\": {\n    \"start\": 1,\n    \"end\": 1\n  },\n  \"content_sha256\": \"sha256:4768181f18f566bd3a48f9cd200ec198f9b490b28ea375610f0ae1768e0f1ec8\",\n  \"excerpt_sha256\": \"sha256:2c8b08da5ce60398e1f19af0e5dccc744df274b826abe585eaba68c525434806\",\n  \"source_kind\": \"unclassified\"\n}\n"
   },
   "cite repository function emit_stderr of .claude/skills/domain-memory/engine/src/main.rs": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of .claude/skills/domain-memory/engine/src/main.rs:603-610 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \".claude/skills/domain-memory/engine/src/main.rs\",\n  \"lines\": {\n    \"start\": 603,\n    \"end\": 610\n  },\n  \"content_sha256\": \"sha256:2b8ced4958a8f23bd10de872dc3588950244c1d301cc8a4b9f705207d88373ba\",\n  \"excerpt_sha256\": \"sha256:450fad0e85c19105952119e99a94b2dfed65d029c49d8b9becca72b7c7391c8c\"\n}\n"
   },
   "cite repository function execute of .claude/skills/domain-memory/engine/src/main.rs": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of .claude/skills/domain-memory/engine/src/main.rs:134-314 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \".claude/skills/domain-memory/engine/src/main.rs\",\n  \"lines\": {\n    \"start\": 134,\n    \"end\": 314\n  },\n  \"content_sha256\": \"sha256:2b8ced4958a8f23bd10de872dc3588950244c1d301cc8a4b9f705207d88373ba\",\n  \"excerpt_sha256\": \"sha256:1577b4004df1f90f4fc1cfecdb45232251fa8c76e07cf479b48390bde57b4071\"\n}\n"
   },
   "cite repository function function_span of .claude/skills/domain-memory/scripts/domain_registry/evidence.py": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of .claude/skills/domain-memory/scripts/domain_registry/evidence.py:427-443 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \".claude/skills/domain-memory/scripts/domain_registry/evidence.py\",\n  \"lines\": {\n    \"start\": 427,\n    \"end\": 443\n  },\n  \"content_sha256\": \"sha256:429bb26587ad26f3b6d4db7333ed4f388260eec31c1971b4c3940b180693fd6b\",\n  \"excerpt_sha256\": \"sha256:3cf0a10caf75f1cacac1d2053a9cf4709e0e9fc33e2011c686820defc95e65be\"\n}\n"
   },
   "cite repository function main of tools/devctl/main.go": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of tools/devctl/main.go:34-50 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"tools/devctl/main.go\",\n  \"lines\": {\n    \"start\": 34,\n    \"end\": 50\n  },\n  \"content_sha256\": \"sha256:a8c2b6d2c79a8f096c80e049ac981c959ca2a93e8c8407824a9ef561dd9f9563\",\n  \"excerpt_sha256\": \"sha256:574642003e674d02b768779afaac322b501987aaccc0ba6d69269a236bd84709\"\n}\n"
   },
   "cite repository function noSuchFunctionAnywhere of apps/web/src/main.tsx": {
@@ -3492,12 +3492,12 @@
   },
   "cite repository function run of .claude/skills/domain-memory/engine/src/main.rs": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of .claude/skills/domain-memory/engine/src/main.rs:99-119 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \".claude/skills/domain-memory/engine/src/main.rs\",\n  \"lines\": {\n    \"start\": 99,\n    \"end\": 119\n  },\n  \"content_sha256\": \"sha256:2b8ced4958a8f23bd10de872dc3588950244c1d301cc8a4b9f705207d88373ba\",\n  \"excerpt_sha256\": \"sha256:cd6d6d9484573355381f1f382ef6982cfb671ae753c3fc211a5293c533460b53\"\n}\n"
   },
   "cite show many lines": {
    "exit": 0,
-   "stderr": "src/text.txt:1: one\nsrc/text.txt: ... 4 lines not shown\nsrc/text.txt:6: six\n",
+   "stderr": "src/text.txt:1: one\nsrc/text.txt: ... 4 lines not shown\nsrc/text.txt:6: six\nNOTE: the text of src/text.txt:1-6 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/text.txt\",\n  \"lines\": {\n    \"start\": 1,\n    \"end\": 6\n  },\n  \"content_sha256\": \"sha256:4768181f18f566bd3a48f9cd200ec198f9b490b28ea375610f0ae1768e0f1ec8\",\n  \"excerpt_sha256\": \"sha256:4768181f18f566bd3a48f9cd200ec198f9b490b28ea375610f0ae1768e0f1ec8\"\n}\n"
   },
   "cite show one line": {
@@ -3532,7 +3532,7 @@
   },
   "cite without a source map": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/text.txt:1-1 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"path\": \"src/text.txt\",\n  \"lines\": {\n    \"start\": 1,\n    \"end\": 1\n  },\n  \"content_sha256\": \"sha256:4768181f18f566bd3a48f9cd200ec198f9b490b28ea375610f0ae1768e0f1ec8\",\n  \"excerpt_sha256\": \"sha256:2c8b08da5ce60398e1f19af0e5dccc744df274b826abe585eaba68c525434806\"\n}\n"
   },
   "command help with an equals value": {
@@ -21790,12 +21790,12 @@
   },
   "recite classifies a file outside the sources as unclassified": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of extra/notes.txt:1-2 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"registry_updates\": [],\n  \"supersedes\": [],\n  \"candidates\": [\n    {\n      \"asset\": \"rules\",\n      \"record\": {\n        \"id\": \"r-two\",\n        \"statement\": \"Two citations.\",\n        \"contexts\": [\n          \"orders\"\n        ],\n        \"evidence\": [\n          {\n            \"path\": \"src/orders.go\",\n            \"lines\": {\n              \"start\": 3,\n              \"end\": 8\n            },\n            \"excerpt_sha256\": \"sha256:c0e704cca62802af439141c58f37a7226d9ac59979af429e66b6a7a2160f17e1\"\n          },\n          {\n            \"path\": \"src/orders.go\",\n            \"lines\": {\n              \"start\": 10,\n              \"end\": 15\n            },\n            \"excerpt_sha256\": \"sha256:bb539c418ef6921231b91c71dd7e03177fd9420e47095956779210687870ac2b\"\n          },\n          {\n            \"path\": \"extra/notes.txt\",\n            \"lines\": {\n              \"start\": 1,\n              \"end\": 2\n            },\n            \"content_sha256\": \"sha256:0ea89bc92e892c5252d236b212831d68c143103a063d7deaa3d12ef073b0c56d\",\n            \"excerpt_sha256\": \"sha256:0ea89bc92e892c5252d236b212831d68c143103a063d7deaa3d12ef073b0c56d\",\n            \"source_kind\": \"unclassified\"\n          }\n        ],\n        \"status\": \"candidate\"\n      }\n    }\n  ]\n}\n"
   },
   "recite classifies the citation by the source map": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/orders.go:3-8 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"registry_updates\": [],\n  \"supersedes\": [],\n  \"candidates\": [\n    {\n      \"asset\": \"rules\",\n      \"record\": {\n        \"id\": \"r-one\",\n        \"statement\": \"One citation.\",\n        \"contexts\": [\n          \"orders\"\n        ],\n        \"evidence\": [\n          {\n            \"path\": \"src/orders.go\",\n            \"lines\": {\n              \"start\": 3,\n              \"end\": 8\n            },\n            \"content_sha256\": \"sha256:1f6050461d2cd61641336fa22c402a4c27dcfdde9e480d42c03c04f40f625bd2\",\n            \"excerpt_sha256\": \"sha256:c0e704cca62802af439141c58f37a7226d9ac59979af429e66b6a7a2160f17e1\",\n            \"source_kind\": \"implementation\"\n          }\n        ],\n        \"status\": \"candidate\"\n      }\n    }\n  ]\n}\n"
   },
   "recite help": {
@@ -21850,17 +21850,17 @@
   },
   "recite re-cites a rule of the repository's own Registry": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of apps/platform/internal/creator/credit/service.go:201-217 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"registry_updates\": [\n    {\n      \"operation\": \"upsert\",\n      \"asset\": \"rules\",\n      \"record\": {\n        \"id\": \"a-balance-exactly-at-the-start-threshold-may-start\",\n        \"statement\": \"A start is allowed when the balance is at or above the start threshold; one credit below is refused.\",\n        \"contexts\": [\n          \"credit\"\n        ],\n        \"examples\": [\n          \"With a threshold of 70, a balance of 70 may start and 69 may not.\"\n        ],\n        \"evidence\": [\n          {\n            \"path\": \"apps/platform/internal/creator/credit/service.go\",\n            \"lines\": {\n              \"start\": 201,\n              \"end\": 217\n            },\n            \"content_sha256\": \"sha256:beb56525684225ef1eb7b487de2b3751381f20720966f46ed588596c9f6e5a7f\",\n            \"excerpt_sha256\": \"sha256:89d86c46f2967ecea8a38db26a6adf304699937c1e77f8bf3dd77bc9e0a8669a\",\n            \"source_kind\": \"implementation\"\n          },\n          {\n            \"path\": \"apps/platform/internal/creator/credit/service_test.go\",\n            \"lines\": {\n              \"start\": 331,\n              \"end\": 348\n            },\n            \"excerpt_sha256\": \"sha256:7b99d21ab7b8cfcd893debf6475ebd06e3d934140e033931c93368ce19f6f331\"\n          }\n        ],\n        \"status\": \"reviewed\"\n      }\n    }\n  ],\n  \"supersedes\": [\n    \"shifted-recite-2026-10-24\"\n  ],\n  \"candidates\": []\n}\n"
   },
   "recite re-cites lines of the replaced file without --lines": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/orders.go:10-15 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"registry_updates\": [],\n  \"supersedes\": [],\n  \"candidates\": [\n    {\n      \"asset\": \"rules\",\n      \"record\": {\n        \"id\": \"r-two\",\n        \"statement\": \"Two citations.\",\n        \"contexts\": [\n          \"orders\"\n        ],\n        \"evidence\": [\n          {\n            \"path\": \"src/orders.go\",\n            \"lines\": {\n              \"start\": 3,\n              \"end\": 8\n            },\n            \"excerpt_sha256\": \"sha256:c0e704cca62802af439141c58f37a7226d9ac59979af429e66b6a7a2160f17e1\"\n          },\n          {\n            \"path\": \"src/orders.go\",\n            \"lines\": {\n              \"start\": 10,\n              \"end\": 15\n            },\n            \"content_sha256\": \"sha256:1f6050461d2cd61641336fa22c402a4c27dcfdde9e480d42c03c04f40f625bd2\",\n            \"excerpt_sha256\": \"sha256:bb539c418ef6921231b91c71dd7e03177fd9420e47095956779210687870ac2b\"\n          },\n          {\n            \"path\": \"src/other.txt\",\n            \"lines\": {\n              \"start\": 1,\n              \"end\": 2\n            },\n            \"excerpt_sha256\": \"sha256:e49c81e2d2f84e259d40e2fb8192f3bcd198b355184845d76d8f58807d0d78ee\"\n          }\n        ],\n        \"status\": \"candidate\"\n      }\n    }\n  ]\n}\n"
   },
   "recite re-cites the only citation of a candidate rule": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/orders.go:3-8 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"registry_updates\": [],\n  \"supersedes\": [],\n  \"candidates\": [\n    {\n      \"asset\": \"rules\",\n      \"record\": {\n        \"id\": \"r-one\",\n        \"statement\": \"One citation.\",\n        \"contexts\": [\n          \"orders\"\n        ],\n        \"evidence\": [\n          {\n            \"path\": \"src/orders.go\",\n            \"lines\": {\n              \"start\": 3,\n              \"end\": 8\n            },\n            \"content_sha256\": \"sha256:1f6050461d2cd61641336fa22c402a4c27dcfdde9e480d42c03c04f40f625bd2\",\n            \"excerpt_sha256\": \"sha256:c0e704cca62802af439141c58f37a7226d9ac59979af429e66b6a7a2160f17e1\"\n          }\n        ],\n        \"status\": \"candidate\"\n      }\n    }\n  ]\n}\n"
   },
   "recite re-cites the only citation onto other lines": {
@@ -21870,7 +21870,7 @@
   },
   "recite reads Arabic-Indic digits as line numbers": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/orders.go:3-8 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"registry_updates\": [],\n  \"supersedes\": [],\n  \"candidates\": [\n    {\n      \"asset\": \"rules\",\n      \"record\": {\n        \"id\": \"r-one\",\n        \"statement\": \"One citation.\",\n        \"contexts\": [\n          \"orders\"\n        ],\n        \"evidence\": [\n          {\n            \"path\": \"src/orders.go\",\n            \"lines\": {\n              \"start\": 3,\n              \"end\": 8\n            },\n            \"content_sha256\": \"sha256:1f6050461d2cd61641336fa22c402a4c27dcfdde9e480d42c03c04f40f625bd2\",\n            \"excerpt_sha256\": \"sha256:c0e704cca62802af439141c58f37a7226d9ac59979af429e66b6a7a2160f17e1\"\n          }\n        ],\n        \"status\": \"candidate\"\n      }\n    }\n  ]\n}\n"
   },
   "recite reads a Registry without an audit log": {
@@ -21880,7 +21880,7 @@
   },
   "recite reads lines ending in a dash as a single line": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/orders.go:3-3 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"registry_updates\": [],\n  \"supersedes\": [],\n  \"candidates\": [\n    {\n      \"asset\": \"rules\",\n      \"record\": {\n        \"id\": \"r-one\",\n        \"statement\": \"One citation.\",\n        \"contexts\": [\n          \"orders\"\n        ],\n        \"evidence\": [\n          {\n            \"path\": \"src/orders.go\",\n            \"lines\": {\n              \"start\": 3,\n              \"end\": 3\n            },\n            \"content_sha256\": \"sha256:1f6050461d2cd61641336fa22c402a4c27dcfdde9e480d42c03c04f40f625bd2\",\n            \"excerpt_sha256\": \"sha256:f49e0e75b4fbba398e77917e4c1c444117feb39057ddafb5e14b3c84426c1782\"\n          }\n        ],\n        \"status\": \"candidate\"\n      }\n    }\n  ]\n}\n"
   },
   "recite refuses a damaged audit log": {
@@ -22005,37 +22005,37 @@
   },
   "recite replaces another file's citation with a new path": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/other.txt:1-3 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"registry_updates\": [],\n  \"supersedes\": [],\n  \"candidates\": [\n    {\n      \"asset\": \"rules\",\n      \"record\": {\n        \"id\": \"r-two\",\n        \"statement\": \"Two citations.\",\n        \"contexts\": [\n          \"orders\"\n        ],\n        \"evidence\": [\n          {\n            \"path\": \"src/orders.go\",\n            \"lines\": {\n              \"start\": 3,\n              \"end\": 8\n            },\n            \"excerpt_sha256\": \"sha256:c0e704cca62802af439141c58f37a7226d9ac59979af429e66b6a7a2160f17e1\"\n          },\n          {\n            \"path\": \"src/other.txt\",\n            \"lines\": {\n              \"start\": 1,\n              \"end\": 3\n            },\n            \"content_sha256\": \"sha256:4fdbc441ea7b546100e086ac1e4fc5ae6749b7314311c99db05be450eca12996\",\n            \"excerpt_sha256\": \"sha256:4fdbc441ea7b546100e086ac1e4fc5ae6749b7314311c99db05be450eca12996\"\n          },\n          {\n            \"path\": \"src/other.txt\",\n            \"lines\": {\n              \"start\": 1,\n              \"end\": 2\n            },\n            \"excerpt_sha256\": \"sha256:e49c81e2d2f84e259d40e2fb8192f3bcd198b355184845d76d8f58807d0d78ee\"\n          }\n        ],\n        \"status\": \"candidate\"\n      }\n    }\n  ]\n}\n"
   },
   "recite replaces by path alone when one citation holds it": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/other.txt:2-3 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"registry_updates\": [],\n  \"supersedes\": [],\n  \"candidates\": [\n    {\n      \"asset\": \"rules\",\n      \"record\": {\n        \"id\": \"r-two\",\n        \"statement\": \"Two citations.\",\n        \"contexts\": [\n          \"orders\"\n        ],\n        \"evidence\": [\n          {\n            \"path\": \"src/orders.go\",\n            \"lines\": {\n              \"start\": 3,\n              \"end\": 8\n            },\n            \"excerpt_sha256\": \"sha256:c0e704cca62802af439141c58f37a7226d9ac59979af429e66b6a7a2160f17e1\"\n          },\n          {\n            \"path\": \"src/orders.go\",\n            \"lines\": {\n              \"start\": 10,\n              \"end\": 15\n            },\n            \"excerpt_sha256\": \"sha256:bb539c418ef6921231b91c71dd7e03177fd9420e47095956779210687870ac2b\"\n          },\n          {\n            \"path\": \"src/other.txt\",\n            \"lines\": {\n              \"start\": 2,\n              \"end\": 3\n            },\n            \"content_sha256\": \"sha256:4fdbc441ea7b546100e086ac1e4fc5ae6749b7314311c99db05be450eca12996\",\n            \"excerpt_sha256\": \"sha256:aa5989aacb57830a365b63654addd2b3e7427ce3e8869f52e261ac98cc318734\"\n          }\n        ],\n        \"status\": \"candidate\"\n      }\n    }\n  ]\n}\n"
   },
   "recite starts from the candidate an earlier recitation proposed": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/other.txt:1-3 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"registry_updates\": [\n    {\n      \"operation\": \"upsert\",\n      \"asset\": \"rules\",\n      \"record\": {\n        \"id\": \"r-two\",\n        \"contexts\": [\n          \"orders\"\n        ],\n        \"statement\": \"Two citations.\",\n        \"status\": \"candidate\",\n        \"evidence\": [\n          {\n            \"path\": \"src/orders.go\",\n            \"lines\": {\n              \"start\": 3,\n              \"end\": 8\n            },\n            \"excerpt_sha256\": \"sha256:c0e704cca62802af439141c58f37a7226d9ac59979af429e66b6a7a2160f17e1\"\n          },\n          {\n            \"path\": \"src/orders.go\",\n            \"lines\": {\n              \"start\": 10,\n              \"end\": 15\n            },\n            \"excerpt_sha256\": \"sha256:bb539c418ef6921231b91c71dd7e03177fd9420e47095956779210687870ac2b\"\n          },\n          {\n            \"path\": \"src/other.txt\",\n            \"lines\": {\n              \"start\": 1,\n              \"end\": 2\n            },\n            \"excerpt_sha256\": \"sha256:e49c81e2d2f84e259d40e2fb8192f3bcd198b355184845d76d8f58807d0d78ee\"\n          }\n        ]\n      }\n    },\n    {\n      \"operation\": \"upsert\",\n      \"asset\": \"rules\",\n      \"record\": {\n        \"id\": \"other\",\n        \"statement\": \"kept\"\n      }\n    }\n  ],\n  \"supersedes\": [\n    \"P-0\"\n  ],\n  \"candidates\": [\n    {\n      \"asset\": \"contexts\",\n      \"record\": {\n        \"id\": \"r-one\"\n      }\n    },\n    {\n      \"asset\": \"rules\",\n      \"record\": {\n        \"id\": \"r-one\",\n        \"contexts\": [\n          \"orders\"\n        ],\n        \"statement\": \"Onto candidate.\",\n        \"evidence\": [\n          {\n            \"path\": \"src/orders.go\",\n            \"lines\": {\n              \"start\": 3,\n              \"end\": 8\n            },\n            \"excerpt_sha256\": \"sha256:c0e704cca62802af439141c58f37a7226d9ac59979af429e66b6a7a2160f17e1\"\n          },\n          {\n            \"path\": \"src/other.txt\",\n            \"lines\": {\n              \"start\": 1,\n              \"end\": 3\n            },\n            \"content_sha256\": \"sha256:4fdbc441ea7b546100e086ac1e4fc5ae6749b7314311c99db05be450eca12996\",\n            \"excerpt_sha256\": \"sha256:4fdbc441ea7b546100e086ac1e4fc5ae6749b7314311c99db05be450eca12996\"\n          }\n        ]\n      }\n    }\n  ],\n  \"unmatched\": [\n    {\n      \"asset\": \"rules\",\n      \"id\": \"r-two\",\n      \"path\": \"src/orders.go\",\n      \"lines\": {\n        \"start\": 10,\n        \"end\": 15\n      },\n      \"reason\": \"gone\"\n    },\n    {\n      \"asset\": \"rules\",\n      \"id\": \"r-two\",\n      \"path\": \"src/orders.go\",\n      \"lines\": {\n        \"start\": 1,\n        \"end\": 2\n      },\n      \"reason\": \"kept\"\n    },\n    {\n      \"asset\": \"rules\",\n      \"id\": \"r-one\",\n      \"path\": \"src/orders.go\",\n      \"lines\": {\n        \"start\": 10,\n        \"end\": 15\n      },\n      \"reason\": \"other record\"\n    }\n  ],\n  \"extra_key\": 7\n}\n"
   },
   "recite starts from the record an earlier recitation proposed": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/other.txt:1-3 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"registry_updates\": [\n    {\n      \"operation\": \"upsert\",\n      \"asset\": \"rules\",\n      \"record\": {\n        \"id\": \"other\",\n        \"statement\": \"kept\"\n      }\n    }\n  ],\n  \"supersedes\": [\n    \"P-0\"\n  ],\n  \"candidates\": [\n    {\n      \"asset\": \"rules\",\n      \"record\": {\n        \"id\": \"r-one\",\n        \"contexts\": [\n          \"orders\"\n        ],\n        \"statement\": \"Onto candidate.\",\n        \"evidence\": [\n          {\n            \"path\": \"src/orders.go\",\n            \"lines\": {\n              \"start\": 3,\n              \"end\": 8\n            },\n            \"excerpt_sha256\": \"sha256:c0e704cca62802af439141c58f37a7226d9ac59979af429e66b6a7a2160f17e1\"\n          },\n          {\n            \"path\": \"src/other.txt\",\n            \"lines\": {\n              \"start\": 1,\n              \"end\": 2\n            },\n            \"excerpt_sha256\": \"sha256:e49c81e2d2f84e259d40e2fb8192f3bcd198b355184845d76d8f58807d0d78ee\"\n          }\n        ]\n      }\n    },\n    {\n      \"asset\": \"contexts\",\n      \"record\": {\n        \"id\": \"r-one\"\n      }\n    },\n    {\n      \"asset\": \"rules\",\n      \"record\": {\n        \"id\": \"r-two\",\n        \"contexts\": [\n          \"orders\"\n        ],\n        \"statement\": \"Two citations.\",\n        \"status\": \"candidate\",\n        \"evidence\": [\n          {\n            \"path\": \"src/orders.go\",\n            \"lines\": {\n              \"start\": 3,\n              \"end\": 8\n            },\n            \"excerpt_sha256\": \"sha256:c0e704cca62802af439141c58f37a7226d9ac59979af429e66b6a7a2160f17e1\"\n          },\n          {\n            \"path\": \"src/orders.go\",\n            \"lines\": {\n              \"start\": 10,\n              \"end\": 15\n            },\n            \"excerpt_sha256\": \"sha256:bb539c418ef6921231b91c71dd7e03177fd9420e47095956779210687870ac2b\"\n          },\n          {\n            \"path\": \"src/other.txt\",\n            \"lines\": {\n              \"start\": 1,\n              \"end\": 3\n            },\n            \"content_sha256\": \"sha256:4fdbc441ea7b546100e086ac1e4fc5ae6749b7314311c99db05be450eca12996\",\n            \"excerpt_sha256\": \"sha256:4fdbc441ea7b546100e086ac1e4fc5ae6749b7314311c99db05be450eca12996\"\n          }\n        ]\n      }\n    }\n  ],\n  \"unmatched\": [\n    {\n      \"asset\": \"rules\",\n      \"id\": \"r-two\",\n      \"path\": \"src/orders.go\",\n      \"lines\": {\n        \"start\": 10,\n        \"end\": 15\n      },\n      \"reason\": \"gone\"\n    },\n    {\n      \"asset\": \"rules\",\n      \"id\": \"r-two\",\n      \"path\": \"src/orders.go\",\n      \"lines\": {\n        \"start\": 1,\n        \"end\": 2\n      },\n      \"reason\": \"kept\"\n    },\n    {\n      \"asset\": \"rules\",\n      \"id\": \"r-one\",\n      \"path\": \"src/orders.go\",\n      \"lines\": {\n        \"start\": 10,\n        \"end\": 15\n      },\n      \"reason\": \"other record\"\n    }\n  ],\n  \"extra_key\": 7\n}\n"
   },
   "recite takes a single line as START": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/orders.go:3-3 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"registry_updates\": [],\n  \"supersedes\": [],\n  \"candidates\": [\n    {\n      \"asset\": \"rules\",\n      \"record\": {\n        \"id\": \"r-one\",\n        \"statement\": \"One citation.\",\n        \"contexts\": [\n          \"orders\"\n        ],\n        \"evidence\": [\n          {\n            \"path\": \"src/orders.go\",\n            \"lines\": {\n              \"start\": 3,\n              \"end\": 3\n            },\n            \"content_sha256\": \"sha256:1f6050461d2cd61641336fa22c402a4c27dcfdde9e480d42c03c04f40f625bd2\",\n            \"excerpt_sha256\": \"sha256:f49e0e75b4fbba398e77917e4c1c444117feb39057ddafb5e14b3c84426c1782\"\n          }\n        ],\n        \"status\": \"candidate\"\n      }\n    }\n  ]\n}\n"
   },
   "recite takes an empty --replace for no replace at all": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/other.txt:2-3 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"registry_updates\": [],\n  \"supersedes\": [],\n  \"candidates\": [\n    {\n      \"asset\": \"rules\",\n      \"record\": {\n        \"id\": \"r-two\",\n        \"statement\": \"Two citations.\",\n        \"contexts\": [\n          \"orders\"\n        ],\n        \"evidence\": [\n          {\n            \"path\": \"src/orders.go\",\n            \"lines\": {\n              \"start\": 3,\n              \"end\": 8\n            },\n            \"excerpt_sha256\": \"sha256:c0e704cca62802af439141c58f37a7226d9ac59979af429e66b6a7a2160f17e1\"\n          },\n          {\n            \"path\": \"src/orders.go\",\n            \"lines\": {\n              \"start\": 10,\n              \"end\": 15\n            },\n            \"excerpt_sha256\": \"sha256:bb539c418ef6921231b91c71dd7e03177fd9420e47095956779210687870ac2b\"\n          },\n          {\n            \"path\": \"src/other.txt\",\n            \"lines\": {\n              \"start\": 2,\n              \"end\": 3\n            },\n            \"content_sha256\": \"sha256:4fdbc441ea7b546100e086ac1e4fc5ae6749b7314311c99db05be450eca12996\",\n            \"excerpt_sha256\": \"sha256:aa5989aacb57830a365b63654addd2b3e7427ce3e8869f52e261ac98cc318734\"\n          }\n        ],\n        \"status\": \"candidate\"\n      }\n    }\n  ]\n}\n"
   },
   "recite treats an empty --lines like a missing one": {
    "exit": 0,
-   "stderr": "",
+   "stderr": "NOTE: the text of src/orders.go:10-15 occurs once in the file, so a later edit can still find it.\n",
    "stdout": "{\n  \"registry_updates\": [],\n  \"supersedes\": [],\n  \"candidates\": [\n    {\n      \"asset\": \"rules\",\n      \"record\": {\n        \"id\": \"r-two\",\n        \"statement\": \"Two citations.\",\n        \"contexts\": [\n          \"orders\"\n        ],\n        \"evidence\": [\n          {\n            \"path\": \"src/orders.go\",\n            \"lines\": {\n              \"start\": 3,\n              \"end\": 8\n            },\n            \"excerpt_sha256\": \"sha256:c0e704cca62802af439141c58f37a7226d9ac59979af429e66b6a7a2160f17e1\"\n          },\n          {\n            \"path\": \"src/orders.go\",\n            \"lines\": {\n              \"start\": 10,\n              \"end\": 15\n            },\n            \"content_sha256\": \"sha256:1f6050461d2cd61641336fa22c402a4c27dcfdde9e480d42c03c04f40f625bd2\",\n            \"excerpt_sha256\": \"sha256:bb539c418ef6921231b91c71dd7e03177fd9420e47095956779210687870ac2b\"\n          },\n          {\n            \"path\": \"src/other.txt\",\n            \"lines\": {\n              \"start\": 1,\n              \"end\": 2\n            },\n            \"excerpt_sha256\": \"sha256:e49c81e2d2f84e259d40e2fb8192f3bcd198b355184845d76d8f58807d0d78ee\"\n          }\n        ],\n        \"status\": \"candidate\"\n      }\n    }\n  ]\n}\n"
   },
   "recite unknown option": {

@@ -1,6 +1,6 @@
 use std::path::PathBuf;
 
-use crate::cite::{citation, line_range, repeated_note};
+use crate::cite::{citation, line_range, occurrence_note};
 use crate::cli::Invocation;
 use crate::files::load_json;
 use crate::json::Value;
@@ -50,7 +50,7 @@ pub fn recite_command(invocation: &Invocation) -> Result<i32, String> {
     print_json(&Value::Object(reply));
     let (start, end) = line_range(lines)?;
     let cited = citation(&repo_root, path, &start, &end)?;
-    if let Some(note) = repeated_note(&repo_root, &cited) {
+    if let Some(note) = occurrence_note(&repo_root, &cited) {
         emit_stderr(&format!("{note}\n"));
     }
     Ok(0)

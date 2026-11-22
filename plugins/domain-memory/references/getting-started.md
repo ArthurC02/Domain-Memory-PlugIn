@@ -90,7 +90,10 @@ $ domain-memory cite --path src/loans.ts --lines 4-6 --show
 src/loans.ts:4: export function mayBorrow(activeLoans: number): boolean {
 src/loans.ts: ... 1 lines not shown
 src/loans.ts:6: }
+NOTE: the text of src/loans.ts:4-6 occurs once in the file, so a later edit can still find it.
 ```
+
+That note is why `--show` is worth the keystrokes: cite lines whose text occurs once, so a later edit can still find them. When the text occurs more than once, the note names the other line instead, and the way out is to widen the span to the enclosing block.
 
 ## 6. Propose the rule as a candidate
 

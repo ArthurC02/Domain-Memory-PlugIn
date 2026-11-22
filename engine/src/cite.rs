@@ -120,7 +120,7 @@ pub fn cite(
             notes.push(format!("{path_text}:{end}: {}", row(end)));
         }
     }
-    notes.extend(repeated_note(&root, &reference));
+    notes.extend(occurrence_note(&root, &reference));
     if reference.get("source_kind").and_then(Value::as_str) == Some("unclassified") {
         notes.push(format!(
             "NOTE: {path_text} is outside the confirmed sources. {OUTSIDE_SOURCES_CONSEQUENCE}"
@@ -129,7 +129,14 @@ pub fn cite(
     Ok(Cited { reference, notes })
 }
 
-pub fn repeated_note(root: &Path, cited: &Object) -> Option<String> {
+struct Occurrences {
+    path: String,
+    start: usize,
+    end: usize,
+    others: Vec<String>,
+}
+
+fn occurrences(root: &Path, cited: &Object) -> Option<Occurrences> {
     let text = |key: &str| {
         cited
             .get(key)
@@ -144,18 +151,50 @@ pub fn repeated_note(root: &Path, cited: &Object) -> Option<String> {
         _ => 0,
     };
     let (start, end) = (bound("start"), bound("end"));
-    let others: Vec<String> = excerpt_starts(root, &path_text, end - start + 1, &excerpt)
+    let others = excerpt_starts(root, &path_text, end - start + 1, &excerpt)
         .into_iter()
         .filter(|line| *line != start)
         .map(|line| line.to_string())
         .collect();
-    if others.is_empty() {
-        return None;
-    }
-    Some(format!(
-        "NOTE: the text of {path_text}:{start}-{end} also starts at line {}, so a later edit cannot tell the copies apart. {WIDEN_TO_UNIQUE}",
-        others.join(", ")
-    ))
+    Some(Occurrences {
+        path: path_text,
+        start,
+        end,
+        others,
+    })
+}
+
+/// The warning for a citation whose text occurs elsewhere in its file, for a
+/// command that writes a batch of records and should say only what is wrong.
+pub fn repeated_note(root: &Path, cited: &Object) -> Option<String> {
+    let found = occurrences(root, cited)?;
+    (!found.others.is_empty()).then(|| warning(&found))
+}
+
+/// What a command that builds one citation says about it: the warning, or
+/// that the cited lines occur once in the file. Said either way, so widening
+/// a citation to the enclosing block ends in a statement that it is now
+/// unique, rather than in the absence of a warning.
+pub fn occurrence_note(root: &Path, cited: &Object) -> Option<String> {
+    let found = occurrences(root, cited)?;
+    Some(if found.others.is_empty() {
+        format!(
+            "NOTE: the text of {}:{}-{} occurs once in the file, so a later edit can still find it.",
+            found.path, found.start, found.end
+        )
+    } else {
+        warning(&found)
+    })
+}
+
+fn warning(found: &Occurrences) -> String {
+    format!(
+        "NOTE: the text of {}:{}-{} also starts at line {}, so a later edit cannot tell the copies apart. {WIDEN_TO_UNIQUE}",
+        found.path,
+        found.start,
+        found.end,
+        found.others.join(", ")
+    )
 }
 
 fn to_count(digits: &str) -> usize {

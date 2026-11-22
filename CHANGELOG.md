@@ -2,6 +2,16 @@
 
 Notable changes to the Domain Memory plugin, newest first. The format follows Keep a Changelog, and versions follow Semantic Versioning: a minor version adds or changes behavior, a patch version only fixes it. Versions before 0.10.0 are recorded in the repository history only.
 
+## 7.3.0
+
+### Changed
+
+- `cite` and `recite` now say either way how the cited text sits in its file: that it occurs once, or where else it starts. Until now uniqueness was only knowable from the absence of a warning, so widening a citation to the enclosing block ended in silence rather than in a statement that the span is now unique — and a span made unique by one line happening to differ read the same as one that is unique by structure. `upsert-candidate` still only warns, because a record carries many citations and a line per citation would bury the one that is wrong.
+
+### Fixed
+
+- `references/brownfield-refactoring.md` showed `recite` with `--onto` where the flag that picks which citation to replace is `--replace <path>:<start>-<end>`, so following the page as written cost a round of trial and error on any record that cites a file twice.
+
 ## 7.2.1
 
 ### Fixed
