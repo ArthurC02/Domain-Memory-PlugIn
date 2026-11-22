@@ -33,6 +33,7 @@ Every write goes through one routine:
 1. Take the per-Registry writer lock, and finish or roll back an interrupted write first.
 2. When the caller named the revision it expects, as `ship-package` does, compare it with the Registry's digest; a difference refuses with `registry revision changed before update; run ship-package again`.
 3. Copy the Registry to a staging directory, apply the change there and validate the whole copy; an error the Registry did not already have refuses the write.
+   A change to an asset writes that asset's whole directory: its concept files and the `index.md` derived from them. So a write brings the index of the asset it touches up to date, even where a merge had left it stale, and that shows in the commit beside the records. `refresh-indexes` is for an index no write is about to touch.
 4. Journal the operation as `prepared`, move the Registry aside as the backup, install the staging copy, and mark the journal `installed`.
 5. Append the audit event and mark the journal `audited`; then remove the backup, the staging copy and the journal. A failed append restores the backup.
 

@@ -2,6 +2,12 @@
 
 Notable changes to the Domain Memory plugin, newest first. The format follows Keep a Changelog, and versions follow Semantic Versioning: a minor version adds or changes behavior, a patch version only fixes it. Versions before 0.10.0 are recorded in the repository history only.
 
+## 7.1.1
+
+### Fixed
+
+- The pages say that a write writes the whole directory of each asset it touches, concept files and the `index.md` derived from them, so the index of a written asset comes back up to date even where a merge had left it stale. This is how every write has always worked, `upsert-candidate` included, but no page said so, and 7.1.0 described `refresh-citations` as changing nothing but citation lines without saying which files it writes (Infra 321). `refresh-indexes` is for an index no write is about to touch. The reports of `refresh-citations` name records and the repository files whose cited lines moved, not the Registry files written, which the commit shows.
+
 ## 7.1.0
 
 A citation that only moved can be re-cited in one command, so the lines the Registry stores stay a reliable way to read it.

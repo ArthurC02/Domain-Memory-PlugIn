@@ -58,7 +58,7 @@ Repairs the log after a git merge brought two clones' events together: it drops 
 
 `refresh-indexes --registry-root <path>`
 
-Rewrites `registry/index.md` and each `registry/<asset>/index.md` from the concept files beside them, never from the index a merge left behind, and prints the indexes it rewrote in `refreshed`; a current set prints an empty list. Run it after a merge touched an index, or whenever `validate` says an index does not list the records beside it.
+Rewrites `registry/index.md` and each `registry/<asset>/index.md` from the concept files beside them, never from the index a merge left behind, and prints the indexes it rewrote in `refreshed`; a current set prints an empty list. Run it after a merge touched an index, or whenever `validate` says an index does not list the records beside it. A write to an asset already rewrites that asset's index, so this is for the ones no write is about to touch.
 
 ### `refresh-citations`
 
@@ -66,7 +66,7 @@ Rewrites `registry/index.md` and each `registry/<asset>/index.md` from the conce
 
 `refresh-citations --registry-root <path> --repo-root <repo>`
 
-Writes the lines where each `shifted` citation's excerpt now sits, across every record, and prints what it moved in `records`, `citations` and `files`. It changes no path, no cited-line digest and no other field, so no record's status or statement changes and nothing needs review: `verify-evidence` reports a citation `shifted` only where its excerpt occurs exactly once in the file, which is the line range this writes. The write goes through the write protocol and appends one audit event; with nothing shifted it writes nothing, appends nothing, and prints empty lists. Run it after a refactoring moved code, so the stored lines stay a reliable way to read the Registry. A `stale` citation is left alone: its text changed, so `recite` points it at new lines once someone checks that the fact still holds.
+Writes the lines where each `shifted` citation's excerpt now sits, across every record, and prints what it moved in `records`, `citations` and `files`, which name the records and the repository files whose cited lines moved. In a record it changes nothing but those lines: no path, no cited-line digest, no status, no statement, so nothing needs review: `verify-evidence` reports a citation `shifted` only where its excerpt occurs exactly once in the file, which is the line range this writes. The write goes through the write protocol and appends one audit event; with nothing shifted it writes nothing, appends nothing, and prints empty lists. As every write does, it writes the whole directory of each asset it touches, so the `index.md` of such an asset comes back up to date if a merge had left it stale; the report names records and repository files, not the Registry files written, which the commit shows. Run it after a refactoring moved code, so the stored lines stay a reliable way to read the Registry. A `stale` citation is left alone: its text changed, so `recite` points it at new lines once someone checks that the fact still holds.
 
 ### `probe`
 
