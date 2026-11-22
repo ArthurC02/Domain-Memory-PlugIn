@@ -79,6 +79,7 @@ Each row names the command and the flags that matter; [script-api.md](references
 | Check the Registry | `validate`; `verify-evidence` for whether citations still match the code; `coverage` for the Contexts that still lack rules |
 | Check files you edited | `verify-evidence --path <file>` |
 | Re-cite after moving or editing code | `relocate-evidence --from <old> --to <new>`; `recite --asset <asset> --id <id> --path <file> --lines <a>-<b>` |
+| Re-cite every citation that only moved | `refresh-citations --repo-root <repo>` |
 | Put a re-citation through review | `init-change-package --output <dir> --recitation <file> --requirement-id <id> --proposal-id <id> --proposer <you>` |
 | Prove rules the code already enforces | `harvest --spec <file> [--through verified]`; `discard-harvest --package-root <package> --reason <text>` undoes it |
 | Prove that a test protects a rule | `counterfactual --repo-root <repo> --file <path> --find <text> --replace <text> --test-command <command>` |

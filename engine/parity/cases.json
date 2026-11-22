@@ -130838,5 +130838,70 @@
       "reg/registry/value-objects/index.md": "# Value Objects\n\n",
       "reg/registry/vocabulary/index.md": "# Vocabulary\n\n"
     }
+  },
+  {
+    "name": "refresh-citations re-cites a shifted citation of a reviewed record",
+    "args": [
+      "refresh-citations",
+      "--registry-root",
+      "{fixture}/m",
+      "--repo-root",
+      "{fixture}"
+    ],
+    "files": {
+      "src/a.go": "// a comment added above\npackage a\nfunc A() {}\n",
+      "m/registry/index.md": "---\nokf_version: \"0.2\"\n---\n# Domain Registry\n\n- [Bounded Contexts](/contexts/index.md)\n- [Vocabulary](/vocabulary/index.md)\n- [Aggregates](/aggregates/index.md)\n- [Business Rules](/rules/index.md)\n- [Contracts](/contracts/index.md)\n- [Interactions](/interactions/index.md)\n- [Decisions](/decisions/index.md)\n- [Domain Events](/events/index.md)\n- [Capabilities](/capabilities/index.md)\n- [Value Objects](/value-objects/index.md)\n- [Dependency Policies](/dependency-policies/index.md)\n",
+      "m/registry/contexts/a.md": "---\ntype: Bounded Context\nstatus: stable\ntitle: Alpha\nverified:\n  - by: \"human:A\"\n    at: \"2026-01-01T00:00:00Z\"\nsources:\n  - resource: \"src/a.go#L1-2\"\n    excerpt_sha256: \"sha256:dfd5090af6d062648be2bf0eac2d20644241ae2e07418ba30e453ab7a46f393d\"\n---\nOwns alpha.",
+      "m/registry/contexts/index.md": "# Bounded Contexts\n\n- [Alpha](/contexts/a) — Owns alpha.\n"
+    },
+    "writes": true
+  },
+  {
+    "name": "refresh-citations leaves a citation that is current alone",
+    "args": [
+      "refresh-citations",
+      "--registry-root",
+      "{fixture}/m",
+      "--repo-root",
+      "{fixture}"
+    ],
+    "files": {
+      "src/a.go": "package a\nfunc A() {}\n",
+      "m/registry/index.md": "---\nokf_version: \"0.2\"\n---\n# Domain Registry\n\n- [Bounded Contexts](/contexts/index.md)\n- [Vocabulary](/vocabulary/index.md)\n- [Aggregates](/aggregates/index.md)\n- [Business Rules](/rules/index.md)\n- [Contracts](/contracts/index.md)\n- [Interactions](/interactions/index.md)\n- [Decisions](/decisions/index.md)\n- [Domain Events](/events/index.md)\n- [Capabilities](/capabilities/index.md)\n- [Value Objects](/value-objects/index.md)\n- [Dependency Policies](/dependency-policies/index.md)\n",
+      "m/registry/contexts/a.md": "---\ntype: Bounded Context\nstatus: stable\ntitle: Alpha\nverified:\n  - by: \"human:A\"\n    at: \"2026-01-01T00:00:00Z\"\nsources:\n  - resource: \"src/a.go#L1-2\"\n    excerpt_sha256: \"sha256:dfd5090af6d062648be2bf0eac2d20644241ae2e07418ba30e453ab7a46f393d\"\n---\nOwns alpha.",
+      "m/registry/contexts/index.md": "# Bounded Contexts\n\n- [Alpha](/contexts/a) — Owns alpha.\n"
+    },
+    "writes": true
+  },
+  {
+    "name": "refresh-citations leaves a citation whose excerpt is now repeated",
+    "args": [
+      "refresh-citations",
+      "--registry-root",
+      "{fixture}/m",
+      "--repo-root",
+      "{fixture}"
+    ],
+    "files": {
+      "src/a.go": "// added\npackage a\nfunc A() {}\npackage a\nfunc A() {}\n",
+      "m/registry/index.md": "---\nokf_version: \"0.2\"\n---\n# Domain Registry\n\n- [Bounded Contexts](/contexts/index.md)\n- [Vocabulary](/vocabulary/index.md)\n- [Aggregates](/aggregates/index.md)\n- [Business Rules](/rules/index.md)\n- [Contracts](/contracts/index.md)\n- [Interactions](/interactions/index.md)\n- [Decisions](/decisions/index.md)\n- [Domain Events](/events/index.md)\n- [Capabilities](/capabilities/index.md)\n- [Value Objects](/value-objects/index.md)\n- [Dependency Policies](/dependency-policies/index.md)\n",
+      "m/registry/contexts/a.md": "---\ntype: Bounded Context\nstatus: stable\ntitle: Alpha\nverified:\n  - by: \"human:A\"\n    at: \"2026-01-01T00:00:00Z\"\nsources:\n  - resource: \"src/a.go#L1-2\"\n    excerpt_sha256: \"sha256:dfd5090af6d062648be2bf0eac2d20644241ae2e07418ba30e453ab7a46f393d\"\n---\nOwns alpha.",
+      "m/registry/contexts/index.md": "# Bounded Contexts\n\n- [Alpha](/contexts/a) — Owns alpha.\n"
+    },
+    "writes": true
+  },
+  {
+    "name": "refresh-citations with no Registry writes nothing",
+    "args": [
+      "refresh-citations",
+      "--registry-root",
+      "{fixture}/none",
+      "--repo-root",
+      "{fixture}"
+    ],
+    "files": {
+      "src/a.go": "package a\nfunc A() {}\n"
+    },
+    "writes": true
   }
 ]

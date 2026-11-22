@@ -1454,12 +1454,13 @@ pub fn shifted_citation_notes(proposal: &Object, repo_root: &Path) -> Result<Vec
             notes.push(format!(
                 "NOTE: registry update {}/{} cites {count} citation{} \
                  whose lines are unchanged but now sit elsewhere in {}; this passes every check and \
-                 needs no Change Package of its own; when the record is next touched, relocate-evidence re-cites {}",
+                 needs no Change Package of its own; refresh-citations writes the lines where {} now {}",
                 str_of(get(raw, "asset")),
                 str_of(get(record, "id")),
                 if many { "s" } else { "" },
                 paths.into_iter().collect::<Vec<_>>().join(", "),
-                if many { "them" } else { "it" }
+                if many { "they" } else { "it" },
+                if many { "are" } else { "is" }
             ));
         }
     }

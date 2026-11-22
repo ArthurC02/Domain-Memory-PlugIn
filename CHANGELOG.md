@@ -2,6 +2,21 @@
 
 Notable changes to the Domain Memory plugin, newest first. The format follows Keep a Changelog, and versions follow Semantic Versioning: a minor version adds or changes behavior, a patch version only fixes it. Versions before 0.10.0 are recorded in the repository history only.
 
+## 7.1.0
+
+A citation that only moved can be re-cited in one command, so the lines the Registry stores stay a reliable way to read it.
+
+### Added
+
+- `refresh-citations --registry-root <root> --repo-root <repo>` writes the lines where each `shifted` citation's excerpt now sits, across every record, and prints what it moved in `records`, `citations` and `files`. It changes no path, no cited-line digest and no other field, so no record's status or statement changes and nothing needs review: a citation is reported `shifted` only where its excerpt occurs exactly once in the file, which is the range this writes. The write goes through the write protocol and appends one audit event; with nothing shifted it writes nothing and appends nothing. On SkillHub's Registry it re-cited 181 citations in 96 files in about 13 seconds, after which `verify-evidence` reported none shifted. `mcp-serve` does not offer it, as it writes.
+
+### Fixed
+
+- A write is no longer refused for a `validate` error the Registry already held, where that error names a path. The staged copy reported it against the staging directory, so it read as new and the refusal told the reader to run `refresh-indexes` on a directory that the write had already removed. This was reachable by any write to a Registry whose `index.md` a merge left stale.
+- `verify-evidence`, and the note a Change Package prints, point a shifted citation at `refresh-citations`. They named `relocate-evidence --from <file> --to <file>`, which proposes `registry_updates` for a path that moved and writes nothing, so it never re-cited anything (reported by Infra, who tested it; 317 and 319).
+- `references/evidence-rules.md` says what each of the two commands does, instead of claiming that `relocate-evidence` re-cites a file's shifted citations.
+- `CONTRIBUTING.md` says to judge the `claude` CLI by whether `claude plugin --help` lists the command, since a Node switch can leave a shim on the path that fails every run (Infra 318).
+
 ## 7.0.7
 
 ### Fixed

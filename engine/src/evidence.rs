@@ -195,9 +195,9 @@ impl Verifier {
         shifted.insert(
             "reason",
             Value::Str(format!(
-                "the cited lines are unchanged but now sit elsewhere in {path_text}; this passes \
-                 every check and needs no Change Package of its own; when one next touches the record, \
-                 relocate-evidence --from {path_text} --to {path_text} re-cites them and prints the supersedes"
+                "the cited lines are unchanged but now sit elsewhere in {path_text}; the excerpt is \
+                 the fact, so this needs no Change Package; refresh-citations writes the lines where \
+                 they now are, for every shifted citation at once"
             )),
         );
         shifted

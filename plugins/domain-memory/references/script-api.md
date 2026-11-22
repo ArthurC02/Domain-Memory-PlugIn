@@ -60,6 +60,14 @@ Repairs the log after a git merge brought two clones' events together: it drops 
 
 Rewrites `registry/index.md` and each `registry/<asset>/index.md` from the concept files beside them, never from the index a merge left behind, and prints the indexes it rewrote in `refreshed`; a current set prints an empty list. Run it after a merge touched an index, or whenever `validate` says an index does not list the records beside it.
 
+### `refresh-citations`
+
+*Re-cite citations that only moved.*
+
+`refresh-citations --registry-root <path> --repo-root <repo>`
+
+Writes the lines where each `shifted` citation's excerpt now sits, across every record, and prints what it moved in `records`, `citations` and `files`. It changes no path, no cited-line digest and no other field, so no record's status or statement changes and nothing needs review: `verify-evidence` reports a citation `shifted` only where its excerpt occurs exactly once in the file, which is the line range this writes. The write goes through the write protocol and appends one audit event; with nothing shifted it writes nothing, appends nothing, and prints empty lists. Run it after a refactoring moved code, so the stored lines stay a reliable way to read the Registry. A `stale` citation is left alone: its text changed, so `recite` points it at new lines once someone checks that the fact still holds.
+
 ### `probe`
 
 *Report Registry health.*

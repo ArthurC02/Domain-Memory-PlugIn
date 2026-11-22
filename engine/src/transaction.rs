@@ -9,7 +9,7 @@ use crate::listing::Repository;
 use crate::py;
 use crate::revision::registry_digest;
 use crate::sha256::hex_digest;
-use crate::store::registry_dir;
+use crate::store::{registry_dir, shown_path};
 use crate::validate::validate;
 
 const JOURNAL_FORMAT: &str = "domain-registry-transaction/v2";
@@ -228,12 +228,25 @@ fn held_open(root: &Path, error: &std::io::Error) -> String {
     )
 }
 
+/// A refusal from the staged copy, worded for the Registry the caller named:
+/// the staging directory is this write's own, and a path inside it names
+/// nothing once the write ends, so an error that holds one would send the
+/// reader to a directory that is gone. Saying it against the live root also
+/// lets a refusal the Registry already holds be recognized as its own.
+fn as_live(error: &str, root: &Path, staging: &Path) -> String {
+    error.replace(&shown_path(staging, None), &shown_path(root, None))
+}
+
 fn invalid_update(
     root: &Path,
     staging: &Path,
     repository: &mut Repository,
 ) -> Result<Option<String>, String> {
-    let mut errors = validate(staging, Some(&mut *repository), false, &mut Vec::new())?;
+    let mut errors: Vec<String> =
+        validate(staging, Some(&mut *repository), false, &mut Vec::new())?
+            .iter()
+            .map(|error| as_live(error, root, staging))
+            .collect();
     if !errors.is_empty() {
         let already = validate(root, Some(repository), false, &mut Vec::new())?;
         errors.retain(|error| !already.contains(error));

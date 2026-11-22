@@ -468,7 +468,7 @@ fn each_command_is_documented_only_under_the_heading_of_its_group() {
                 .map(move |name| (name, BTreeSet::from([group.to_string()])))
         })
         .collect();
-    assert_eq!(62, expected.len());
+    assert_eq!(63, expected.len());
     assert_eq!(expected, documented_groups());
 }
 

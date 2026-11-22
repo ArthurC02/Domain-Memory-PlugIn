@@ -7,7 +7,7 @@ A governed, file-backed domain model that coding agents read before they code an
 
 Every new agent session starts out knowing nothing about your domain. It works out the business rules again from the code, guesses where they live, and leaves nothing for the next session. Domain Memory gives those rules a home: a **Registry** of reviewed Domain-Driven Design facts that sits in your repository next to the code it describes.
 
-- **Facts are tied to code.** Each Context, rule, invariant, contract and term cites the exact source lines that enforce it, along with a SHA-256 of those lines. When the code changes, the citation is reported as `shifted` or `stale`, so the model cannot drift away from the code without anyone noticing.
+- **Facts are tied to code.** Each Context, rule, invariant, contract and term cites the exact source lines that enforce it, along with a SHA-256 of those lines. When the code changes, the citation is reported as `shifted` or `stale`, so the model cannot drift away from the code without anyone noticing. A refactoring that only moves cited code is settled by `refresh-citations`, which re-cites every citation that moved; a `stale` one waits for someone to check that the fact still holds.
 - **Only reviewed facts count.** Agents may propose `candidate` records at any time, but nothing becomes a fact until a Change Package passes review: frozen at submission, tested, approved, and proven by a signed commit.
 - **Every write is safe.** A write is staged on a copy, validated whole, swapped in atomically and appended to a hash-chained audit log. A crashed write can be finished or rolled back.
 - **One binary, no runtime.** A single Rust executable runs on Linux, macOS and Windows and needs only `git`. Prebuilt binaries are committed, so installing the plugin is enough.
@@ -43,7 +43,7 @@ Both check the executable against the release's `SHA256SUMS` before it lands, pr
 **GitHub Actions**:
 
 ```yaml
-- uses: ArthurC02/Domain-Memory-PlugIn@v7.0.7
+- uses: ArthurC02/Domain-Memory-PlugIn@v7.1.0
 - run: |
     domain-memory validate
     domain-memory verify-evidence
@@ -65,7 +65,7 @@ The pre-commit hook stops a commit whose staged code no longer matches what the 
 
 ### Pin a version for a team
 
-Pin the same tag everywhere, so the Skills an agent reads, the hooks and CI run one release. In Claude Code, `/plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v7.0.7`; to declare it for everyone who opens the repository, add this to its `.claude/settings.json`, or run `claude plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v7.0.7 --scope project` then `claude plugin install domain-memory@domain-memory --scope project`:
+Pin the same tag everywhere, so the Skills an agent reads, the hooks and CI run one release. In Claude Code, `/plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v7.1.0`; to declare it for everyone who opens the repository, add this to its `.claude/settings.json`, or run `claude plugin marketplace add ArthurC02/Domain-Memory-PlugIn#v7.1.0 --scope project` then `claude plugin install domain-memory@domain-memory --scope project`:
 
 ```json
 {
@@ -74,7 +74,7 @@ Pin the same tag everywhere, so the Skills an agent reads, the hooks and CI run 
       "source": {
         "source": "github",
         "repo": "ArthurC02/Domain-Memory-PlugIn",
-        "ref": "v7.0.7"
+        "ref": "v7.1.0"
       }
     }
   },
@@ -84,7 +84,7 @@ Pin the same tag everywhere, so the Skills an agent reads, the hooks and CI run 
 }
 ```
 
-Claude Code honours it once the folder is trusted. On the command line, pin with `DOMAIN_MEMORY_VERSION=v7.0.7` in front of `sh` (`$env:DOMAIN_MEMORY_VERSION = 'v7.0.7'` before `irm` in PowerShell); `DOMAIN_MEMORY_INSTALL_DIR` chooses the folder, and `DOMAIN_MEMORY_SHA256SUMS_SHA256` pins the digest of the release's `SHA256SUMS`. In GitHub Actions the action's tag or commit SHA is the pin. Every release is a tag `v<version>`, and its [GitHub Release](https://github.com/ArthurC02/Domain-Memory-PlugIn/releases) carries the executables, `SHA256SUMS` and a build provenance attestation (`gh attestation verify <file> -R ArthurC02/Domain-Memory-PlugIn`).
+Claude Code honours it once the folder is trusted. On the command line, pin with `DOMAIN_MEMORY_VERSION=v7.1.0` in front of `sh` (`$env:DOMAIN_MEMORY_VERSION = 'v7.1.0'` before `irm` in PowerShell); `DOMAIN_MEMORY_INSTALL_DIR` chooses the folder, and `DOMAIN_MEMORY_SHA256SUMS_SHA256` pins the digest of the release's `SHA256SUMS`. In GitHub Actions the action's tag or commit SHA is the pin. Every release is a tag `v<version>`, and its [GitHub Release](https://github.com/ArthurC02/Domain-Memory-PlugIn/releases) carries the executables, `SHA256SUMS` and a build provenance attestation (`gh attestation verify <file> -R ArthurC02/Domain-Memory-PlugIn`).
 
 ### Upgrading
 
@@ -116,7 +116,7 @@ Point your agent at [`AGENTS.md`](plugins/domain-memory/AGENTS.md). A clone runs
 1. **Read.** Before coding, run `readiness`. It tells an empty repository apart from a greenfield design, a brownfield codebase, or a memory whose evidence has gone stale, and it names the capability to start with.
 2. **Extract.** Turn requirements or existing code into cited `candidate` records.
 3. **Design.** Draft a material change as a Change Package that names the Contexts, rules and contracts it affects.
-4. **Maintain.** Once the code is merged, re-cite evidence that moved and record what the model learned.
+4. **Maintain.** Once the code is merged, run `refresh-citations` for the citations that only moved, re-cite the rest, and record what the model learned.
 5. **Review.** Check the Registry, the evidence and the audit chain, or review a branch for what it does to the domain model with `brief --base <branch point>`.
 
 The Skills under [`skills/`](plugins/domain-memory/skills/) cover these steps, and the [`domain-memory`](plugins/domain-memory/skills/domain-memory/SKILL.md) Skill routes a request to the smallest one that fits.

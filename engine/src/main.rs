@@ -50,6 +50,7 @@ mod readiness;
 mod recitation_package;
 mod reconciliation;
 mod records;
+mod refresh_citations;
 mod registry_write;
 mod relocate;
 mod review_commands;
@@ -340,6 +341,7 @@ fn execute(invocation: &Invocation) -> Result<i32, String> {
         "governance-readiness" => audit_commands::governance_readiness(invocation),
         "validate" => validate_command(invocation),
         "refresh-indexes" => refresh_indexes_command(invocation),
+        "refresh-citations" => refresh_citations_command(invocation),
         "change-coupling" => read_commands::change_coupling(invocation),
         "compare-registry" => read_commands::compare_registry(invocation),
         "probe" => read_commands::probe(invocation),
@@ -491,6 +493,14 @@ fn validate_command(invocation: &Invocation) -> Result<i32, String> {
         emit_stderr(&format!("{note}\n"));
     }
     Ok(code)
+}
+
+fn refresh_citations_command(invocation: &Invocation) -> Result<i32, String> {
+    let root = py::resolve(invocation.text("registry_root").unwrap_or("."));
+    let repo_root = py::resolve(invocation.text("repo_root").unwrap_or("."));
+    let report = refresh_citations::refresh_citations(&root, &repo_root)?;
+    print_json(&Value::Object(report));
+    Ok(0)
 }
 
 fn refresh_indexes_command(invocation: &Invocation) -> Result<i32, String> {
