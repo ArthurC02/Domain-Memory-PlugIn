@@ -7,8 +7,9 @@ use crate::candidate_evidence::{
     unclassified_paths,
 };
 use crate::changes::{ParsedUpdate, parsed_update, validate_change_package};
+use crate::cite::repeated_note;
 use crate::common::iso_timestamp;
-use crate::coverage::SourceKinds;
+use crate::coverage::{SourceKinds, all_references};
 use crate::files::{PROPOSAL_FILE, load_json, write_json};
 use crate::json::{self, Object, Value};
 use crate::okf::{review_field, truthy};
@@ -27,6 +28,7 @@ use crate::transaction::{mutate_registry, mutate_registry_expecting};
 #[derive(Default)]
 pub struct Upserted {
     pub outside: Vec<String>,
+    pub repeated: Vec<String>,
     pub created: usize,
     pub same_evidence: Vec<String>,
     pub skipped_reviewed: Vec<String>,
@@ -128,6 +130,31 @@ fn reviewed_copy(
     Ok(None)
 }
 
+/// Each citation of a record whose text occurs more than once in its file,
+/// named with the record, so the writer can widen it now: once the lines
+/// move, nothing can tell the copies apart, and `verify-evidence` reports it
+/// `stale` rather than `shifted`, which no command can re-cite by itself.
+fn repeated_citations(
+    asset: &str,
+    record: &Object,
+    repo_root: &Path,
+) -> Result<Vec<String>, String> {
+    let id = id_of(record);
+    let mut found = Vec::new();
+    for reference in all_references(&Value::Object(record.clone()), 0)? {
+        let Value::Object(reference) = reference else {
+            continue;
+        };
+        if let Some(note) = repeated_note(repo_root, &reference) {
+            found.push(format!(
+                "{asset}/{id} {}",
+                note.trim_start_matches("NOTE: ")
+            ));
+        }
+    }
+    Ok(found)
+}
+
 pub fn stage_candidates(
     asset: &str,
     records: &mut Vec<Object>,
@@ -196,12 +223,16 @@ pub fn upsert_candidate(
     record_paths: &[PathBuf],
 ) -> Result<Upserted, String> {
     let mut batch = Vec::new();
+    let mut repeated = Vec::new();
     for record in batch_records(record_paths)? {
-        batch.push(as_object(hash_all(&Value::Object(record), repo_root)?));
+        let hashed = as_object(hash_all(&Value::Object(record), repo_root)?);
+        repeated.extend(repeated_citations(asset, &hashed, repo_root)?);
+        batch.push(hashed);
     }
     let source_map = source_map_for(root)?;
     let kinds = SourceKinds::of(&source_map);
     let mut result = Upserted::default();
+    result.repeated = repeated;
     let mut event = operation_event("upsert-candidate", Some(asset));
     match batch.as_slice() {
         [only] => event.insert("record_id", Value::Str(id_of(only))),

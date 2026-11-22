@@ -130903,5 +130903,39 @@
       "src/a.go": "package a\nfunc A() {}\n"
     },
     "writes": true
+  },
+  {
+    "name": "upsert-candidate notes a citation whose text is repeated in its file",
+    "args": [
+      "upsert-candidate",
+      "--registry-root",
+      "{fixture}/m",
+      "--repo-root",
+      "{fixture}",
+      "--asset",
+      "contexts",
+      "--record-file",
+      "{fixture}/r.json"
+    ],
+    "files": {
+      "m/registry/index.md": "---\nokf_version: \"0.2\"\n---\n# Domain Registry\n\n- [Bounded Contexts](/contexts/index.md)\n- [Vocabulary](/vocabulary/index.md)\n- [Aggregates](/aggregates/index.md)\n- [Business Rules](/rules/index.md)\n- [Contracts](/contracts/index.md)\n- [Interactions](/interactions/index.md)\n- [Decisions](/decisions/index.md)\n- [Domain Events](/events/index.md)\n- [Capabilities](/capabilities/index.md)\n- [Value Objects](/value-objects/index.md)\n- [Dependency Policies](/dependency-policies/index.md)\n",
+      "m/registry/contexts/index.md": "# Bounded Contexts\n\n- [Billing](/contexts/billing) — Owns billing.\n- [Orders](/contexts/orders) — Owns orders.\n",
+      "m/registry/contexts/billing.md": "---\ntype: Bounded Context\ntitle: Billing\nstatus: draft\n---\nOwns billing.\n",
+      "m/registry/contexts/orders.md": "---\ntype: Bounded Context\ntitle: Orders\nstatus: draft\n---\nOwns orders.\n",
+      "m/registry/vocabulary/index.md": "# Vocabulary\n\n",
+      "m/registry/aggregates/index.md": "# Aggregates\n\n",
+      "m/registry/rules/index.md": "# Business Rules\n\n",
+      "m/registry/contracts/index.md": "# Contracts\n\n",
+      "m/registry/interactions/index.md": "# Interactions\n\n",
+      "m/registry/decisions/index.md": "# Decisions\n\n",
+      "m/registry/events/index.md": "# Domain Events\n\n",
+      "m/registry/capabilities/index.md": "# Capabilities\n\n",
+      "m/registry/value-objects/index.md": "# Value Objects\n\n",
+      "m/registry/dependency-policies/index.md": "# Dependency Policies\n\n",
+      "src/a.go": "package a\nfunc A() error {\n\treturn nil\n}\nfunc B() error {\n\treturn nil\n}\n",
+      "src/b.txt": "line one\nline two\nline three\n",
+      "r.json": "{\"id\": \"ev\", \"name\": \"Ev\", \"responsibility\": \"Cites code.\", \"evidence\": [{\"path\": \"src/a.go\", \"lines\": {\"start\": 3, \"end\": 3}}]}"
+    },
+    "writes": true
   }
 ]

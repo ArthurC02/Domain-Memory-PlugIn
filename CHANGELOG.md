@@ -2,6 +2,15 @@
 
 Notable changes to the Domain Memory plugin, newest first. The format follows Keep a Changelog, and versions follow Semantic Versioning: a minor version adds or changes behavior, a patch version only fixes it. Versions before 0.10.0 are recorded in the repository history only.
 
+## 7.2.0
+
+A citation whose text is not unique in its file is said at the moment it is written, and a `refresh-citations` run that leaves work behind says so.
+
+### Added
+
+- `upsert-candidate` prints a NOTE for each citation of the record it writes whose text occurs more than once in its file, naming the record and the other line, as `cite` and `recite` already did for the citation they build. Such a citation cannot be re-cited by any command once its lines move: nothing can tell the copies apart, so `verify-evidence` reports it `stale` rather than `shifted`. Writing is the cheapest moment to widen it (Infra 322, from Feature's single-line citations of a repeated call site).
+- `refresh-citations` reports what it could not write in `unresolved`: the record, the file and the reason, for each `stale` citation. A run no longer looks clean while a tail is left, and the reason says whether the excerpt changed, which `recite` settles, or is now repeated, which is widened to the enclosing block first.
+
 ## 7.1.1
 
 ### Fixed

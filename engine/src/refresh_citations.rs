@@ -15,11 +15,25 @@ struct Moved {
     paths: Vec<String>,
 }
 
+/// A citation this command cannot write: its excerpt is no longer where it
+/// was and no single place in the file holds it, either because the text
+/// changed or because it occurs more than once. Only a person can settle it.
+struct Unresolved {
+    asset: &'static str,
+    record_id: String,
+    path: String,
+    reason: String,
+}
+
 /// Rewrites the stored lines of every `shifted` citation to where its excerpt
 /// now sits, leaving `path` and `excerpt_sha256` as they are. A shifted
 /// citation is reported only where the excerpt occurs exactly once in the
 /// file, so the lines it moves to are the ones the Registry already cites.
-fn refreshed(repo_root: &Path, record: &Object) -> Result<(Object, usize, Vec<String>), String> {
+fn refreshed(
+    repo_root: &Path,
+    record: &Object,
+    mut unresolved: Option<&mut Vec<(String, String)>>,
+) -> Result<(Object, usize, Vec<String>), String> {
     let mut verifier = Verifier::new(repo_root, false);
     let mut moved = 0;
     let mut paths: Vec<String> = Vec::new();
@@ -30,7 +44,18 @@ fn refreshed(repo_root: &Path, record: &Object) -> Result<(Object, usize, Vec<St
                 return Ok(reference.clone());
             };
             let verdict = verifier.check(reference)?;
-            if verdict.get("status").and_then(Value::as_str) != Some("shifted") {
+            let status = verdict.get("status").and_then(Value::as_str);
+            if status != Some("shifted") {
+                if let (Some(found), Some("stale")) = (unresolved.as_deref_mut(), status) {
+                    let text = |key: &str| {
+                        verdict
+                            .get(key)
+                            .and_then(Value::as_str)
+                            .unwrap_or_default()
+                            .to_string()
+                    };
+                    found.push((text("path"), text("reason")));
+                }
                 return Ok(reference.clone());
             }
             let Some(lines @ Value::Object(_)) = verdict.get("lines") else {
@@ -56,33 +81,44 @@ fn refreshed(repo_root: &Path, record: &Object) -> Result<(Object, usize, Vec<St
     Ok((refreshed, moved, paths))
 }
 
-fn moved_records(root: &Path, repo_root: &Path) -> Result<Vec<Moved>, String> {
+fn moved_records(root: &Path, repo_root: &Path) -> Result<(Vec<Moved>, Vec<Unresolved>), String> {
     let registry = Registry::open(root)?;
     let mut found = Vec::new();
+    let mut unresolved = Vec::new();
     for (asset, _, _) in ASSETS {
         for item in registry.records(asset)? {
             let Value::Object(record) = item else {
                 continue;
             };
-            let (_, citations, paths) = refreshed(repo_root, &record)?;
+            let mut stale = Vec::new();
+            let (_, citations, paths) = refreshed(repo_root, &record, Some(&mut stale))?;
+            let record_id = record
+                .get("id")
+                .and_then(Value::as_str)
+                .unwrap_or_default()
+                .to_string();
+            for (path, reason) in stale {
+                unresolved.push(Unresolved {
+                    asset,
+                    record_id: record_id.clone(),
+                    path,
+                    reason,
+                });
+            }
             if citations > 0 {
                 found.push(Moved {
                     asset,
-                    record_id: record
-                        .get("id")
-                        .and_then(Value::as_str)
-                        .unwrap_or_default()
-                        .to_string(),
+                    record_id,
                     citations,
                     paths,
                 });
             }
         }
     }
-    Ok(found)
+    Ok((found, unresolved))
 }
 
-fn report_of(moved: &[Moved]) -> Object {
+fn report_of(moved: &[Moved], unresolved: &[Unresolved]) -> Object {
     let mut records = Vec::new();
     let mut citations = 0;
     let mut files: Vec<String> = Vec::new();
@@ -104,6 +140,15 @@ fn report_of(moved: &[Moved]) -> Object {
         records.push(Value::Object(row));
     }
     files.sort();
+    let mut left = Vec::new();
+    for found in unresolved {
+        let mut row = Object::new();
+        row.insert("asset", Value::Str(found.asset.to_string()));
+        row.insert("id", Value::Str(found.record_id.clone()));
+        row.insert("path", Value::Str(found.path.clone()));
+        row.insert("reason", Value::Str(found.reason.clone()));
+        left.push(Value::Object(row));
+    }
     let mut report = Object::new();
     report.insert("format", Value::Str("domain-memory-refresh/v1".to_string()));
     report.insert("records", Value::Array(records));
@@ -112,6 +157,7 @@ fn report_of(moved: &[Moved]) -> Object {
         "files",
         Value::Array(files.into_iter().map(Value::Str).collect()),
     );
+    report.insert("unresolved", Value::Array(left));
     report
 }
 
@@ -121,10 +167,10 @@ fn report_of(moved: &[Moved]) -> Object {
 /// keeps it idempotent and leaves no audit event behind.
 pub fn refresh_citations(root: &Path, repo_root: &Path) -> Result<Object, String> {
     if !has_registry(root) {
-        return Ok(report_of(&[]));
+        return Ok(report_of(&[], &[]));
     }
-    let moved = moved_records(root, repo_root)?;
-    let report = report_of(&moved);
+    let (moved, unresolved) = moved_records(root, repo_root)?;
+    let report = report_of(&moved, &unresolved);
     if moved.is_empty() {
         return Ok(report);
     }
@@ -151,7 +197,7 @@ pub fn refresh_citations(root: &Path, repo_root: &Path) -> Result<Object, String
                 let mut records = read_records(staging, asset)?;
                 let mut touched = false;
                 for record in &mut records {
-                    let (refreshed, citations, _) = refreshed(repo_root, record)?;
+                    let (refreshed, citations, _) = refreshed(repo_root, record, None)?;
                     if citations > 0 {
                         *record = refreshed;
                         touched = true;

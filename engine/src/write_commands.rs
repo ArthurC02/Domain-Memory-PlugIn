@@ -59,6 +59,9 @@ pub fn upsert(invocation: &Invocation) -> Result<i32, String> {
             upserted.outside.join(", ")
         ));
     }
+    for note in &upserted.repeated {
+        emit_stderr(&format!("NOTE: {note}\n"));
+    }
     if !upserted.status_dropped.is_empty() {
         emit_stderr(&format!(
             "NOTE: {} carried a review status, stored as candidate: a record \
